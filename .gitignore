@@ -1,0 +1,14 @@
+﻿# IDE CONFIG
+*.idea/
+
+# ARTIFICATS
+obj/
+bin/
+
+# IGNORE WEB CONFIG STUFF
+*apsettings.json
+*appsettings.Development.json
+*appsettings.Production.json
+
+# PACKAGES
+packages/
