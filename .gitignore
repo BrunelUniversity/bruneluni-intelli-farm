@@ -12,3 +12,6 @@ bin/
 
 # PACKAGES
 packages/
+
+# OUTPUT DUMP
+*.dump

@@ -10,8 +10,8 @@ def render_init(scene):
 
 
 def complete(scene):
-    f = open("render_times.txt", "a")
-    totalRenderTime = (datetime.now() - RENDER_START_TIME)
+    f = open("render_times.dump", "a")
+    totalRenderTime = str((datetime.now() - RENDER_START_TIME))+"\n"
     f.write(totalRenderTime)
     f.close()
 
