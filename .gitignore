@@ -6,7 +6,7 @@ obj/
 bin/
 
 # IGNORE WEB CONFIG STUFF
-*apsettings.json
+*appsettings.json
 *appsettings.Development.json
 *appsettings.Production.json
 

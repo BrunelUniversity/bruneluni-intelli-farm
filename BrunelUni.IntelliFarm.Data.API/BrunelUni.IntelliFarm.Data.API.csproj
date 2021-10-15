@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Properties\launchSettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj" />
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj" />
+    </ItemGroup>
+
+</Project>
