@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BrunelUni.IntelliFarm.Data.Core
+namespace BrunelUni.IntelliFarm.Data.Core.Dtos
 {
     public class RenderOptions
     {
@@ -8,5 +8,9 @@ namespace BrunelUni.IntelliFarm.Data.Core
         public int Samples { get; set; }
         [ JsonPropertyName( "max_light_bounces" ) ]
         public int MaxLightBounces { get; set; }
+        [ JsonPropertyName( "start_frame" ) ]
+        public int StartFrame { get; set; }
+        [ JsonPropertyName( "end_frame" ) ]
+        public int EndFrame { get; set; }
     }
 }

@@ -11,6 +11,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj" />
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj" />
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj" />
     </ItemGroup>
 
 </Project>

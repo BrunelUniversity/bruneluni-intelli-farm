@@ -2,6 +2,7 @@
 using Aidan.Common.Core;
 using Aidan.Common.DependencyInjection;
 using Aidan.Common.Utils;
+using BrunelUni.IntelliFarm.Data.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BrunelUni.IntelliFarm.Crosscutting.DIModule
@@ -13,6 +14,6 @@ namespace BrunelUni.IntelliFarm.Crosscutting.DIModule
             {
                 CommonUtilsInitializer.Initialize,
                 CommonInitializer.Initialize
-            }, "Aidan.Common" );
+            }, DataApplicationConstants.CrosscuttingRootNamespace );
     }
 }

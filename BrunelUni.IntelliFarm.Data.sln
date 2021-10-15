@@ -1,12 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Common", "BrunelUni.IntelliFarm.Data.Common\BrunelUni.IntelliFarm.Data.Common.csproj", "{83D6F9E0-611D-4267-A5D3-CDC8DDECE27D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Blender", "BrunelUni.IntelliFarm.Data.Blender\BrunelUni.IntelliFarm.Data.Blender.csproj", "{83D6F9E0-611D-4267-A5D3-CDC8DDECE27D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Core", "BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj", "{714BAB2D-1DEB-4AAE-9275-2DB6EBF227F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.API", "BrunelUni.IntelliFarm.Data.API\BrunelUni.IntelliFarm.Data.API.csproj", "{42FAB6DE-7444-4039-B95B-64A0C3283C0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Crosscutting.DIModule", "BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj", "{7AD61706-C16F-4BBC-B981-CFF6B6A7F023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.DIModule", "BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj", "{C977C04A-1B57-4744-9B70-4C6A3688E56B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +32,9 @@ Global
 		{7AD61706-C16F-4BBC-B981-CFF6B6A7F023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AD61706-C16F-4BBC-B981-CFF6B6A7F023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AD61706-C16F-4BBC-B981-CFF6B6A7F023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C977C04A-1B57-4744-9B70-4C6A3688E56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C977C04A-1B57-4744-9B70-4C6A3688E56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C977C04A-1B57-4744-9B70-4C6A3688E56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C977C04A-1B57-4744-9B70-4C6A3688E56B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
