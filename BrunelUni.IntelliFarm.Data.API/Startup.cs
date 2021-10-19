@@ -1,3 +1,4 @@
+using Aidan.Common.Core.Enum;
 using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.Data.DIModule;
@@ -14,7 +15,8 @@ namespace BrunelUni.IntelliFarm.Data.API
                 .BindCrosscuttingLayer( )
                 .BindDataLayer( )
                 .AddTransient<MvcAdapter>( )
-                .AddControllers( );
+                .AddControllers( )
+                .BindJsonOptions( CaseEnum.Snake );
 
         public void Configure( IApplicationBuilder applicationBuilder, IWebHostEnvironment env ) =>
             applicationBuilder
