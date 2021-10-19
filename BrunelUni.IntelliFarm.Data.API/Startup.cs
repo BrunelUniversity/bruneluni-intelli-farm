@@ -1,6 +1,7 @@
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
+using BrunelUni.IntelliFarm.Data.API.Filters;
 using BrunelUni.IntelliFarm.Data.DIModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ namespace BrunelUni.IntelliFarm.Data.API
                 .BindCrosscuttingLayer( )
                 .BindDataLayer( )
                 .AddTransient<MvcAdapter>( )
+                .AddTransient<RenderFileFilter>( )
                 .AddControllers( )
                 .BindJsonOptions( CaseEnum.Snake );
 

@@ -3,8 +3,8 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 
 namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
-    public interface IRenderRepository
+    public interface IRenderEventRepository
     {
-        public Result Create( RenderOptions renderOptions );
+        public Result Create( RenderEventDto renderOptions );
     }
 }

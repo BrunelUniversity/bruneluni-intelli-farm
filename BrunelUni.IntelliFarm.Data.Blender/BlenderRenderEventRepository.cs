@@ -4,9 +4,9 @@ using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Data.Blender
 {
-    public class BlenderRenderRepository : IRenderRepository
+    public class BlenderRenderEventRepository : IRenderEventRepository
     {
         // TODO: add implementation
-        public Result Create( RenderOptions renderOptions ) => Result.Error( "implement" );
+        public Result Create( RenderEventDto renderOptions ) => Result.Error( "implement" );
     }
 }

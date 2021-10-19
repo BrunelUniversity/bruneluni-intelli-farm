@@ -6,21 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace BrunelUni.IntelliFarm.Data.API.Controllers
 {
     [ Route( "render-event" ) ]
-    public class RenderEventController : ControllerBase
+    public class RenderEventController : BaseDataController
     {
-        private readonly IRenderRepository _renderRepository;
+        private readonly IRenderEventRepository _renderEventRepository;
         private readonly MvcAdapter _mvcAdapter;
 
-        public RenderEventController( IRenderRepository renderRepository, MvcAdapter mvcAdapter )
+        public RenderEventController( IRenderEventRepository renderEventRepository, MvcAdapter mvcAdapter )
         {
-            _renderRepository = renderRepository;
+            _renderEventRepository = renderEventRepository;
             _mvcAdapter = mvcAdapter;
         }
 
         [ HttpPost ]
-        public IActionResult CreateRenderEvent( [ FromBody ] RenderOptions renderOptions )
+        public IActionResult CreateRenderEvent( [ FromBody ] RenderEventDto renderOptions )
         {
-            _renderRepository.Create( renderOptions );
+            _renderEventRepository.Create( renderOptions );
             return _mvcAdapter.OkResult( renderOptions );
         }
     }

@@ -8,10 +8,10 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     public class BlenderSceneRepository : ISceneRepository
     {
         // TODO: implement
-        public Result Update( RenderOptions renderOptions ) => Result.Error( "implement" );
+        public Result Update( RenderDataDto renderOptions ) => Result.Error( "implement" );
 
         // TODO: implement
-        public ObjectResult<RenderOptions> Read( ) => new ObjectResult<RenderOptions>
+        public ObjectResult<RenderDataDto> Read( ) => new ObjectResult<RenderDataDto>
             { Status = OperationResultEnum.Failed, Msg = "implement" };
     }
 }

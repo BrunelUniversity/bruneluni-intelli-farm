@@ -5,7 +5,7 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface ISceneRepository
     {
-        public Result Update( RenderOptions renderOptions );
-        public ObjectResult<RenderOptions> Read( );
+        public Result Update( RenderDataDto renderOptions );
+        public ObjectResult<RenderDataDto> Read( );
     }
 }
