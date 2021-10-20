@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Aidan.Common.Core.Interfaces.Contract;
 using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -9,17 +8,14 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
 {
     public class RenderFileFilter : ActionFilterAttribute
     {
-        private readonly ISerializer _serializer;
         private readonly MvcAdapter _mvcAdapter;
         private readonly IRenderManagerFactory _renderManagerFactory;
         private readonly IRenderManagerGetter _renderManagerGetter;
 
-        public RenderFileFilter( ISerializer serializer,
-            MvcAdapter mvcAdapter,
+        public RenderFileFilter( MvcAdapter mvcAdapter,
             IRenderManagerFactory renderManagerFactory,
             IRenderManagerGetter renderManagerGetter )
         {
-            _serializer = serializer;
             _mvcAdapter = mvcAdapter;
             _renderManagerFactory = renderManagerFactory;
             _renderManagerGetter = renderManagerGetter;
