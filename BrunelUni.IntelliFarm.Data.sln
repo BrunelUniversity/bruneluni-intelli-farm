@@ -10,12 +10,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Cross
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.DIModule", "BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj", "{C977C04A-1B57-4744-9B70-4C6A3688E56B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrunelUni.IntelliFarm.Build", "BrunelUni.IntelliFarm.Build\BrunelUni.IntelliFarm.Build.csproj", "{5764AC95-963B-4BBD-A04A-0A34BA389CD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5764AC95-963B-4BBD-A04A-0A34BA389CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5764AC95-963B-4BBD-A04A-0A34BA389CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D6F9E0-611D-4267-A5D3-CDC8DDECE27D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{83D6F9E0-611D-4267-A5D3-CDC8DDECE27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D6F9E0-611D-4267-A5D3-CDC8DDECE27D}.Release|Any CPU.ActiveCfg = Release|Any CPU

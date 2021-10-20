@@ -7,5 +7,5 @@ build-job:
   stage: ci
   script:
     - dotnet tool install Nuke.GlobalTool --global
-    - dotnet build
-    - echo "Running ci"
+    - nuke -Solution BrunelUni.IntelliFarm.sln
+    - nuke -Solution BrunelUni.IntelliFarm.Data.sln
