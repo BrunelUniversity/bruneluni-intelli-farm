@@ -14,7 +14,4 @@ bin/
 packages/
 
 # OUTPUT DUMP
-*.dump
-
-# BUILD STUFF
-/.nuke/temp
+temp/
