@@ -27,7 +27,11 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             {
                 return Result.Error( $"{filePath} was not found" );
             }
-            _fileAdapter.GetFileExtension( filePath );
+            var ext = _fileAdapter.GetFileExtension( filePath ).Value;
+            if( ext != ".blend" )
+            {
+                return Result.Error( $"{filePath} is not of type '.blend'" );
+            }
             _renderManagerService.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto
             {
                 BlendFilePath = filePath
