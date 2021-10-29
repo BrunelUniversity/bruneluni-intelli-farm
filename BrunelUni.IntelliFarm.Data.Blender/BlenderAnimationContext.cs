@@ -1,4 +1,5 @@
 ﻿using Aidan.Common.Core;
+using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -22,7 +23,10 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result Initialize( string filePath )
         {
-            _fileAdapter.Exists( filePath );
+            if( _fileAdapter.Exists( filePath ).Status == OperationResultEnum.Failed )
+            {
+                return Result.Error( $"{filePath} was not found" );
+            }
             _fileAdapter.GetFileExtension( filePath );
             _renderManagerService.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto
             {
