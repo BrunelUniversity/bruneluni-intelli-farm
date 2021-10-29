@@ -20,9 +20,9 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _fileAdapter = fileAdapter;
         }
 
+        // TODO: validation
         public ObjectResult<T> ReadTemp<T>( ) where T : RenderDto
         {
-            _processor.RunAndWait( "blender", $"-b -P {DataApplicationConstants.DataScriptsDir}\\render_reader.py" );
             var fileResult = _fileAdapter.ReadFile( $"{DataApplicationConstants.DataScriptsTempFile}" );
             return new ObjectResult<T>
             {

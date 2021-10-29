@@ -34,23 +34,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         }
 
         [ Test ]
-        public void Then_Blender_Data_Was_Extracted( )
-        {
-            MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockProcessor.Received( ).RunAndWait( "blender", $"-b -P {TestConstants.ScriptDir}\\render_reader.py" );
-        }
-
-        [ Test ]
-        public void Then_File_Is_Read_After_Blender_Process_Finishes( )
-        {
-            Received.InOrder( ( ) =>
-            {
-                MockProcessor.RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-                MockFileAdapter.ReadFile( Arg.Any<string>( ) );
-            } );
-        }
-
-        [ Test ]
         public void Then_Data_Was_Returned_Successfully( )
         {
             Assert.AreSame( _renderDataDto, _result.Value );
