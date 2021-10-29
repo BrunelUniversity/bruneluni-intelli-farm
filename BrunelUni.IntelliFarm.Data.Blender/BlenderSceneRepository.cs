@@ -22,7 +22,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _fileAdapter = fileAdapter;
         }
         
-        // TODO: implement
+
         public Result Update( RenderDataDto renderOptions )
         {
             var content = _serializer.Serialize( renderOptions );
