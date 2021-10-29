@@ -1,5 +1,6 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Data.Blender
@@ -19,6 +20,15 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _fileAdapter = fileAdapter;
         }
 
-        public Result Initialize( string filePath ) { return Result.Error( "" );}
+        public Result Initialize( string filePath )
+        {
+            _fileAdapter.Exists( filePath );
+            _fileAdapter.GetFileExtension( filePath );
+            _renderManagerService.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto
+            {
+                BlendFilePath = filePath
+            } );
+            return Result.Success( );
+        }
     }
 }
