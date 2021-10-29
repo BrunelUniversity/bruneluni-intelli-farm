@@ -19,6 +19,6 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _fileAdapter = fileAdapter;
         }
 
-        public Result Initialize( ) { throw new System.NotImplementedException( ); }
+        public Result Initialize( string filePath ) { return Result.Error( "" );}
     }
 }

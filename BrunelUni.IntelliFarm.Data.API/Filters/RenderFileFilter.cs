@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
                 return;
             }
 
-            var result = _animationContext.Initialize( );
+            var result = _animationContext.Initialize( renderFile );
             
             if( result.Status == OperationResultEnum.Failed )
             {

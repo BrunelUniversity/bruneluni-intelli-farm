@@ -1,8 +1,9 @@
-﻿using Aidan.Common.Core.Interfaces.Excluded;
+﻿using Aidan.Common.Core;
 
 namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
-    public interface IAnimationContext : IInitialisable
+    public interface IAnimationContext
     {
+        Result Initialize( string filePath );
     }
 }
