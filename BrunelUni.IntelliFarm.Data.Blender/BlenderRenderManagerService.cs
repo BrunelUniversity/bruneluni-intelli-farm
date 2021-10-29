@@ -2,11 +2,11 @@
 
 namespace BrunelUni.IntelliFarm.Data.Blender
 {
-    public class BlenderRenderManagerGetter : IRenderManagerGetter
+    public class BlenderRenderManagerService : IRenderManagerService
     {
         private bool _hasBeenSet;
         private IRenderManager _renderManager;
-        public BlenderRenderManagerGetter( ) { _hasBeenSet = false; }
+        public BlenderRenderManagerService( ) { _hasBeenSet = false; }
         public IRenderManager RenderManager
         {
             get => _renderManager;

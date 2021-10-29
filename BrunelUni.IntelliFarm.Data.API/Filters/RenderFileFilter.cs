@@ -1,6 +1,5 @@
-﻿using System.IO;
+﻿using Aidan.Common.Core.Enum;
 using Aidan.Common.Utils.Web;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -9,16 +8,13 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
     public class RenderFileFilter : ActionFilterAttribute
     {
         private readonly MvcAdapter _mvcAdapter;
-        private readonly IRenderManagerFactory _renderManagerFactory;
-        private readonly IRenderManagerGetter _renderManagerGetter;
+        private readonly IAnimationContext _animationContext;
 
         public RenderFileFilter( MvcAdapter mvcAdapter,
-            IRenderManagerFactory renderManagerFactory,
-            IRenderManagerGetter renderManagerGetter )
+            IAnimationContext animationContext )
         {
             _mvcAdapter = mvcAdapter;
-            _renderManagerFactory = renderManagerFactory;
-            _renderManagerGetter = renderManagerGetter;
+            _animationContext = animationContext;
         }
         
         public override void OnActionExecuting( ActionExecutingContext context )
@@ -33,14 +29,13 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
                 return;
             }
 
-            if( !File.Exists( renderFile ) )
+            var result = _animationContext.Initialize( );
+            
+            if( result.Status == OperationResultEnum.Failed )
             {
                 context.Result =
-                    _mvcAdapter.NotFoundError(
-                        $"'{renderFile}' does not exist" );
-                return;
+                    _mvcAdapter.NotFoundError( result.Msg );
             }
-            _renderManagerGetter.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto{ BlendFilePath = renderFile } );
         }
     }
 }
