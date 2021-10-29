@@ -5,7 +5,7 @@ using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.Initialize
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests.Initialize
 {
     public class When_Initialised_Successfully : Given_A_BlenderAnimationContext
     {

@@ -4,7 +4,7 @@ using BrunelUni.IntelliFarm.Data.Blender;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using NSubstitute;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public abstract class Given_A_BlenderAnimationContext : GivenWhenThen<IAnimationContext>
     {
