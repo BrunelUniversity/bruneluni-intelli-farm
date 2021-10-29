@@ -41,6 +41,16 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         }
 
         [ Test ]
+        public void Then_File_Is_Read_After_Blender_Process_Finishes( )
+        {
+            Received.InOrder( ( ) =>
+            {
+                MockProcessor.RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
+                MockFileAdapter.ReadFile( Arg.Any<string>( ) );
+            } );
+        }
+
+        [ Test ]
         public void Then_Data_Was_Returned_Successfully( )
         {
             Assert.AreEqual( _renderDataDto, _result.Value );
