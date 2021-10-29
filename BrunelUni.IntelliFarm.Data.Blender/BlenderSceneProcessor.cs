@@ -24,6 +24,14 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public ObjectResult<T> ReadTemp<T>( ) where T : RenderDto
         {
             var fileResult = _fileAdapter.ReadFile( $"{DataApplicationConstants.DataScriptsTempFile}" );
+            if( fileResult.Status == OperationResultEnum.Failed )
+            {
+                return new ObjectResult<T>
+                {
+                    Status = OperationResultEnum.Failed,
+                    Msg = fileResult.Msg
+                };
+            }
             return new ObjectResult<T>
             {
                 Value = _serializer.Deserialize<T>( fileResult.Value ),
