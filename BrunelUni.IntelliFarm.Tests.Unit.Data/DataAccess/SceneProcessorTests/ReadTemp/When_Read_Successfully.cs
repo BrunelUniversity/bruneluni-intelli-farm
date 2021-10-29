@@ -9,25 +9,25 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
     public class When_Read_Successfully : Given_A_SceneProcessor
     {
         private ObjectResult<string> _objectResult;
-        private ObjectResult<RenderDto> _result;
+        private ObjectResult<RenderDataDto> _result;
         private RenderDataDto _renderDataDto;
         private const string ContentValue = "test";
 
         protected override void When( )
         {
             _renderDataDto = new RenderDataDto { Samples = 100, MaxLightBounces = 4 };
-            MockSerializer.Deserialize<object>( Arg.Any<string>( ) )
+            MockSerializer.Deserialize<RenderDataDto>( Arg.Any<string>( ) )
                 .Returns( _renderDataDto );
             _objectResult = new ObjectResult<string> { Status = OperationResultEnum.Success, Value = ContentValue };
             MockFileAdapter.ReadFile( Arg.Any<string>( ) )
                 .Returns( _objectResult );
-            _result = SUT.ReadTemp( );
+            _result = SUT.ReadTemp<RenderDataDto>( );
         }
 
         [ Test ]
         public void Then_Correct_File_Was_Read( )
         {
-            MockSerializer.Received( 1 ).Deserialize<object>( Arg.Any<string>( ) );
+            MockSerializer.Received( 1 ).Deserialize<RenderDataDto>( Arg.Any<string>( ) );
             MockSerializer.Received( ).Deserialize<RenderDataDto>( ContentValue );
             MockFileAdapter.Received( 1 ).ReadFile( Arg.Any<string>( ) );
             MockFileAdapter.Received( ).ReadFile( TestConstants.DataScriptsTempFile );
@@ -53,7 +53,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         [ Test ]
         public void Then_Data_Was_Returned_Successfully( )
         {
-            Assert.AreEqual( _renderDataDto, _result.Value );
+            Assert.AreSame( _renderDataDto, _result.Value );
             Assert.AreEqual( OperationResultEnum.Success, _result.Status );
         }
     }

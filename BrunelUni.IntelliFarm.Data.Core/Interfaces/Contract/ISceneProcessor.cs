@@ -5,7 +5,7 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface ISceneProcessor
     {
-        ObjectResult<RenderDto> ReadTemp( );
+        ObjectResult<T> ReadTemp<T>( ) where T : RenderDto;
         Result WriteTemp( RenderDto renderDto );
         Result RunSceneProcessAndExit( string pathToBlend, string script, bool render );
     }

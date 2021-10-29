@@ -1,6 +1,7 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Data.Core;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -19,9 +20,15 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _fileAdapter = fileAdapter;
         }
 
-        public ObjectResult<RenderDto> ReadTemp( )
+        public ObjectResult<T> ReadTemp<T>( ) where T : RenderDto
         {
-            return new ObjectResult<RenderDto> { Status = OperationResultEnum.Failed };
+            _processor.RunAndWait( "blender", $"-b -P {DataApplicationConstants.DataScriptsDir}\\render_reader.py" );
+            var fileResult = _fileAdapter.ReadFile( $"{DataApplicationConstants.DataScriptsTempFile}" );
+            return new ObjectResult<T>
+            {
+                Value = _serializer.Deserialize<T>( fileResult.Value ),
+                Status = OperationResultEnum.Success
+            };
         }
 
         public Result WriteTemp( RenderDto renderDto ) { throw new System.NotImplementedException( ); }

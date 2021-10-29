@@ -26,7 +26,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public Result Update( RenderDataDto renderOptions )
         {
             var content = _serializer.Serialize( renderOptions );
-            var fileResult = _fileAdapter.WriteFile( DataApplicationConstants.DataScriptsTempDir, content );
+            var fileResult = _fileAdapter.WriteFile( DataApplicationConstants.DataScriptsTempFile, content );
             if( fileResult.Status == OperationResultEnum.Failed )
             {
                 return Result.Error( fileResult.Msg );
