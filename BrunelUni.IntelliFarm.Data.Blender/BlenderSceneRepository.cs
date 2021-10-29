@@ -1,6 +1,7 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Data.Core;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -22,7 +23,13 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         }
         
         // TODO: implement
-        public Result Update( RenderDataDto renderOptions ) => Result.Error( "implement" );
+        public Result Update( RenderDataDto renderOptions )
+        {
+            var content = _serializer.Serialize( renderOptions );
+            _fileAdapter.WriteFile( DataApplicationConstants.DataScriptsTempDir, content );
+            _processor.RunAndWait( "blender", $"-b -P {DataApplicationConstants.DataScriptsDir}\\render_writer.py" );
+            return Result.Success(  );
+        }
 
         // TODO: implement
         public ObjectResult<RenderDataDto> Read( ) => new ObjectResult<RenderDataDto>
