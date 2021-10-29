@@ -31,8 +31,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             {
                 return Result.Error( fileResult.Msg );
             }
-            _processor.RunAndWait( "blender", $"-b -P {DataApplicationConstants.DataScriptsDir}\\render_writer.py" );
-            return Result.Success(  );
+            var blenderResult = _processor.RunAndWait( "blender", $"-b -P {DataApplicationConstants.DataScriptsDir}\\render_writer.py" );
+            return blenderResult.Status == OperationResultEnum.Failed ? Result.Error( blenderResult.Msg ) : Result.Success(  );
         }
 
         // TODO: implement
