@@ -38,7 +38,10 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             };
         }
 
-        public Result WriteTemp( RenderDto renderDto ) { throw new System.NotImplementedException( ); }
+        public Result WriteTemp( RenderDto renderDto )
+        {
+            return Result.Error( "" );
+        }
 
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render ) { throw new System.NotImplementedException( ); }
     }
