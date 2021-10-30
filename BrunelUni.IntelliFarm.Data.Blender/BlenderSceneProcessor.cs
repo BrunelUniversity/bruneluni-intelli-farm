@@ -41,8 +41,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public Result WriteTemp( RenderDto renderDto )
         {
             var result = _serializer.Serialize( renderDto );
-            _fileAdapter.WriteFile( DataApplicationConstants.DataScriptsTempFile, result );
-            return Result.Success(  );
+            var fileResult = _fileAdapter.WriteFile( DataApplicationConstants.DataScriptsTempFile, result );
+            return fileResult.Status == OperationResultEnum.Failed ? fileResult : Result.Success(  );
         }
 
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render ) { throw new System.NotImplementedException( ); }
