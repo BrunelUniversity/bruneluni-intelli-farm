@@ -20,10 +20,10 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public Result Update( RenderDataDto renderOptions )
         {
             _sceneProcessor.WriteTemp( renderOptions );
-            _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+            var processResult = _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
                 "writer",
                 false );
-            return Result.Success( );
+            return processResult.Status == OperationResultEnum.Failed ? processResult : Result.Success( );
         }
 
         // TODO: implement
