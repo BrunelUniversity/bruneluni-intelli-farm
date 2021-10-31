@@ -45,6 +45,9 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return fileResult.Status == OperationResultEnum.Failed ? fileResult : Result.Success(  );
         }
 
-        public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render ) { throw new System.NotImplementedException( ); }
+        public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
+        {
+            return Result.Error( "" );
+        }
     }
 }
