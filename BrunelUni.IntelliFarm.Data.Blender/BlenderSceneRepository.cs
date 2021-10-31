@@ -44,11 +44,15 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                     Msg = processResult.Msg
                 };
             }
-            var data = _sceneProcessor.ReadTemp<RenderDataDto>( );
+            var readResult = _sceneProcessor.ReadTemp<RenderDataDto>( );
+            if( readResult.Status == OperationResultEnum.Failed )
+            {
+                return readResult;
+            }
             return new ObjectResult<RenderDataDto>
             {
                 Status = OperationResultEnum.Success,
-                Value = data.Value
+                Value = readResult.Value
             };
         }
     }
