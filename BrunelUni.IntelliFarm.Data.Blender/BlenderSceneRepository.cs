@@ -19,7 +19,11 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result Update( RenderDataDto renderOptions )
         {
-            return Result.Success(  );
+            _sceneProcessor.WriteTemp( renderOptions );
+            _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+                "writer",
+                false );
+            return Result.Success( );
         }
 
         // TODO: implement
