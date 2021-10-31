@@ -13,6 +13,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
 
         protected override void When( )
         {
+            MockRenderManagerService.RenderManager
+                .GetRenderInfo( )
+                .Returns( new RenderMetaDto( ) );
             MockSceneProcessor.WriteTemp( Arg.Any<RenderDto>( ) )
                 .Returns( Result.Success( ) );
             MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
