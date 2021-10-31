@@ -9,10 +9,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
     {
         private const string BlendFile = "C:\\Users\\roboc\\asset_1.blend";
         private const string Script = "writer";
-        private readonly bool _render;
         private Result _result;
-
-        public When_Ran_Successfully( bool render ) { _render = render; }
         
         protected override void When( )
         {
