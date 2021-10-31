@@ -57,6 +57,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         }
 
         [ Test ]
+        public void Then_Correct_Data_Was_Written_Into_Blender_File( )
+        {
+            MockSceneProcessor.Received( 1 ).WriteTemp( Arg.Any<RenderDto>( ) );
+            MockSceneProcessor.Received( ).WriteTemp( _data );
+        }
+
+        [ Test ]
         public void Then_Success_Was_Returned( )
         {
             Assert.AreEqual( _result.Status, OperationResultEnum.Success );
