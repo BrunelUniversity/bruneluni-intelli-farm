@@ -30,7 +30,6 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return processResult.Status == OperationResultEnum.Failed ? processResult : Result.Success( );
         }
 
-        // TODO: implement
         public ObjectResult<RenderDataDto> Read( )
         {
             var processResult = _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
