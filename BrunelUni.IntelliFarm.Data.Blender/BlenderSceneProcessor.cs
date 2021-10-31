@@ -47,7 +47,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
         {
-            return Result.Error( "" );
+            _processor.RunAndWait( "blender", $"{pathToBlend} -b -P render_{script}.py" );
+            return Result.Success(  );
         }
     }
 }
