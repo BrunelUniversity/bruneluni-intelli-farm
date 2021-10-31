@@ -22,7 +22,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         public void Then_Blender_Process_Is_Run_In_The_Backround_With_Correct_Script( )
         {
             MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockProcessor.Received( ).RunAndWait( "blender", $"{BlendFile} -b -P render_{Script}.py" );
+            MockProcessor.Received( ).RunAndWait( "blender", $"{BlendFile} -b -P {TestConstants.ScriptDir}\\render_{Script}.py" );
         }
 
         [ Test ]

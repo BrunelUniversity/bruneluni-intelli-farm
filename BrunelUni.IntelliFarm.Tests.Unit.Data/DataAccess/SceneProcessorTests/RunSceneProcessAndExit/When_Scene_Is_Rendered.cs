@@ -17,7 +17,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         public void Then_Render_Argument_Is_Passed_Into_Blender_CLI( )
         {
             MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockProcessor.Received( ).RunAndWait( Arg.Any<string>( ), "test -b -P render_test.py -a" );
+            MockProcessor.Received( ).RunAndWait( Arg.Any<string>( ), $"test -b -P {TestConstants.ScriptDir}\\render_test.py -a" );
         }
     }
 }
