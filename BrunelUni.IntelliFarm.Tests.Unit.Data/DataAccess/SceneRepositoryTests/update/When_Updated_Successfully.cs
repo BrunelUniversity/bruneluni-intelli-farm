@@ -68,5 +68,15 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         {
             Assert.AreEqual( _result.Status, OperationResultEnum.Success );
         }
+        
+        [ Test ]
+        public void Then_Process_Is_Run_Before_Reading( )
+        {
+            Received.InOrder( ( ) =>
+            {
+                MockSceneProcessor.WriteTemp( Arg.Any<RenderDto>( ) );
+                MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
+            } );
+        }
     }
 }

@@ -55,5 +55,15 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 .Received( 1 )
                 .ReadTemp<RenderDataDto>( );
         }
+
+        [ Test ]
+        public void Then_Process_Is_Run_Before_Reading( )
+        {
+            Received.InOrder( ( ) =>
+            {
+                MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
+                MockSceneProcessor.ReadTemp<RenderDataDto>( );
+            } );
+        }
     }
 }
