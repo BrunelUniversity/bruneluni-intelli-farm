@@ -33,9 +33,17 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         // TODO: implement
         public ObjectResult<RenderDataDto> Read( )
         {
-            _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+            var processResult = _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
                 "reader",
                 false );
+            if( processResult.Status == OperationResultEnum.Failed )
+            {
+                return new ObjectResult<RenderDataDto>
+                {
+                    Status = OperationResultEnum.Failed,
+                    Msg = processResult.Msg
+                };
+            }
             var data = _sceneProcessor.ReadTemp<RenderDataDto>( );
             return new ObjectResult<RenderDataDto>
             {
