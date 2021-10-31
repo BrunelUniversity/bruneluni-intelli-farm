@@ -8,11 +8,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
 {
     public class When_Updated_Successfully : Given_A_SceneRepository
     {
-        private const string DataString = "test";
         private Result _result;
         private RenderDataDto _data;
-        private const string ScriptDir = "BrunelUni.IntelliFarm.Data.Scripts\\data_scripts";
-        private static readonly string DataScriptsTempDir = $"{ScriptDir}\\temp\\render.json";
+        private const string BlendFile = "C:\\path\\path\\test.blend";
 
         protected override void When( )
         {
@@ -21,34 +19,41 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 MaxLightBounces = 4,
                 Samples = 100
             };
-            MockSerializer.Serialize( Arg.Any<object>( ) )
-                .Returns( DataString );
-            MockFileAdapter.WriteFile( Arg.Any<string>( ), Arg.Any<string>( ) )
+            MockSceneProcessor.WriteTemp( Arg.Any<RenderDataDto>( ) )
                 .Returns( Result.Success( ) );
-            MockProcessor.RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) )
+            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
                 .Returns( Result.Success( ) );
+            MockRenderManagerService.RenderManager
+                .GetRenderInfo( )
+                .Returns( new RenderMetaDto
+                {
+                    BlendFilePath = BlendFile
+                } );
             _result = SUT.Update( _data );
         }
 
         [ Test ]
-        public void Then_Correct_Blender_Data_Was_Written_To_Correct_File( )
+        public void Then_Blender_Was_Run_Once( )
         {
-            MockFileAdapter.Received( 1 ).WriteFile( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockFileAdapter.Received().WriteFile( DataScriptsTempDir, DataString );
+            MockSceneProcessor.Received( 1 ).RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
         }
 
         [ Test ]
-        public void Then_Correct_Data_Was_Serialised( )
+        public void Then_Correct_Blender_File_Was_Written_To( )
         {
-            MockSerializer.Received( 1 ).Serialize( Arg.Any<object>( ) );
-            MockSerializer.Received( ).Serialize( _data );
+            MockSceneProcessor.Received( ).RunSceneProcessAndExit( BlendFile, Arg.Any<string>( ), Arg.Any<bool>( ) );
+        }
+        
+        [ Test ]
+        public void Then_Blender_File_Was_Not_Rendered( )
+        {
+            MockSceneProcessor.Received( ).RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), false );
         }
 
         [ Test ]
-        public void Then_Blender_File_Was_Written_To( )
+        public void Then_Correct_Script_Was_Ran_With_Blender_File( )
         {
-            MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockProcessor.Received( ).RunAndWait( $"blender", $"-b -P {ScriptDir}\\render_writer.py" );
+            MockSceneProcessor.Received( ).RunSceneProcessAndExit( Arg.Any<string>( ), "writer", Arg.Any<bool>( ) );
         }
 
         [ Test ]
