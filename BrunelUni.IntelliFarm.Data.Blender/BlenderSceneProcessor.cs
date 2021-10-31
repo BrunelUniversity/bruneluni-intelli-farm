@@ -52,8 +52,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             {
                 args += " -a";
             }
-            _processor.RunAndWait( "blender", args );
-            return Result.Success(  );
+            var result = _processor.RunAndWait( "blender", args );
+            return result.Status == OperationResultEnum.Failed ? result : Result.Success( );
         }
     }
 }
