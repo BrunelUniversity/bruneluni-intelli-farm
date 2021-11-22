@@ -1,4 +1,5 @@
 ﻿using Aidan.Common.Core;
+using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -17,10 +18,20 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         
         public ObjectResult<RenderResultDto> Create( )
         {
-            _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+            var processorResult = _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
                 "logger",
                 true );
-            return _sceneProcessor.ReadTemp<RenderResultDto>( );
+            if( processorResult.Status == OperationResultEnum.Failed )
+            {
+                return new ObjectResult<RenderResultDto>
+                {
+                    Status = processorResult.Status,
+                    Msg = processorResult.Msg
+                };
+            }
+
+            var fileResult = _sceneProcessor.ReadTemp<RenderResultDto>( );
+            return fileResult;
         }
     }
 }

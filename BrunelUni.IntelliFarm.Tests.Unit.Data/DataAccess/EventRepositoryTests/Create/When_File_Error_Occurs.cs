@@ -13,8 +13,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.EventRepositoryTests.
         
         protected override void When( )
         {
-            MockSceneProcessor.ReadTemp<RenderDataDto>( )
-                .Returns( new ObjectResult<RenderDataDto>
+            MockSceneProcessor.ReadTemp<RenderResultDto>( )
+                .Returns( new ObjectResult<RenderResultDto>
                 {
                     Status = OperationResultEnum.Failed,
                     Msg = Message
