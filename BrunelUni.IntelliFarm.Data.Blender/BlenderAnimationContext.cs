@@ -41,9 +41,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             {
                 return webResult;
             }
-            _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
-
-            return Result.Success( );
+            var zipResult = _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
+            return zipResult.Status == OperationResultEnum.Failed ? zipResult : Result.Success( );
         }
 
         public Result InitializeScene( string filePath )
