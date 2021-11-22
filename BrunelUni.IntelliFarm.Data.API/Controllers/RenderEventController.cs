@@ -23,10 +23,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
             var result = _renderEventRepository.Create( );
             return result.Status == OperationResultEnum.Failed ?
                 _mvcAdapter.BadRequestError( result.Msg ) :
-                _mvcAdapter.OkResult( new
-                {
-                    RenderTime = result.Value
-                } );
+                _mvcAdapter.OkResult( result.Value );
         }
     }
 }
