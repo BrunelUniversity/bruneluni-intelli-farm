@@ -4,6 +4,7 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface IAnimationContext
     {
-        Result Initialize( string filePath );
+        Result Initialize( );
+        Result InitializeScene( string filePath );
     }
 }

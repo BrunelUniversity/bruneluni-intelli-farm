@@ -11,17 +11,31 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         private readonly IRenderManagerService _renderManagerService;
         private readonly IRenderManagerFactory _renderManagerFactory;
         private readonly IFileAdapter _fileAdapter;
+        private readonly IZipAdapter _zipAdapter;
+        private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
+        private readonly IWebClientAdapter _webClientAdapter;
 
         public BlenderAnimationContext( IRenderManagerService renderManagerService,
             IRenderManagerFactory renderManagerFactory,
-            IFileAdapter fileAdapter )
+            IFileAdapter fileAdapter,
+            IZipAdapter zipAdapter,
+            IScriptsRootDirectoryState scriptsRootDirectoryState,
+            IWebClientAdapter webClientAdapter )
         {
             _renderManagerService = renderManagerService;
             _renderManagerFactory = renderManagerFactory;
             _fileAdapter = fileAdapter;
+            _zipAdapter = zipAdapter;
+            _scriptsRootDirectoryState = scriptsRootDirectoryState;
+            _webClientAdapter = webClientAdapter;
         }
 
-        public Result Initialize( string filePath )
+        public Result Initialize( )
+        {
+            return Result.Error( "" );
+        }
+
+        public Result InitializeScene( string filePath )
         {
             if( _fileAdapter.Exists( filePath ).Status == OperationResultEnum.Failed )
             {

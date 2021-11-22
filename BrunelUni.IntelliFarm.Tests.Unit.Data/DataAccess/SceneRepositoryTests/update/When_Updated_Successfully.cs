@@ -16,7 +16,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         {
             _data = new RenderDataDto
             {
-                MaxLightBounces = 4,
+                MaxBounces = 4,
                 Samples = 100
             };
             MockSceneProcessor.WriteTemp( Arg.Any<RenderDataDto>( ) )

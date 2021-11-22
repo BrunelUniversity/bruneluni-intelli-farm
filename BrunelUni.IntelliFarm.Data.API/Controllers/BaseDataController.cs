@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BrunelUni.IntelliFarm.Data.API.Controllers
 {
     [ ServiceFilter( typeof( RenderFileFilter ), Order = 1 ) ]
+    [ ServiceFilter( typeof( BlenderInstallFilter ), Order = 2 ) ]
     public abstract class BaseDataController : ControllerBase
     {
     }

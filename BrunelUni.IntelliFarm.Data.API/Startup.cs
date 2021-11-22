@@ -17,6 +17,7 @@ namespace BrunelUni.IntelliFarm.Data.API
                 .BindDataLayer( )
                 .AddTransient<MvcAdapter>( )
                 .AddTransient<RenderFileFilter>( )
+                .AddTransient<BlenderInstallFilter>()
                 .AddControllers( )
                 .BindJsonOptions( CaseEnum.Snake );
 

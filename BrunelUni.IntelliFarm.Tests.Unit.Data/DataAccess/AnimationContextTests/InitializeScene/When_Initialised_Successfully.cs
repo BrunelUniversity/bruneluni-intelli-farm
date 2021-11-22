@@ -5,7 +5,7 @@ using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests.Initialize
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests.InitializeScene
 {
     public class When_Initialised_Successfully : Given_A_BlenderAnimationContext
     {
@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             MockRenderManagerFactory
                 .Factory( Arg.Any<RenderMetaDto>( ) )
                 .Returns( _renderManager );
-            _result = SUT.Initialize( ExamplePathTestBlend );
+            _result = SUT.InitializeScene( ExamplePathTestBlend );
         }
 
         [ Test ]

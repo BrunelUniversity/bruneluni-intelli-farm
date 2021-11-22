@@ -1,6 +1,7 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
+using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
 
         protected override void When( )
         {
-            _renderDataDto = new RenderDataDto { Samples = 100, MaxLightBounces = 4 };
+            _renderDataDto = new RenderDataDto { Samples = 100, MaxBounces = 4 };
             MockSerializer.Deserialize<RenderDataDto>( Arg.Any<string>( ) )
                 .Returns( _renderDataDto );
             _objectResult = new ObjectResult<string> { Status = OperationResultEnum.Success, Value = ContentValue };

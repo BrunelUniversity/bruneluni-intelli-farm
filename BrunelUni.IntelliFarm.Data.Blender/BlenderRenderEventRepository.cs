@@ -6,7 +6,18 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 {
     public class BlenderRenderEventRepository : IRenderEventRepository
     {
-        // TODO: add implementation
-        public Result Create( RenderEventDto renderOptions ) => Result.Error( "implement" );
+        private readonly IRenderManagerService _renderManagerService;
+        private readonly ISceneProcessor _sceneProcessor;
+
+        public BlenderRenderEventRepository( IRenderManagerService renderManagerService, ISceneProcessor sceneProcessor )
+        {
+            _renderManagerService = renderManagerService;
+            _sceneProcessor = sceneProcessor;
+        }
+        
+        public Result Create( RenderEventDto renderOptions )
+        {
+            return Result.Error( "" );
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
 
         protected override void When( )
         {
+            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
+                .Returns( Result.Success( ) );
             MockRenderManagerService.RenderManager
                 .GetRenderInfo( )
                 .Returns( new RenderMetaDto
@@ -25,7 +27,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                     Value = new RenderDataDto
                     {
                         Samples = 100,
-                        MaxLightBounces = 4
+                        MaxBounces = 4
                     }
                 } );
             _result = SUT.Read( );
