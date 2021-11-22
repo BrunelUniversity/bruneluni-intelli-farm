@@ -1,6 +1,7 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Data.Core;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -32,7 +33,11 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result Initialize( )
         {
-            return Result.Error( "" );
+            _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory );
+            _webClientAdapter.DownloadFile(
+                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip", "blender.zip" );
+            _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
+            return Result.Success(  );
         }
 
         public Result InitializeScene( string filePath )

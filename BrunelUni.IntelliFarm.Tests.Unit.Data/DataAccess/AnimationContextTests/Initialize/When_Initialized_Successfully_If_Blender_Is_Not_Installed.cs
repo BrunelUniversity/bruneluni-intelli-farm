@@ -8,6 +8,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public class When_Initialized_Successfully_If_Blender_Is_Not_Installed : Given_A_BlenderAnimationContext
     {
+        private Result _result;
+
         protected override void When( )
         {
             MockFileAdapter.Exists( Arg.Any<string>( ) )
@@ -16,7 +18,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 .Returns( new Result { Status = OperationResultEnum.Success } );
             MockZipAdapter.ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( new Result { Status = OperationResultEnum.Success } );
-            SUT.Initialize( );
+            _result = SUT.Initialize( );
         }
 
         [ Test ]
@@ -38,7 +40,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         [ Test ]
         public void Then_File_Is_Unzipped( )
         {
-            MockZipAdapter.Received( ).ExtractToDirectory( "blender.zip", TestConstants.BlenderDirectory );
+            MockZipAdapter.Received( ).ExtractToDirectory( "blender.zip", $"{TestConstants.Directory}\\blender" );
             MockFileAdapter.Received( 1 ).Exists( Arg.Any<string>( ) );
         }
 
@@ -51,6 +53,12 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 MockWebClientAdapter.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) );
                 MockZipAdapter.ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
             } );
+        }
+
+        [ Test ]
+        public void Then_Success_Is_Returned( )
+        {
+            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
         }
     }
 }
