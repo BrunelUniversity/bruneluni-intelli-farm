@@ -41,7 +41,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         public void Then_File_Is_Unzipped( )
         {
             MockZipAdapter.Received( ).ExtractToDirectory( "blender.zip", $"{TestConstants.Directory}\\blender" );
-            MockFileAdapter.Received( 1 ).Exists( Arg.Any<string>( ) );
+            MockZipAdapter.Received( 1 ).ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
         }
 
         [ Test ]
