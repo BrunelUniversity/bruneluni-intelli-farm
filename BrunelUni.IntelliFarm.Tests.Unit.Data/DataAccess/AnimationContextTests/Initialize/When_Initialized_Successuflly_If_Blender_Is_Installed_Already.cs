@@ -12,7 +12,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         protected override void When( )
         {
             MockFileAdapter.Exists( Arg.Any<string>( ) )
-                .Returns( Result.Error( "" ) );
+                .Returns( Result.Success( ) );
             _result = SUT.Initialize( );
         }
         

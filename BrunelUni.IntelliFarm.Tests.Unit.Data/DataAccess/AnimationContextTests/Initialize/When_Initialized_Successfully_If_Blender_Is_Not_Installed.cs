@@ -13,7 +13,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         protected override void When( )
         {
             MockFileAdapter.Exists( Arg.Any<string>( ) )
-                .Returns( new Result { Status = OperationResultEnum.Failed } );
+                .Returns( Result.Error( "file doesnt exist" ) );
             MockWebClientAdapter.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( new Result { Status = OperationResultEnum.Success } );
             MockZipAdapter.ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) )

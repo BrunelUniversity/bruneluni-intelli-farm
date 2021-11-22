@@ -33,11 +33,13 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result Initialize( )
         {
-            _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory );
+            if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status == OperationResultEnum.Success
+            ) return Result.Success( );
             _webClientAdapter.DownloadFile(
                 $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip", "blender.zip" );
             _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
-            return Result.Success(  );
+
+            return Result.Success( );
         }
 
         public Result InitializeScene( string filePath )
