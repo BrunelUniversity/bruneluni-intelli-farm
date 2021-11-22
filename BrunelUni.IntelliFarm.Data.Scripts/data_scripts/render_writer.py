@@ -17,5 +17,7 @@ f = open(FILENAME)
 data = json.load(f)
 bpy.data.scenes[0].cycles.samples = data["samples"]
 bpy.data.scenes[0].cycles.max_bounces = data["max_bounces"]
+bpy.data.scenes[0].frame_start = data["start_frame"]
+bpy.data.scenes[0].frame_end = data["end_frame"]
 f.close()
 bpy.ops.wm.save_mainfile()
