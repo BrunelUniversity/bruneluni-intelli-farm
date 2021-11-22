@@ -18,14 +18,6 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
         
         public override void OnActionExecuting( ActionExecutingContext context )
         {
-            // if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status == OperationResultEnum.Success )
-            // {
-            //     return;
-            // }
-            // _webClientAdapter.DownloadFile( $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip",
-            //     $"{_scriptsRootDirectoryState.Directory}\\blender.zip" );
-            // _zipAdapter.ExtractToDirectory( $"{_scriptsRootDirectoryState.Directory}\\blender.zip",
-            //     $"{_scriptsRootDirectoryState.Directory}\\blender" );
             var result = _animationContext.Initialize( );
             if( result.Status == OperationResultEnum.Failed )
             {
