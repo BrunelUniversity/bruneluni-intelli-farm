@@ -16,9 +16,9 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _sceneProcessor = sceneProcessor;
         }
         
-        public ObjectResult<double> Create( RenderEventDto renderOptions )
+        public ObjectResult<RenderResultDto> Create( )
         {
-            return new ObjectResult<double>
+            return new ObjectResult<RenderResultDto>
             {
                 Status = OperationResultEnum.Failed
             };

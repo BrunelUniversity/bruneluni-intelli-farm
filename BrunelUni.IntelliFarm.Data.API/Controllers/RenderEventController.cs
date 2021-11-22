@@ -1,5 +1,5 @@
-﻿using Aidan.Common.Utils.Web;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using Aidan.Common.Core.Enum;
+using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +18,15 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
         }
 
         [ HttpPost ]
-        public IActionResult CreateRenderEvent( [ FromBody ] RenderEventDto renderOptions )
+        public IActionResult CreateRenderEvent( )
         {
-            _renderEventRepository.Create( renderOptions );
-            return _mvcAdapter.OkResult( renderOptions );
+            var result = _renderEventRepository.Create( );
+            return result.Status == OperationResultEnum.Failed ?
+                _mvcAdapter.BadRequestError( result.Msg ) :
+                _mvcAdapter.OkResult( new
+                {
+                    RenderTime = result.Value
+                } );
         }
     }
 }

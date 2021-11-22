@@ -7,6 +7,6 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
     public interface IRenderEventRepository
     {
         [ Description( "triggers a render and returns the time taken to render" ) ]
-        public ObjectResult<double> Create( RenderEventDto renderOptions );
+        public ObjectResult<RenderResultDto> Create( );
     }
 }
