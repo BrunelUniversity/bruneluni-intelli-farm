@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrunelUni.IntelliFarm.Build
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Tests.Unit.Data", "BrunelUni.IntelliFarm.Tests.Unit.Data\BrunelUni.IntelliFarm.Tests.Unit.Data.csproj", "{1D446D33-EAED-433F-BA01-5C8EC5ADB6C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Tests.Feasability.Data", "BrunelUni.IntelliFarm.Tests.Feasability.Data\BrunelUni.IntelliFarm.Tests.Feasability.Data.csproj", "{71E0F19D-974C-4B44-AF7D-CB2385BD9A39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,5 +48,9 @@ Global
 		{1D446D33-EAED-433F-BA01-5C8EC5ADB6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D446D33-EAED-433F-BA01-5C8EC5ADB6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D446D33-EAED-433F-BA01-5C8EC5ADB6C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71E0F19D-974C-4B44-AF7D-CB2385BD9A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71E0F19D-974C-4B44-AF7D-CB2385BD9A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71E0F19D-974C-4B44-AF7D-CB2385BD9A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71E0F19D-974C-4B44-AF7D-CB2385BD9A39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

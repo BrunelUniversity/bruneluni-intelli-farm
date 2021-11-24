@@ -6,10 +6,11 @@
 obj/
 bin/
 
-# IGNORE WEB CONFIG STUFF
+# IGNORE CONFIG FILE STUFF
 *appsettings.json
 *appsettings.Development.json
 *appsettings.Production.json
+*runsettings.json
 
 # PACKAGES
 packages/
