@@ -42,6 +42,7 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
 
             foreach( var file in _samplesState.Files )
             {
+                
                 _animationContext.InitializeScene( file.File );
                 var result = _sceneRepository.Read( );
                 if( result.Status == OperationResultEnum.Failed )
