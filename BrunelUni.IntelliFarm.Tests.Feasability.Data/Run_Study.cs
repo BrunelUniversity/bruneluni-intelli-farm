@@ -45,7 +45,6 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
         [ Test ]
         public void Run_Study_Test( )
         {
-            Assert.AreEqual( "", "" );
         }
     }
 }

@@ -1,9 +1,18 @@
-﻿namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
+﻿using System.Collections.Generic;
+
+namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
 {
     public class TestAppOptions
     {
         public bool Local { get; set; }
-        public string File { get; set; }
+        public IEnumerable<FileDto> Files { get; set; }
         public SamplesTestAppOptions SamplesTestAppOptions { get; set; }
+        public BouncesTestAppOptions BouncesTestAppOptions { get; set; }
+    }
+
+    public class FileDto
+    {
+        public string File { get; set; }
+        public string Id { get; set; }
     }
 }

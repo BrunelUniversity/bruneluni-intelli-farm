@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -36,46 +37,61 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
         public void Run( )
         {
             _animationContext.Initialize( );
-            _animationContext.InitializeScene( _samplesState.File );
-            var result = _sceneRepository.Read( );
-            if( result.Status == OperationResultEnum.Failed )
+            var initialSamples = _samplesState.Samples.Value;
+            var initialBounes = _samplesState.Bounces.Value;
+
+            foreach( var file in _samplesState.Files )
             {
-                throw new Exception( "failed to communicate with blender" );
-            }
-            for( var i = 0; i < _samplesState.Iterations; i++ )
-            {
-                var dataResult = _sceneRepository.Update( new RenderDataDto
+                _animationContext.InitializeScene( file.File );
+                var result = _sceneRepository.Read( );
+                if( result.Status == OperationResultEnum.Failed )
                 {
-                    StartFrame = 1,
-                    EndFrame = 1,
-                    MaxBounces = 4,
-                    Samples = _samplesState.Samples
-                } );
-                if( dataResult.Status == OperationResultEnum.Failed )
+                    throw new Exception( "failed to communicate with blender" );
+                }
+                for( var i = 0; i < 3; i++ )
                 {
-                    throw new Exception( "error occured with updating samples" );
+                    for( var j = 0; j < 3; j++ )
+                    {
+                        var dataResult = _sceneRepository.Update( new RenderDataDto
+                        {
+                            StartFrame = 1,
+                            EndFrame = 1,
+                            MaxBounces = _samplesState.Bounces.Value,
+                            Samples = _samplesState.Samples.Value
+                        } );
+                        if( dataResult.Status == OperationResultEnum.Failed )
+                        {
+                            throw new Exception( "error occured with updating samples" );
+                        }
+                
+                        var renderResult = _renderEventRepository.Create( );
+                        if( renderResult.Status == OperationResultEnum.Failed )
+                        {
+                            throw new Exception( "error occured with rendering" );
+                        }
+
+                        _loggerAdapter.LogInfo( $"render time was {renderResult.Value.RenderTime} seconds with samples of {_samplesState.Samples.Value} and bounces of {_samplesState.Bounces.Value}" );
+                        _samplesState.RenderResults.Add( new RenderSamplesResultDto
+                        {
+                            Samples = _samplesState.Samples.Value,
+                            RenderTime = renderResult.Value.RenderTime
+                        });
+                        _samplesState.Samples.Value += _samplesState.Samples.Diff;
+                
+                        var filePath = _fileAdapter.GetCurrentDirectory(  ).Value;
+                        _loggerAdapter.LogInfo( $"csv dir => {filePath}\\samples.csv" );
+                        _csvAdapterFactory
+                            .Factory( $"{filePath}\\{file.Id}_{_samplesState.Bounces.Value}.csv" )
+                            .Write( _samplesState.RenderResults );
+                    }
+
+                    _samplesState.Bounces.Value += _samplesState.Bounces.Diff;
+                    _samplesState.Samples.Value = initialSamples;
+                    _samplesState.RenderResults = new List<RenderSamplesResultDto>( );
                 }
                 
-                var renderResult = _renderEventRepository.Create( );
-                if( renderResult.Status == OperationResultEnum.Failed )
-                {
-                    throw new Exception( "error occured with rendering" );
-                }
-
-                _loggerAdapter.LogInfo( $"render time was {renderResult.Value.RenderTime} seconds with samples of {_samplesState.Samples}" );
-                _samplesState.RenderResults.Add( new RenderSamplesResultDto
-                {
-                    Samples = _samplesState.Samples,
-                    RenderTime = renderResult.Value.RenderTime
-                });
-                _samplesState.Samples += _samplesState.SamplesDiff;
+                _samplesState.Bounces.Value = initialBounes;
             }
-
-            var filePath = _fileAdapter.GetCurrentDirectory(  ).Value;
-            _loggerAdapter.LogInfo( $"non-lib current dir => {filePath}\\samples.csv" );
-            _csvAdapterFactory
-                .Factory( $"{filePath}\\samples.csv" )
-                .Write( _samplesState.RenderResults );
         }
     }
 }

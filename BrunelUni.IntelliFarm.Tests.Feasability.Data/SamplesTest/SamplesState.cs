@@ -9,15 +9,21 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
         {
             var state = configurationAdapter.Get<TestAppOptions>( );
             RenderResults = new List<RenderSamplesResultDto>( );
-            Iterations = state.SamplesTestAppOptions.Iterations;
-            File = state.File;
-            Samples = state.SamplesTestAppOptions.Samples;
-            SamplesDiff = state.SamplesTestAppOptions.SamplesDiff;
+            Files = state.Files;
+
+            Samples = new MetaTestDto( );
+            Bounces = new MetaTestDto( );
+            Samples.Iterations = state.SamplesTestAppOptions.Iterations;
+            Samples.Value = state.SamplesTestAppOptions.Samples;
+            Samples.Diff = state.SamplesTestAppOptions.SamplesDiff;
+            
+            Bounces.Iterations = state.BouncesTestAppOptions.Iterations;
+            Bounces.Value = state.BouncesTestAppOptions.Bounces;
+            Bounces.Diff = state.BouncesTestAppOptions.BouncesDiff;
         }
         public IList<RenderSamplesResultDto> RenderResults { get; set; }
-        public int Iterations { get; set; }
-        public string File { get; set; }
-        public int Samples { get; set; }
-        public int SamplesDiff { get; set; }
+        public MetaTestDto Samples { get; set; }
+        public MetaTestDto Bounces { get; set; }
+        public IEnumerable<FileDto> Files { get; set; }
     }
 }
