@@ -48,9 +48,9 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
                 {
                     throw new Exception( "failed to communicate with blender" );
                 }
-                for( var i = 0; i < 3; i++ )
+                for( var i = 0; i < _samplesState.Bounces.Iterations; i++ )
                 {
-                    for( var j = 0; j < 3; j++ )
+                    for( var j = 0; j < _samplesState.Samples.Iterations; j++ )
                     {
                         var dataResult = _sceneRepository.Update( new RenderDataDto
                         {
