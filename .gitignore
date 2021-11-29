@@ -1,6 +1,7 @@
 ﻿# IDE CONFIG
 *.idea/
 *.DotSettings.user
+*.vs/
 
 # ARTIFICATS
 obj/
