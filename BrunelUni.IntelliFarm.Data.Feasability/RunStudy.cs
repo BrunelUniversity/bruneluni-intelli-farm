@@ -2,19 +2,17 @@
 using Aidan.Common.Utils.Utils;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.Data.DIModule;
-using BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest;
+using BrunelUni.IntelliFarm.Data.Feasability.SamplesTest;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
+namespace BrunelUni.IntelliFarm.Data.Feasability
 {
-    public abstract class Run_Study<T> where T : IRunnable
+    public abstract class RunStudy<T> where T : IRunnable
     {
         private IHost _host;
-
-        [ SetUp ]
-        public void Setup( )
+        
+        public void SetupAndRun( )
         {
             Bootstrap( );
             CustomSetup( _host );
@@ -40,11 +38,6 @@ namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
             ActivatorUtilities
                 .CreateInstance<T>( _host.Services )
                 .Run( );
-        }
-
-        [ Test ]
-        public void Run_Study_Test( )
-        {
         }
     }
 }

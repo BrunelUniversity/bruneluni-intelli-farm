@@ -5,7 +5,7 @@ using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
-namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
+namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
 {
     public class SamplesTestApp : IRunnable
     {

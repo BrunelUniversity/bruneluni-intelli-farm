@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
+namespace BrunelUni.IntelliFarm.Data.Feasability
 {
     public class TestAppOptions
     {

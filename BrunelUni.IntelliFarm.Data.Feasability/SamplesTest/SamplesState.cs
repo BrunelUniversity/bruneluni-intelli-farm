@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Aidan.Common.Core.Interfaces.Contract;
 
-namespace BrunelUni.IntelliFarm.Tests.Feasability.Data.SamplesTest
+namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
 {
     public class SamplesState
     {

@@ -1,6 +1,6 @@
 ﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 
-namespace BrunelUni.IntelliFarm.Tests.Feasability.Data
+namespace BrunelUni.IntelliFarm.Data.Feasability
 {
     public class RenderBouncesResultDto : RenderResultDto
     {
