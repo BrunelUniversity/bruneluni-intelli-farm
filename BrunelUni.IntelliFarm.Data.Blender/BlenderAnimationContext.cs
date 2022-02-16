@@ -1,4 +1,5 @@
-﻿using Aidan.Common.Core;
+﻿using System;
+using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core;
@@ -49,12 +50,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         {
             if( _fileAdapter.Exists( filePath ).Status == OperationResultEnum.Failed )
             {
-                return Result.Error( $"{filePath} was not found" );
+                throw new ArgumentException( $"{filePath} was not found" );
             }
             var ext = _fileAdapter.GetFileExtension( filePath ).Value;
             if( ext != ".blend" )
             {
-                return Result.Error( $"{filePath} is not of type '.blend'" );
+                throw new ArgumentException( $"{filePath} is not of type '.blend'" );
             }
             _renderManagerService.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto
             {
