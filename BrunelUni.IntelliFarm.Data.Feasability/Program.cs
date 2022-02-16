@@ -24,7 +24,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
                             var currentCoverage = 100.0;
                             for( int j = 0; j < coverageSteps; j++ )
                             {
-                                var filename = $"poly_{currentPoly}_coverage_{currentCoverage.ToString().Replace( ".", "_" )}";
+                                var filename = $"poly_{currentPoly}_{currentCoverage.ToString().Replace( ".", "_" )}_coverage";
                                 Environment.SetEnvironmentVariable( $"Files__{fileCount}__File", $"{basePath}\\{filename}.blend" );
                                 Environment.SetEnvironmentVariable( $"Files__{fileCount}__Id", $"{filename}" );
                                 currentCoverage -= coverageIncrement;
