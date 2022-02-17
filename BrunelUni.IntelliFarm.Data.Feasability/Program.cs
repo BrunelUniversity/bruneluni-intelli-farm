@@ -17,11 +17,11 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
                         var polySteps = float.Parse( args[ 3 ] );
                         var coverageSteps = float.Parse( args[ 4 ] );
                         var basePath = args[ 5 ];
-                        var currentPoly = 80;
+                        var currentPoly = float.Parse( args[ 6 ] );;
                         var fileCount = 0;
                         for( int i = 0; i < polySteps; i++ )
                         {
-                            var currentCoverage = 100.0;
+                            var currentCoverage = float.Parse( args[ 7 ] );;
                             for( int j = 0; j < coverageSteps; j++ )
                             {
                                 var filename = $"poly_{currentPoly}_{currentCoverage.ToString().Replace( ".", "_" )}_coverage";
