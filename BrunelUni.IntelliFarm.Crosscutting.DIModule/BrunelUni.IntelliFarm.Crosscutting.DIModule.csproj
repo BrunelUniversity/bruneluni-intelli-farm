@@ -9,9 +9,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Aidan.Common.DependencyInjection" Version="1.0.4" />
-      <PackageReference Include="Aidan.Common.Utils" Version="1.0.22" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Aidan.Common.DependencyInjection" Version="1.0.8"/>
+        <PackageReference Include="Aidan.Common.Utils" Version="1.0.30"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0"/>
     </ItemGroup>
 
     <ItemGroup>
