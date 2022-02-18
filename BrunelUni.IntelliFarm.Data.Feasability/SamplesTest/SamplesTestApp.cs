@@ -68,6 +68,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                             StartFrame = 1,
                             EndFrame = 1,
                             MaxBounces = _samplesState.Bounces.Value,
+                            DiffuseBounces = _samplesState.Bounces.Value,
                             Samples = _samplesState.Samples.Value
                         } );
                         if( dataResult.Status == OperationResultEnum.Failed )
@@ -101,7 +102,8 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                                 PolyCount = file.PolyCount,
                                 RenderTimeSeconds = renderResult.Value.RenderTime,
                                 Device = appOptions.Device,
-                                Session = _batchService.Session
+                                Session = _batchService.Session,
+                                Clusters = 1
                             } );
                         }
                         else

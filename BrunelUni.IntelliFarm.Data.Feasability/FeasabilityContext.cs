@@ -6,18 +6,18 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
 {
     public class FeasabilityContext : DbContext
     {
-        private readonly string _fileName;
+        private readonly string _source;
 
         public FeasabilityContext( IConfigurationAdapter configurationAdapter )
         {
-            _fileName = configurationAdapter.Get<TestAppOptions>( ).DbSource;
+            _source = configurationAdapter.Get<TestAppOptions>( ).DbSource;
         }
 
         public DbSet<FeasabilityDto> FeasabilityDtos { get; set; }
 
         protected override void OnConfiguring( DbContextOptionsBuilder optionsBuilder )
         {
-            optionsBuilder.UseSqlite( $"Data Source={_fileName};" );
+            optionsBuilder.UseMySql( _source );
         }
     }
 }
