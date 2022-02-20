@@ -45,20 +45,21 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
                             Id = filename,
                             PolyCount = currentPoly
                         } );
-                        if( !appOptions.CurrentFile.IsNullOrEmpty( ) )
-                        {
-                            var currentFile = _samplesState.Files.First( x => x.Id == appOptions.CurrentFile );
-                            _samplesState.Files = _samplesState
-                                .Files
-                                .Skip( _samplesState.Files.IndexOf( currentFile ) )
-                                .ToList( );
-                        }
 
                         currentCoverage -= batchModeOptions.CoverageIncrement;
                         fileCount++;
                     }
 
                     currentPoly *= batchModeOptions.PolyMultiplier;
+                }
+
+                if( !appOptions.CurrentFile.IsNullOrEmpty( ) )
+                {
+                    var currentFile = _samplesState.Files.First( x => x.Id == appOptions.CurrentFile );
+                    _samplesState.Files = _samplesState
+                        .Files
+                        .Skip( _samplesState.Files.IndexOf( currentFile ) )
+                        .ToList( );
                 }
             }
             else
