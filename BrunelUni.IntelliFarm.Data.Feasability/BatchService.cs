@@ -5,6 +5,7 @@ using Aidan.Common.Core;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Feasability.SamplesTest;
+using Castle.Core.Internal;
 
 namespace BrunelUni.IntelliFarm.Data.Feasability
 {
@@ -24,7 +25,8 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
 
         public Result Initialize( )
         {
-            var batchModeOptions = _configurationAdapter.Get<TestAppOptions>( ).BatchModeOptions;
+            var appOptions = _configurationAdapter.Get<TestAppOptions>( );
+            var batchModeOptions = appOptions.BatchModeOptions;
             var currentPoly = batchModeOptions.StartPoly;
             var fileCount = 0;
             if( batchModeOptions.BatchMode )
@@ -43,6 +45,15 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
                             Id = filename,
                             PolyCount = currentPoly
                         } );
+                        if( !appOptions.CurrentFile.IsNullOrEmpty( ) )
+                        {
+                            var currentFile = _samplesState.Files.First( x => x.Id == appOptions.CurrentFile );
+                            _samplesState.Files = _samplesState
+                                .Files
+                                .Skip( _samplesState.Files.IndexOf( currentFile ) )
+                                .ToList( );
+                        }
+
                         currentCoverage -= batchModeOptions.CoverageIncrement;
                         fileCount++;
                     }

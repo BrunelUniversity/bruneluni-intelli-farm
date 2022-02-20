@@ -11,6 +11,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability
         public BatchModeDto BatchModeOptions { get; set; }
         public string DbSource { get; set; }
         public string Device { get; set; }
+        public string CurrentFile { get; set; }
     }
 
     public class FileDto

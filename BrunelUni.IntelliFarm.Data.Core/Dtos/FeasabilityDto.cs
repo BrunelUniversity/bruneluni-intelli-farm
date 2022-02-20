@@ -14,5 +14,6 @@ namespace BrunelUni.IntelliFarm.Data.Core.Dtos
         public double RenderTimeSeconds { get; set; }
         public Guid Session { get; set; }
         public string Device { get; set; }
+        public DateTime UtcCurrent { get; set; } = DateTime.UtcNow;
     }
 }
