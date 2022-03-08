@@ -55,5 +55,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                 Value = readResult.Value
             };
         }
+
+        public double GetCoverage( int subdivisions ) { return 0.0; }
     }
 }
