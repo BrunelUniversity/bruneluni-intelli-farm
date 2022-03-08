@@ -16,8 +16,4 @@
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj" />
     </ItemGroup>
 
-    <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-        <Copy SourceFiles="appsettings.json" DestinationFolder="$(OutputPath)" />
-    </Target>
-
 </Project>

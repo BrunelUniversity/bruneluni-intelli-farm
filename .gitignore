@@ -13,6 +13,10 @@ bin/
 *appsettings.Production.json
 *runsettings.json
 
+# WEB STUFF
+Properties/
+*csproj.user
+
 # PACKAGES
 packages/
 
