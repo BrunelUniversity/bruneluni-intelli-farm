@@ -39,4 +39,11 @@ class Build : NukeBuild
                 .EnableNoRestore( ) );
         } );
 
+    Target Test => _ => _
+        .After( Compile )
+        .Executes( ( ) =>
+        {
+            DotNetTest( );
+        } );
+
 }

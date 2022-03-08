@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Core", "BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj", "{DC0E675C-7901-4331-B8B0-DE8676007993}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Build", "BrunelUni.IntelliFarm.Build\BrunelUni.IntelliFarm.Build.csproj", "{EB364825-EA38-4381-98D6-4278E9D67765}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{DC0E675C-7901-4331-B8B0-DE8676007993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC0E675C-7901-4331-B8B0-DE8676007993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC0E675C-7901-4331-B8B0-DE8676007993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB364825-EA38-4381-98D6-4278E9D67765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB364825-EA38-4381-98D6-4278E9D67765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB364825-EA38-4381-98D6-4278E9D67765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB364825-EA38-4381-98D6-4278E9D67765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
