@@ -92,13 +92,17 @@ def blender_ray_trace(vectors):
         ray_hits = ray_hits + 1
         if did_ray_hit:
             ray_did_hits = ray_did_hits + 1
-    print(datetime.now() - start_time)
-    print(ray_did_hits / ray_hits)
+    print(f"ray cast took {datetime.now() - start_time}")
+    return ray_did_hits / ray_hits
 
 
 # todo: always casting from origin
 def render_ray_cast():
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=8,
+    f = open(FILENAME)
+    data = json.load(f)
+    subdivisions = data["subdivisions"]
+    f.close()
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
                                           radius=1,
                                           enter_editmode=False,
                                           align='WORLD',
@@ -109,7 +113,11 @@ def render_ray_cast():
     bpy.ops.object.delete(use_global=False, confirm=False)
     vectors = [Vector((vertex[0], vertex[1], vertex[2])) for vertex in vertexes]
     print(f"processing {len(vectors)} vectors for ray cast")
-    print(blender_ray_trace(vectors=vectors))
+    ray_coverage = blender_ray_trace(vectors=vectors)
+    print(f"ray coverage of {ray_coverage}")
+    f = open(FILENAME, "w")
+    f.write(json.dumps({ "coverage": ray_coverage }))
+    f.close()
 
 
 if argv[0] is "render_reader":
