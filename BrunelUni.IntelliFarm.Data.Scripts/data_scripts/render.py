@@ -71,6 +71,7 @@ def render_writer():
     bpy.data.scenes[0].cycles.volume_bounces = data["volume_bounces"]
     bpy.data.scenes[0].frame_start = data["start_frame"]
     bpy.data.scenes[0].frame_end = data["end_frame"]
+    bpy.context.scene.frame_set(data["end_frame"])
     f.close()
     bpy.ops.wm.save_mainfile()
 
