@@ -11,7 +11,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         private const string BlendFile = "C:\\Users\\roboc\\asset_1.blend";
         private const string Script = "writer";
         private Result _result;
-        
+
         protected override void When( )
         {
             MockProcessor.RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) )
@@ -23,13 +23,11 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         public void Then_Blender_Process_Is_Run_In_The_Backround_With_Correct_Script( )
         {
             MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockProcessor.Received( ).RunAndWait( TestConstants.BlenderDirectory, $"{BlendFile} -b -P {TestConstants.DataScriptsDir}\\render_{Script}.py" );
+            MockProcessor.Received( ).RunAndWait( TestConstants.BlenderDirectory,
+                $"{BlendFile} -b -P {TestConstants.DataScriptsDir}\\render.py -- render_{Script}" );
         }
 
         [ Test ]
-        public void Then_Success_Is_Returned( )
-        {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
-        }
+        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
     }
 }

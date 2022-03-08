@@ -9,20 +9,17 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 [ ShutdownDotNetAfterServerBuild ]
 class Build : NukeBuild
 {
-    public static int Main ( ) => Execute<Build>( x => x.Compile );
-
-    [ Parameter ]
-    readonly Configuration Configuration = Configuration.Debug;
+    [ Parameter ] readonly Configuration Configuration = Configuration.Debug;
 
     [ Solution ] readonly Solution Solution;
 
     Target Clean => _ => _
-        .Before( Restore )
         .Executes( ( ) =>
         {
         } );
 
     Target Restore => _ => _
+        .DependsOn( Clean )
         .Executes( ( ) =>
         {
             DotNetRestore( s => s
@@ -34,16 +31,17 @@ class Build : NukeBuild
         .Executes( ( ) =>
         {
             DotNetBuild( s => s
-                .SetProjectFile(Solution)
-                .SetConfiguration(Configuration)
+                .SetProjectFile( Solution )
+                .SetConfiguration( Configuration )
                 .EnableNoRestore( ) );
         } );
 
     Target Test => _ => _
-        .After( Compile )
+        .DependsOn( Compile )
         .Executes( ( ) =>
         {
-            DotNetTest( );
+            DotNetTest( s => s.SetProjectFile( Solution ) );
         } );
 
+    public static int Main( ) => Execute<Build>( x => x.Test );
 }
