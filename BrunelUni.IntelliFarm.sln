@@ -1,10 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Blender", "BrunelUni.IntelliFarm.Data.Blender\BrunelUni.IntelliFarm.Data.Blender.csproj", "{82B0A02A-8209-4BCF-93EE-9BC780906FD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Core", "BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj", "{DC0E675C-7901-4331-B8B0-DE8676007993}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82B0A02A-8209-4BCF-93EE-9BC780906FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B0A02A-8209-4BCF-93EE-9BC780906FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B0A02A-8209-4BCF-93EE-9BC780906FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B0A02A-8209-4BCF-93EE-9BC780906FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC0E675C-7901-4331-B8B0-DE8676007993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC0E675C-7901-4331-B8B0-DE8676007993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC0E675C-7901-4331-B8B0-DE8676007993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC0E675C-7901-4331-B8B0-DE8676007993}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
