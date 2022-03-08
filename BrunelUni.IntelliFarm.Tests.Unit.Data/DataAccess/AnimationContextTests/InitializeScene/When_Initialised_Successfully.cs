@@ -9,7 +9,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public class When_Initialised_Successfully : Given_A_BlenderAnimationContext
     {
-        private Result _result;
         private const string ExamplePathTestBlend = "example/path/test.blend";
         private IRenderManager _renderManager;
 
@@ -29,7 +28,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             MockRenderManagerFactory
                 .Factory( Arg.Any<RenderMetaDto>( ) )
                 .Returns( _renderManager );
-            _result = SUT.InitializeScene( ExamplePathTestBlend );
+            SUT.InitializeScene( ExamplePathTestBlend );
         }
 
         [ Test ]
@@ -56,12 +55,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             MockRenderManagerService
                 .Received( )
                 .RenderManager = _renderManager;
-        }
-
-        [ Test ]
-        public void Then_Success_Is_Returned( )
-        {
-            Assert.AreEqual( _result.Status, OperationResultEnum.Success );
         }
     }
 }

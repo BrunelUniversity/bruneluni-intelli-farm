@@ -10,12 +10,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 {
     public class BlenderAnimationContext : IAnimationContext
     {
-        private readonly IRenderManagerService _renderManagerService;
-        private readonly IRenderManagerFactory _renderManagerFactory;
         private readonly IFileAdapter _fileAdapter;
-        private readonly IZipAdapter _zipAdapter;
+        private readonly IRenderManagerFactory _renderManagerFactory;
+        private readonly IRenderManagerService _renderManagerService;
         private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
         private readonly IWebClientAdapter _webClientAdapter;
+        private readonly IZipAdapter _zipAdapter;
 
         public BlenderAnimationContext( IRenderManagerService renderManagerService,
             IRenderManagerFactory renderManagerFactory,
@@ -35,33 +35,31 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public Result Initialize( )
         {
             if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status == OperationResultEnum.Success
-            ) return Result.Success( );
+              ) return Result.Success( );
             var webResult = _webClientAdapter.DownloadFile(
-                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip", "blender.zip" );
-            if( webResult.Status == OperationResultEnum.Failed )
-            {
-                return webResult;
-            }
-            var zipResult = _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
+                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip",
+                "blender.zip" );
+            if( webResult.Status == OperationResultEnum.Failed ) { return webResult; }
+
+            var zipResult =
+                _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
             return zipResult.Status == OperationResultEnum.Failed ? zipResult : Result.Success( );
         }
 
-        public Result InitializeScene( string filePath )
+        public void InitializeScene( string filePath )
         {
             if( _fileAdapter.Exists( filePath ).Status == OperationResultEnum.Failed )
             {
                 throw new ArgumentException( $"{filePath} was not found" );
             }
+
             var ext = _fileAdapter.GetFileExtension( filePath ).Value;
-            if( ext != ".blend" )
-            {
-                throw new ArgumentException( $"{filePath} is not of type '.blend'" );
-            }
+            if( ext != ".blend" ) { throw new ArgumentException( $"{filePath} is not of type '.blend'" ); }
+
             _renderManagerService.RenderManager = _renderManagerFactory.Factory( new RenderMetaDto
             {
                 BlendFilePath = filePath
             } );
-            return Result.Success( );
         }
     }
 }

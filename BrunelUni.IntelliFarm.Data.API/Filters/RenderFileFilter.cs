@@ -1,4 +1,4 @@
-﻿using Aidan.Common.Core.Enum;
+﻿using System;
 using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -7,8 +7,8 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
 {
     public class RenderFileFilter : ActionFilterAttribute
     {
-        private readonly MvcAdapter _mvcAdapter;
         private readonly IAnimationContext _animationContext;
+        private readonly MvcAdapter _mvcAdapter;
 
         public RenderFileFilter( MvcAdapter mvcAdapter,
             IAnimationContext animationContext )
@@ -16,7 +16,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
             _mvcAdapter = mvcAdapter;
             _animationContext = animationContext;
         }
-        
+
         public override void OnActionExecuting( ActionExecutingContext context )
         {
             var renderFile = context.HttpContext.Request.Query[ ApiConstants.RenderFileField ].ToString( );
@@ -24,17 +24,16 @@ namespace BrunelUni.IntelliFarm.Data.API.Filters
             if( renderFile == string.Empty )
             {
                 context.Result =
-                    _mvcAdapter.UnauthorizedError( 
+                    _mvcAdapter.UnauthorizedError(
                         $"'{ApiConstants.RenderFileField}' parameter was not present in the request" );
                 return;
             }
 
-            var result = _animationContext.InitializeScene( renderFile );
-            
-            if( result.Status == OperationResultEnum.Failed )
+            try { _animationContext.InitializeScene( renderFile ); }
+            catch( ArgumentException e )
             {
                 context.Result =
-                    _mvcAdapter.NotFoundError( result.Msg );
+                    _mvcAdapter.NotFoundError( e.Message );
             }
         }
     }
