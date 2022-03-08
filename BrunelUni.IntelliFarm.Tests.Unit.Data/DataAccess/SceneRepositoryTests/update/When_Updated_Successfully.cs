@@ -8,9 +8,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
 {
     public class When_Updated_Successfully : Given_A_SceneRepository
     {
-        private Result _result;
-        private RenderDataDto _data;
         private const string BlendFile = "C:\\path\\path\\test.blend";
+        private RenderDataDto _data;
+        private Result _result;
 
         protected override void When( )
         {
@@ -35,7 +35,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         [ Test ]
         public void Then_Blender_Was_Run_Once( )
         {
-            MockSceneProcessor.Received( 1 ).RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
+            MockSceneProcessor.Received( 1 )
+                .RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
         }
 
         [ Test ]
@@ -43,7 +44,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         {
             MockSceneProcessor.Received( ).RunSceneProcessAndExit( BlendFile, Arg.Any<string>( ), Arg.Any<bool>( ) );
         }
-        
+
         [ Test ]
         public void Then_Blender_File_Was_Not_Rendered( )
         {
@@ -57,25 +58,24 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         }
 
         [ Test ]
-        public void Then_Correct_Data_Was_Written_Into_Blender_File( )
+        public void Then_Correct_Data_Was_Written_Into_Blender_File_And_File_Was_Cleared_Once( )
         {
+            MockSceneProcessor.Received( 1 ).ClearTemp( );
             MockSceneProcessor.Received( 1 ).WriteTemp( Arg.Any<RenderDto>( ) );
             MockSceneProcessor.Received( ).WriteTemp( _data );
         }
 
         [ Test ]
-        public void Then_Success_Was_Returned( )
-        {
-            Assert.AreEqual( _result.Status, OperationResultEnum.Success );
-        }
-        
+        public void Then_Success_Was_Returned( ) { Assert.AreEqual( _result.Status, OperationResultEnum.Success ); }
+
         [ Test ]
-        public void Then_Process_Is_Run_Before_Reading( )
+        public void Then_Process_Is_Run_Before_Reading_Then_Cleared( )
         {
             Received.InOrder( ( ) =>
             {
                 MockSceneProcessor.WriteTemp( Arg.Any<RenderDto>( ) );
                 MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
+                MockSceneProcessor.ClearTemp( );
             } );
         }
     }

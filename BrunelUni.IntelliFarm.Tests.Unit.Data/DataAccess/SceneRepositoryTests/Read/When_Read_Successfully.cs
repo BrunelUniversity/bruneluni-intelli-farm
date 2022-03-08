@@ -34,10 +34,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         }
 
         [ Test ]
-        public void Then_Success_Is_Returned( )
-        {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
-        }
+        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
 
         [ Test ]
         public void Then_Blender_Is_Ran_With_Correct_Args( )
@@ -49,22 +46,24 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 .Received( )
                 .RunSceneProcessAndExit( "test", "reader", false );
         }
-        
+
         [ Test ]
-        public void Then_Temp_File_Is_Read_From( )
+        public void Then_Temp_File_Is_Read_From_And_Cleared( )
         {
             MockSceneProcessor
                 .Received( 1 )
                 .ReadTemp<RenderDataDto>( );
+            MockSceneProcessor.Received( 1 ).ClearTemp( );
         }
 
         [ Test ]
-        public void Then_Process_Is_Run_Before_Reading( )
+        public void Then_Process_Is_Run_Before_Reading_Then_Cleared( )
         {
             Received.InOrder( ( ) =>
             {
                 MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
                 MockSceneProcessor.ReadTemp<RenderDataDto>( );
+                MockSceneProcessor.ClearTemp( );
             } );
         }
     }

@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.EventRepositoryTests.
                     }
                 } );
             MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
-                .Returns( Result.Success(  ) );
+                .Returns( Result.Success( ) );
             _result = SUT.Create( );
         }
 
@@ -50,22 +50,24 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.EventRepositoryTests.
                 .Received( )
                 .RunSceneProcessAndExit( "test", "logger", true );
         }
-        
+
         [ Test ]
-        public void Then_Temp_File_Is_Read_From( )
+        public void Then_Temp_File_Is_Read_From_And_Cleared( )
         {
+            MockSceneProcessor.Received( 1 ).ClearTemp( );
             MockSceneProcessor
                 .Received( 1 )
                 .ReadTemp<RenderResultDto>( );
         }
 
         [ Test ]
-        public void Then_Process_Is_Run_Before_Reading( )
+        public void Then_Process_Is_Run_Before_Reading_Then_Cleared( )
         {
             Received.InOrder( ( ) =>
             {
                 MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
                 MockSceneProcessor.ReadTemp<RenderResultDto>( );
+                MockSceneProcessor.ClearTemp( );
             } );
         }
     }
