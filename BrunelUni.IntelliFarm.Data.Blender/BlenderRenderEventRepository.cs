@@ -10,15 +10,17 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         private readonly IRenderManagerService _renderManagerService;
         private readonly ISceneProcessor _sceneProcessor;
 
-        public BlenderRenderEventRepository( IRenderManagerService renderManagerService, ISceneProcessor sceneProcessor )
+        public BlenderRenderEventRepository( IRenderManagerService renderManagerService,
+            ISceneProcessor sceneProcessor )
         {
             _renderManagerService = renderManagerService;
             _sceneProcessor = sceneProcessor;
         }
-        
+
         public ObjectResult<RenderResultDto> Create( )
         {
-            var processorResult = _sceneProcessor.RunSceneProcessAndExit( _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+            var processorResult = _sceneProcessor.RunSceneProcessAndExit(
+                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
                 "logger",
                 true );
             if( processorResult.Status == OperationResultEnum.Failed )
@@ -31,6 +33,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             }
 
             var fileResult = _sceneProcessor.ReadTemp<RenderResultDto>( );
+            _sceneProcessor.ClearTemp( );
             return fileResult;
         }
     }
