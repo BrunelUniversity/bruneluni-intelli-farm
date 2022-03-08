@@ -50,6 +50,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return fileResult.Status == OperationResultEnum.Failed ? fileResult : Result.Success( );
         }
 
+        public void ClearTemp( ) { }
+
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
         {
             var args = $"{pathToBlend} -b -P {_scriptsRootDirectoryState.DataScriptsDir}\\render.py";

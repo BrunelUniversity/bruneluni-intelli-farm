@@ -7,6 +7,7 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
     {
         ObjectResult<T> ReadTemp<T>( ) where T : RenderDto;
         Result WriteTemp( RenderDto renderDto );
+        void ClearTemp( );
         Result RunSceneProcessAndExit( string pathToBlend, string script, bool render );
     }
 }
