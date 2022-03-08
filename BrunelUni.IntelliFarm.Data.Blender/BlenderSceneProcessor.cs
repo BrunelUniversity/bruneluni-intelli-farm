@@ -1,4 +1,5 @@
-﻿using Aidan.Common.Core;
+﻿using System.IO;
+using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -50,7 +51,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return fileResult.Status == OperationResultEnum.Failed ? fileResult : Result.Success( );
         }
 
-        public void ClearTemp( ) { }
+        public void ClearTemp( )
+        {
+            var fileResult = _fileAdapter.WriteFile( _scriptsRootDirectoryState.DataScriptsTempFile, "{}" );
+            if( fileResult.Status == OperationResultEnum.Failed )
+                throw new IOException( $"file error {fileResult.Msg}" );
+        }
 
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
         {
