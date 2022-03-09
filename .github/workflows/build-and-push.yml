@@ -4,7 +4,7 @@ on:
     branches: [ trunk ]
 jobs:
   build_and_test:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
