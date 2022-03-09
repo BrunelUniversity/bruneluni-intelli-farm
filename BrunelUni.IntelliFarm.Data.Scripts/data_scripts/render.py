@@ -117,7 +117,7 @@ def render_ray_cast():
     ray_coverage = blender_ray_trace(vectors=vectors)
     print(f"ray coverage of {ray_coverage}")
     f = open(FILENAME, "w")
-    f.write(json.dumps({ "coverage": ray_coverage }))
+    f.write(json.dumps({ "percentage": ray_coverage }))
     f.close()
 
 

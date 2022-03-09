@@ -10,6 +10,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     public class BlenderSceneProcessor : ISceneProcessor
     {
         private readonly IFileAdapter _fileAdapter;
+        private readonly ILoggerAdapter<ISceneProcessor> _loggerAdapter;
         private readonly IProcessor _processor;
         private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
         private readonly ISerializer _serializer;
@@ -17,12 +18,14 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public BlenderSceneProcessor( IProcessor processor,
             ISerializer serializer,
             IFileAdapter fileAdapter,
-            IScriptsRootDirectoryState scriptsRootDirectoryState )
+            IScriptsRootDirectoryState scriptsRootDirectoryState,
+            ILoggerAdapter<ISceneProcessor> loggerAdapter )
         {
             _processor = processor;
             _serializer = serializer;
             _fileAdapter = fileAdapter;
             _scriptsRootDirectoryState = scriptsRootDirectoryState;
+            _loggerAdapter = loggerAdapter;
         }
 
         public ObjectResult<T> ReadTemp<T>( ) where T : RenderDto
@@ -65,6 +68,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                 args += " -a";
             else
                 args += $" -- render_{script}";
+            _loggerAdapter.LogInfo( $"blender args: {args}" );
             var result = _processor.RunAndWait( _scriptsRootDirectoryState.BlenderDirectory, args );
             return result.Status == OperationResultEnum.Failed ? result : Result.Success( );
         }
