@@ -1,0 +1,2 @@
+fake-bpy-module-2.90==20211212
+pytest==6.2.5
