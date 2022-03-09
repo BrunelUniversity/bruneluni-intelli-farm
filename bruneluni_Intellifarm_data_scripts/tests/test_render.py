@@ -1,7 +1,8 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock, call
-from src.core import TempCommsService, SceneAdapter, DateTimeAdapter
-from src.domain import RenderCommands
+
+from bruneluni_Intellifarm_data_scripts.src.core import TempCommsService, SceneAdapter, DateTimeAdapter
+from bruneluni_Intellifarm_data_scripts.src.domain import RenderCommands
 
 
 class TestRenderCommands(TestCase):

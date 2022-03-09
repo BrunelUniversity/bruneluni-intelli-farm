@@ -1,14 +1,13 @@
 ﻿import os
-import os
 import pathlib
 import sys
 from typing import Callable
 
 import bpy
 
-from blender_access import FileTempCommsService, BlenderSceneAdapter
-from core import InBuiltDateTimeAdapter
-from domain import RenderCommands
+from bruneluni_Intellifarm_data_scripts.src.blender_access import FileTempCommsService, BlenderSceneAdapter
+from bruneluni_Intellifarm_data_scripts.src.core import InBuiltDateTimeAdapter
+from bruneluni_Intellifarm_data_scripts.src.domain import RenderCommands
 
 dir = os.path.dirname(bpy.data.filepath)
 if not dir in sys.path:

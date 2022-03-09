@@ -3,7 +3,7 @@ import json
 import os
 from typing import Callable, Any
 from bpy.app import handlers
-from core import RenderEngineEnum, SceneDataDto, VectorType
+from bruneluni_Intellifarm_data_scripts.src.core import RenderEngineEnum, SceneDataDto, VectorType
 import bpy
 
 

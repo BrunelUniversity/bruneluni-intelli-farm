@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter
+from bruneluni_Intellifarm_data_scripts.src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter
 
 
 class RenderCommands:

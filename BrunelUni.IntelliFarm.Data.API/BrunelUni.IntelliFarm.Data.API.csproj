@@ -14,8 +14,4 @@
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj" />
     </ItemGroup>
 
-    <Target Name="CopyCustomContent" AfterTargets="AfterPublish">
-        <Copy SourceFiles="..\BrunelUni.IntelliFarm.Data.Scripts\data_scripts\render_logger.py;..\BrunelUni.IntelliFarm.Data.Scripts\data_scripts\render_reader.py;..\BrunelUni.IntelliFarm.Data.Scripts\data_scripts\render_writer.py" DestinationFolder="$(OutputPath)\data_scripts" />
-    </Target>
-
 </Project>
