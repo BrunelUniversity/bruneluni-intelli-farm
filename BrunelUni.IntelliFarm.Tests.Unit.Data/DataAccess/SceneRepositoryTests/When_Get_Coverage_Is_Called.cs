@@ -8,12 +8,18 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
 {
     public class When_Get_Coverage_Is_Called : Given_A_SceneRepository
     {
+        private string _blendFilePath;
         private RayCoverageInputDto _rayCoverageInputDto;
         private RayCoverageResultDto _rayCoverageResultDto;
         private RayCoverageResultDto _result;
 
         protected override void When( )
         {
+            _blendFilePath = "test//path";
+            MockRenderManagerService.RenderManager.GetRenderInfo( ).Returns( new RenderMetaDto
+            {
+                BlendFilePath = _blendFilePath
+            } );
             MockSceneProcessor
                 .WriteTemp( Arg.Any<RayCoverageInputDto>( ) )
                 .Returns( Result.Success( ) );
@@ -53,6 +59,15 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
         public void Then_Coverage_Result_Was_The_Same_As_The_Object_Read( )
         {
             Assert.AreSame( _rayCoverageResultDto, _result );
+        }
+
+        [ Test ]
+        public void Then_Correct_Script_Was_Called( )
+        {
+            MockSceneProcessor.Received( )
+                .RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
+            MockSceneProcessor.Received( 1 )
+                .RunSceneProcessAndExit( _blendFilePath, "render_ray_cast", false );
         }
     }
 }
