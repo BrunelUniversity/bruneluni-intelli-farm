@@ -4,20 +4,20 @@ from unittest.mock import Mock, MagicMock
 from mathutils import Vector
 from callee import Captor
 
-from render import RenderCommands, TempCommsService, SceneAdapter, RenderEngineEnum
+from render import RenderCommands, TempCommsService, SceneAdapter, RenderEngineEnum, DateTimeAdapter
 
 
-class RenderCommandTests(TestCase):
+class TestRenderCommands(TestCase):
 
     def setUp(self) -> None:
         self.__comms_service: TempCommsService = Mock()
         self.__scene_adapter: SceneAdapter = Mock()
-        self.__date_time_adapter = Mock()
+        self.__date_time_adapter: DateTimeAdapter = Mock()
         self.__sut = RenderCommands(comms_service=self.__comms_service,
                                     scene_adapter=self.__scene_adapter,
                                     date_time_adapter=self.__date_time_adapter)
 
-    def when_get_coverage_called(self):
+    def test_when_get_coverage_called(self):
         self.__scene_adapter.cast_ray = MagicMock()
         self.__scene_adapter.cast_ray.side_effect = [True, False, True, True]
         self.__comms_service.read_json = MagicMock(return_value={"subdivisions": 8})
@@ -38,4 +38,5 @@ class RenderCommandTests(TestCase):
         self.__scene_adapter.cast_ray.assert_called_with(origin=Vector({0, 0, 0}),
                                                          direction=Vector({0, 0, 4}),
                                                          distance=100)
+
         assert result == 0.75
