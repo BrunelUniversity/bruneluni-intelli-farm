@@ -16,6 +16,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
         protected override void When( )
         {
             _blendFilePath = "test//path";
+            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
+                .Returns( Result.Success( ) );
             MockRenderManagerService.RenderManager.GetRenderInfo( ).Returns( new RenderMetaDto
             {
                 BlendFilePath = _blendFilePath
@@ -51,7 +53,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
                 MockSceneProcessor.ClearTemp( );
             } );
             MockSceneProcessor.Received( 1 ).WriteTemp( Arg.Any<RenderDto>( ) );
-            MockSceneProcessor.Received( 1 ).ReadTemp<RenderDto>( );
+            MockSceneProcessor.Received( 1 ).ReadTemp<RayCoverageResultDto>( );
             MockSceneProcessor.Received( 1 ).ClearTemp( );
         }
 

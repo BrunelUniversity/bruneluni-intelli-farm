@@ -1,4 +1,5 @@
-﻿using Aidan.Common.Core;
+﻿using System.IO;
+using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -58,10 +59,16 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public RayCoverageResultDto GetCoverage( RayCoverageInputDto rayCoverageInputDto )
         {
-            return new RayCoverageResultDto
-            {
-                Percentage = 0.0
-            };
+            var writeResult = _sceneProcessor.WriteTemp( rayCoverageInputDto );
+            if( writeResult.Status == OperationResultEnum.Failed ) throw new IOException( writeResult.Msg );
+            var blenderResult = _sceneProcessor.RunSceneProcessAndExit(
+                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+                "render_ray_cast", false );
+            if( blenderResult.Status == OperationResultEnum.Failed ) throw new IOException( blenderResult.Msg );
+            var readResult = _sceneProcessor.ReadTemp<RayCoverageResultDto>( );
+            if( readResult.Status == OperationResultEnum.Failed ) throw new IOException( readResult.Msg );
+            _sceneProcessor.ClearTemp( );
+            return readResult.Value;
         }
     }
 }
