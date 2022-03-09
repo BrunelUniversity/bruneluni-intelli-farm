@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock, call
-from core import TempCommsService, SceneAdapter, DateTimeAdapter
-from domain import RenderCommands
+from src.core import TempCommsService, SceneAdapter, DateTimeAdapter
+from src.domain import RenderCommands
 
 
 class TestRenderCommands(TestCase):
