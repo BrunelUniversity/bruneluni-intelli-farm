@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
+using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -8,13 +9,16 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 {
     public class BlenderSceneRepository : ISceneRepository
     {
+        private readonly ILoggerAdapter<ISceneRepository> _loggerAdapter;
         private readonly IRenderManagerService _renderManagerService;
         private readonly ISceneProcessor _sceneProcessor;
 
-        public BlenderSceneRepository( ISceneProcessor sceneProcessor, IRenderManagerService renderManagerService )
+        public BlenderSceneRepository( ISceneProcessor sceneProcessor, IRenderManagerService renderManagerService,
+            ILoggerAdapter<ISceneRepository> loggerAdapter )
         {
             _sceneProcessor = sceneProcessor;
             _renderManagerService = renderManagerService;
+            _loggerAdapter = loggerAdapter;
         }
 
 
@@ -59,11 +63,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public RayCoverageResultDto GetCoverage( RayCoverageInputDto rayCoverageInputDto )
         {
+            _loggerAdapter.LogInfo( $"coverage subdivisions are {rayCoverageInputDto.Subdivisions}" );
             var writeResult = _sceneProcessor.WriteTemp( rayCoverageInputDto );
             if( writeResult.Status == OperationResultEnum.Failed ) throw new IOException( writeResult.Msg );
             var blenderResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "render_ray_cast", false );
+                "ray_cast", false );
             if( blenderResult.Status == OperationResultEnum.Failed ) throw new IOException( blenderResult.Msg );
             var readResult = _sceneProcessor.ReadTemp<RayCoverageResultDto>( );
             if( readResult.Status == OperationResultEnum.Failed ) throw new IOException( readResult.Msg );

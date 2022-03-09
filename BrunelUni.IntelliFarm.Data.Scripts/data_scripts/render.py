@@ -102,6 +102,7 @@ def render_ray_cast():
     f = open(FILENAME)
     data = json.load(f)
     subdivisions = data["subdivisions"]
+    print(f"subdivisions in temp {subdivisions}")
     f.close()
     bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
                                           radius=1,
@@ -121,16 +122,16 @@ def render_ray_cast():
     f.close()
 
 
-if argv[0] is "render_reader":
+if argv[0] == "render_reader":
     print("running render_reader")
     render_reader()
-elif argv[0] is "render_writer":
+elif argv[0] == "render_writer":
     print("running render_writer")
     render_writer()
-elif argv[0] is "render_logger":
+elif argv[0] == "render_logger":
     print("running render_logger")
     render_logger()
-elif argv[0] is "render_ray_cast":
+elif argv[0] == "render_ray_cast":
     print("running render_ray_cast")
     render_ray_cast()
 else:
