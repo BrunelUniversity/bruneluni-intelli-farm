@@ -24,7 +24,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         {
             MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
             MockProcessor.Received( ).RunAndWait( TestConstants.BlenderDirectory,
-                $"{BlendFile} -b -P {TestConstants.DataScriptsDir}\\render.py -- {Script}" );
+                $"{BlendFile} -b -P {TestConstants.DataScriptsDir}\\main.py -- {Script}" );
         }
 
         [ Test ]

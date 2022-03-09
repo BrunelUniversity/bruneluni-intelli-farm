@@ -19,7 +19,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         {
             MockProcessor.Received( 1 ).RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) );
             MockProcessor.Received( ).RunAndWait( Arg.Any<string>( ),
-                $"test -b -P {TestConstants.DataScriptsDir}\\render.py -a" );
+                $"test -b -P {TestConstants.DataScriptsDir}\\main.py -a" );
         }
     }
 }
