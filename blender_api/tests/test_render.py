@@ -30,4 +30,4 @@ class TestRenderCommands(TestCase):
                                                        call(origin=(0,0,0), direction=(0,0,3), distance=100),
                                                        call(origin=(0,0,0), direction=(0,0,4), distance=100)])
         assert self.__scene_adapter.cast_ray.call_count == 4
-        self.__comms_service.write_json.assert_called_once_with(data={"scene_coverage": 0.75})
+        self.__comms_service.write_json.assert_called_once_with(data={"percentage": 0.75})

@@ -54,7 +54,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         [ Test ]
         public void Then_Correct_Script_Was_Ran_With_Blender_File( )
         {
-            MockSceneProcessor.Received( ).RunSceneProcessAndExit( Arg.Any<string>( ), "writer", Arg.Any<bool>( ) );
+            MockSceneProcessor.Received( ).RunSceneProcessAndExit( Arg.Any<string>( ), "set_scene_data", Arg.Any<bool>( ) );
         }
 
         [ Test ]

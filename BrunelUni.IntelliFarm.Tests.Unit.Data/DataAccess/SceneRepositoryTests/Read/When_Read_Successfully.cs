@@ -44,7 +44,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 .RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
             MockSceneProcessor
                 .Received( )
-                .RunSceneProcessAndExit( "test", "reader", false );
+                .RunSceneProcessAndExit( "test", "get_scene_data", false );
         }
 
         [ Test ]
