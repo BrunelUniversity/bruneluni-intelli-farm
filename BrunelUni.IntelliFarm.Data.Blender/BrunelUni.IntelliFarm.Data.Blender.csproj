@@ -5,13 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <_CopyItems Include="..\blender_api\src\*" />
+    </ItemGroup>
+    
+    <ItemGroup>
         <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Content Include="..\bruneluni_\**">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
+    <Target Name="CopyCustomContent" AfterTargets="AfterBuild;AfterPublish">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(OutputPath)\data_scripts\src" />
+    </Target>
+    
 </Project>
