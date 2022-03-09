@@ -67,7 +67,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             if( render )
                 args += " -a";
             else
-                args += $" -- render_{script}";
+                args += $" -- {script}";
             _loggerAdapter.LogInfo( $"blender args: {args}" );
             var result = _processor.RunAndWait( _scriptsRootDirectoryState.BlenderDirectory, args );
             return result.Status == OperationResultEnum.Failed ? result : Result.Success( );

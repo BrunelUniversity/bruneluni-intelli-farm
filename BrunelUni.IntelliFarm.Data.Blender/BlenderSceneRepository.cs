@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
             var processResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "writer",
+                "set_scene_data",
                 false );
             _sceneProcessor.ClearTemp( );
             return processResult.Status == OperationResultEnum.Failed ? processResult : Result.Success( );
@@ -39,7 +39,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         {
             var processResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "reader",
+                "get_scene_data",
                 false );
             if( processResult.Status == OperationResultEnum.Failed )
             {
@@ -68,7 +68,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             if( writeResult.Status == OperationResultEnum.Failed ) throw new IOException( writeResult.Msg );
             var blenderResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "ray_cast", false );
+                "get_scene_and_viewpoint_coverage", false );
             if( blenderResult.Status == OperationResultEnum.Failed ) throw new IOException( blenderResult.Msg );
             var readResult = _sceneProcessor.ReadTemp<RayCoverageResultDto>( );
             if( readResult.Status == OperationResultEnum.Failed ) throw new IOException( readResult.Msg );

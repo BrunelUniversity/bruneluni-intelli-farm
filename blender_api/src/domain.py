@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from blender_api.src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter
+from datetime import datetime
 
 
 class RenderCommands:
@@ -50,4 +49,4 @@ class RenderCommands:
             self.__scene_adapter.cast_ray(origin=origin_vector,
                                           direction=vector,
                                           distance=100)
-        self.__comms_service.write_json(data={"scene_coverage": 0.75})
+        self.__comms_service.write_json(data={"percentage": 0.75})

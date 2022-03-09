@@ -21,7 +21,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         {
             var processorResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "logger",
+                "render_frame",
                 true );
             if( processorResult.Status == OperationResultEnum.Failed )
             {
