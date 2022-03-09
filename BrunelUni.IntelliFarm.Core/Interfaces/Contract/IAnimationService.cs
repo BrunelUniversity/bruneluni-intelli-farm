@@ -1,9 +1,11 @@
 ﻿using BrunelUni.IntelliFarm.Core.Dtos;
 
-namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract;
-
-public interface IAnimationService
+namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
 {
-    void RenderScene( SceneTinyType scene );
-    CallibrationDto CollaborateScene( SceneTinyType scene );
+
+    public interface IAnimationService
+    {
+        void RenderScene( SceneTinyType scene );
+        CallibrationDto CollaborateScene( SceneTinyType scene );
+    }
 }

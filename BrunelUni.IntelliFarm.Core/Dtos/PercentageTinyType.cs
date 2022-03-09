@@ -1,6 +1,8 @@
-﻿namespace BrunelUni.IntelliFarm.Core.Dtos;
-
-public class PercentageTinyType
+﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-    public double Percentage { get; set; }
+
+    public class PercentageTinyType
+    {
+        public double Percentage { get; set; }
+    }
 }

@@ -1,6 +1,8 @@
-﻿namespace BrunelUni.IntelliFarm.Core.Dtos;
-
-public class SceneTinyType
+﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-    public string FilePath { get; set; }
+
+    public class SceneTinyType
+    {
+        public string FilePath { get; set; }
+    }
 }

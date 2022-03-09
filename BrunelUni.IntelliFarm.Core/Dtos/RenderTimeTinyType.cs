@@ -1,6 +1,8 @@
-﻿namespace BrunelUni.IntelliFarm.Core.Dtos;
-
-public class RenderTimeTinyType
+﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-    public double RenderTime { get; set; }
+
+    public class RenderTimeTinyType
+    {
+        public double RenderTime { get; set; }
+    }
 }
