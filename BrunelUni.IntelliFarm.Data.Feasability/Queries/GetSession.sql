@@ -1,3 +1,3 @@
 ﻿SELECT SESSION, DEVICE
-FROM FeasabilityDtos
+FROM FeasabilityDtos where Device = 'WEY-LAPTOP'
 GROUP BY SESSION

@@ -34,6 +34,9 @@ class RenderEngineEnum(Enum):
     BlenderInternal = 1
 
 
+VectorType = tuple[float, float, float]
+
+
 class TempCommsService(Protocol):
     def read_json(self) -> dict:
         ...
@@ -65,15 +68,15 @@ class SceneAdapter(Protocol):
                             complete_handler: Callable[[Any], None]) -> None:
         ...
 
-    def add_iscosphere(self, subdivisions: int, location: Vector) -> list[Vector]:
+    def add_iscosphere(self, subdivisions: int, location: VectorType) -> list[VectorType]:
         '''
         add iscosphere and get real vectors multiplied by world matrix
         '''
         ...
 
     def cast_ray(self,
-                 origin: Vector,
-                 direction: Vector,
+                 origin: VectorType,
+                 direction: VectorType,
                  distance: int) -> bool:
         ...
 
@@ -101,7 +104,14 @@ class RenderCommands:
         ...
 
     def get_scene_and_viewpoint_coverage(self):
-        ...
+        subdivisions = self.__comms_service.read_json()["subdivisions"]
+        origin_vector = (0, 0, 0)
+        vectors = self.__scene_adapter.add_iscosphere(subdivisions=subdivisions, location=origin_vector)
+        for vector in vectors:
+            self.__scene_adapter.cast_ray(origin=origin_vector,
+                                          direction=vector,
+                                          distance=100)
+        self.__comms_service.write_json(data={"scene_coverage": 0.75})
 
 
 class BlenderSceneAdapter:
@@ -144,7 +154,7 @@ class BlenderSceneAdapter:
         handlers.render_init.append(init_handler)
         handlers.render_complete.append(complete_handler)
 
-    def add_iscosphere(self, subdivisions: int, location: Vector) -> list[Vector]:
+    def add_iscosphere(self, subdivisions: int, location: VectorType) -> list[VectorType]:
         '''
         add iscosphere and get real vectors multiplied by world matrix
         '''
@@ -158,8 +168,8 @@ class BlenderSceneAdapter:
         return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
 
     def cast_ray(self,
-                 origin: Vector,
-                 direction: Vector,
+                 origin: VectorType,
+                 direction: VectorType,
                  distance: int) -> bool:
         return bpy.context.scene.ray_cast(view_layer=bpy.context.view_layer,
                                    origin=origin,
