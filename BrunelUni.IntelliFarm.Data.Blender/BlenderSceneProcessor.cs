@@ -63,7 +63,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
         {
-            var args = $"{pathToBlend} -b -P {_scriptsRootDirectoryState.DataScriptsDir}\\render.py";
+            var args = $"{pathToBlend} -b -P {_scriptsRootDirectoryState.DataScriptsDir}\\main.py";
             if( render )
                 args += " -a";
             else
