@@ -7,6 +7,6 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
     {
         public Result Update( RenderDataDto renderOptions );
         public ObjectResult<RenderDataDto> Read( );
-        public double GetCoverage( int subdivisions );
+        public RayCoverageResultDto GetCoverage( RayCoverageInputDto rayCoverageInputDto );
     }
 }
