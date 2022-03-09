@@ -56,6 +56,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             };
         }
 
-        public double GetCoverage( int subdivisions ) { return 0.0; }
+        public RayCoverageResultDto GetCoverage( RayCoverageInputDto rayCoverageInputDto )
+        {
+            return new RayCoverageResultDto
+            {
+                Percentage = 0.0
+            };
+        }
     }
 }
