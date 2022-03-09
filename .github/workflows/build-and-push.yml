@@ -30,4 +30,4 @@ jobs:
           fi
       - name: Test with pytest
         run: |
-          pytest BrunelUni.IntelliFarm.Data.Scripts/
+          pytest
