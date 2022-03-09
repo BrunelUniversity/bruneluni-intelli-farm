@@ -5,9 +5,9 @@ from typing import Callable
 
 import bpy
 
-from bruneluni_Intellifarm_data_scripts.src.blender_access import FileTempCommsService, BlenderSceneAdapter
-from bruneluni_Intellifarm_data_scripts.src.core import InBuiltDateTimeAdapter
-from bruneluni_Intellifarm_data_scripts.src.domain import RenderCommands
+from blender_api.src.blender_access import FileTempCommsService, BlenderSceneAdapter
+from blender_api.src.core import InBuiltDateTimeAdapter
+from blender_api.src.domain import RenderCommands
 
 dir = os.path.dirname(bpy.data.filepath)
 if not dir in sys.path:
