@@ -39,7 +39,7 @@ class RenderCommands:
 
     def render_frame(self):
         self.__scene_adapter.set_render_engine(engine=RenderEngineEnum.Cycles)
-        self.__scene_adapter.add_render_handlers(init_handler=self.init_handler, complete_handler=self.complete_handler)
+        self.__scene_adapter.add_render_handlers(init_handler=lambda scene: self.init_handler(), complete_handler=lambda scene: self.complete_handler())
 
     def get_scene_and_viewpoint_coverage(self):
         subdivisions = self.__comms_service.read_json()["subdivisions"]

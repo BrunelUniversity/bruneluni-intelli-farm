@@ -18,8 +18,8 @@ class SceneDataDto:
 
 
 class RenderEngineEnum(Enum):
-    Cycles = 0,
-    BlenderInternal = 1
+    Cycles = "Cycles",
+    BlenderInternal = "Blender Internal"
 
 
 VectorType = tuple[float, float, float]
@@ -69,9 +69,4 @@ class SceneAdapter(Protocol):
         ...
 
     def delete_current_object(self) -> None:
-        ...
-
-
-class InBuiltDateTimeAdapter:
-    def now_utc(self) -> datetime:
         ...

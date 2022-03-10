@@ -1,6 +1,7 @@
 import errno
 import json
 import os
+from datetime import datetime
 from typing import Callable, Any
 from bpy.app import handlers
 from blender_api.src.core import RenderEngineEnum, SceneDataDto, VectorType
@@ -10,11 +11,12 @@ import bpy
 class BlenderSceneAdapter:
 
     def set_render_engine(self, engine: RenderEngineEnum) -> None:
+        print(f"setting render engine to {engine.value}")
         if engine == RenderEngineEnum.Cycles:
             bpy.context.scene.render.engine = 'CYCLES'
 
     def get_scene_data(self) -> SceneDataDto:
-        return SceneDataDto(
+        data = SceneDataDto(
             samples=bpy.data.scenes[0].cycles.samples,
             max_bounces=bpy.data.scenes[0].cycles.max_bounces,
             diffuse_bounces=bpy.data.scenes[0].cycles.diffuse_bounces,
@@ -25,8 +27,11 @@ class BlenderSceneAdapter:
             start_frame=bpy.data.scenes[0].frame_start,
             end_frame=bpy.data.scenes[0].frame_end
         )
+        print(f"get scene data\n{data.__dict__}")
+        return data
 
     def set_scene_data(self, data: SceneDataDto) -> None:
+        print(f"set scene data\n{data.__dict__}")
         bpy.data.scenes[0].cycles.samples = data.samples
         bpy.data.scenes[0].cycles.max_bounces = data.max_bounces
         bpy.data.scenes[0].cycles.diffuse_bounces = data.diffuse_bounces
@@ -39,18 +44,18 @@ class BlenderSceneAdapter:
         bpy.context.scene.frame_set(data.end_frame)
 
     def save_file(self) -> None:
+        print(f"saving file")
         bpy.ops.wm.save_mainfile()
 
     def add_render_handlers(self,
                             init_handler: Callable[[Any], None],
                             complete_handler: Callable[[Any], None]) -> None:
+        print(f"adding render handles")
         handlers.render_init.append(init_handler)
         handlers.render_complete.append(complete_handler)
 
     def add_iscosphere(self, subdivisions: int, location: VectorType) -> list[VectorType]:
-        '''
-        add iscosphere and get real vectors multiplied by world matrix
-        '''
+        print(f"adding iscosphere of {subdivisions} subdivisions at {str(location)}")
         bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
                                               radius=1,
                                               enter_editmode=False,
@@ -70,6 +75,7 @@ class BlenderSceneAdapter:
                                           distance=distance)[0]
 
     def delete_current_object(self) -> None:
+        print("delete current object")
         bpy.ops.object.delete(use_global=False, confirm=False)
 
 
@@ -77,17 +83,21 @@ class FileTempCommsService:
 
     def __init__(self, filename: str):
         self.__filename = filename
-        if not os.path.exists(self.__filename):
-            try:
-                os.makedirs(self.__filename)
-            except OSError as exc:
-                if exc.errno != errno.EEXIST:
-                    raise
+        os.makedirs(os.path.dirname(self.__filename), exist_ok=True)
 
     def read_json(self) -> dict:
         with open(self.__filename) as opened_file:
-            return json.loads(opened_file.read())
+            read = json.loads(opened_file.read())
+            print(f"read from file\n{json.dumps(read, indent=4, sort_keys=True)}")
+            return read
 
     def write_json(self, data: dict):
         with open(self.__filename, 'w') as opened_file:
+            print(f"writing to file\n{json.dumps(data, indent=4, sort_keys=True)}")
             opened_file.write(json.dumps(data))
+
+
+class InBuiltDateTimeAdapter:
+
+    def now_utc(self) -> datetime:
+        return datetime.utcnow()
