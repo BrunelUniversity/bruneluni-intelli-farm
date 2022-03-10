@@ -45,8 +45,8 @@ class RenderCommands:
         subdivisions = self.__comms_service.read_json()["subdivisions"]
         origin_vector = (0, 0, 0)
         vectors = self.__scene_adapter.add_iscosphere(subdivisions=subdivisions, location=origin_vector)
+        hit_count = 0
         for vector in vectors:
-            self.__scene_adapter.cast_ray(origin=origin_vector,
-                                          direction=vector,
-                                          distance=100)
-        self.__comms_service.write_json(data={"percentage": 0.75})
+            if self.__scene_adapter.cast_ray(origin=origin_vector,direction=vector,distance=100):
+                hit_count = hit_count + 1
+        self.__comms_service.write_json(data={"percentage": hit_count/len(vectors)})

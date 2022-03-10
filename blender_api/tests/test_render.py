@@ -18,6 +18,7 @@ class TestRenderCommands(TestCase):
     def test_when_get_coverage_called(self):
         self.__comms_service.write_json = MagicMock()
         self.__scene_adapter.cast_ray = MagicMock()
+        self.__scene_adapter.delete_current_object = MagicMock()
         self.__scene_adapter.cast_ray.side_effect = [True, False, True, True]
         self.__comms_service.read_json = MagicMock(return_value={"subdivisions": 8})
         self.__scene_adapter.add_iscosphere = MagicMock(return_value=[(0, 0, 1),
@@ -29,5 +30,6 @@ class TestRenderCommands(TestCase):
                                                        call(origin=(0,0,0), direction=(0,0,2), distance=100),
                                                        call(origin=(0,0,0), direction=(0,0,3), distance=100),
                                                        call(origin=(0,0,0), direction=(0,0,4), distance=100)])
+        self.__scene_adapter.delete_current_object.assert_called_once()
         assert self.__scene_adapter.cast_ray.call_count == 4
         self.__comms_service.write_json.assert_called_once_with(data={"percentage": 0.75})
