@@ -1,4 +1,5 @@
-from blender_api.src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter
+from blender_api.src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter, \
+    MeshEnum
 from datetime import datetime
 
 
@@ -44,7 +45,9 @@ class RenderCommands:
     def get_scene_and_viewpoint_coverage(self):
         subdivisions = self.__comms_service.read_json()["subdivisions"]
         origin_vector = (0, 0, 0)
-        vectors = self.__scene_adapter.add_iscosphere(subdivisions=subdivisions, location=origin_vector)
+        vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
+                                                location=origin_vector,
+                                                mesh=MeshEnum.Iscosphere)
         hit_count = 0
         self.__scene_adapter.delete_current_object()
         for vector in vectors:
