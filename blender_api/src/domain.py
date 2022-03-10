@@ -46,6 +46,7 @@ class RenderCommands:
         origin_vector = (0, 0, 0)
         vectors = self.__scene_adapter.add_iscosphere(subdivisions=subdivisions, location=origin_vector)
         hit_count = 0
+        self.__scene_adapter.delete_current_object()
         for vector in vectors:
             if self.__scene_adapter.cast_ray(origin=origin_vector,direction=vector,distance=100):
                 hit_count = hit_count + 1
