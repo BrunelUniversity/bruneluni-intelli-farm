@@ -3,15 +3,14 @@ import pathlib
 import sys
 from typing import Callable
 
-import bpy
+print(f"{os.getcwd()}")
+dir = os.path.dirname(f"{os.getcwd()}")
+if not dir in sys.path:
+    sys.path.append(dir)
 
 from blender_api.src.blender_access import FileTempCommsService, BlenderSceneAdapter
 from blender_api.src.core import InBuiltDateTimeAdapter
 from blender_api.src.domain import RenderCommands
-
-dir = os.path.dirname(bpy.data.filepath)
-if not dir in sys.path:
-    sys.path.append(dir )
 
 FILENAME = f"{pathlib.Path(__file__).parent.resolve()}\\temp\\render.json"
 

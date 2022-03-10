@@ -9,7 +9,7 @@
         public const string BlenderDirectory =
             "C:\\Test\\TestUser\\Dir\\blender\\blender-2.93.6-windows-x64\\blender.exe";
 
-        public const string BlenderBaseUrl = "https://download.blender.org/release/Blender2.90";
-        public const string BlenderVersion = "blender-2.90.1-windows64";
+        public const string BlenderBaseUrl = "https://download.blender.org/release/Blender2.93";
+        public const string BlenderVersion = "blender-2.93.6-windows-x64";
     }
 }
