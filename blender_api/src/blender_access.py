@@ -64,7 +64,7 @@ class BlenderSceneAdapter:
                  origin: VectorType,
                  direction: VectorType,
                  distance: int) -> bool:
-        return bpy.context.scene.ray_cast(view_layer=bpy.context.view_layer,
+        return bpy.context.scene.ray_cast(depsgraph=bpy.context.evaluated_depsgraph_get(),
                                           origin=origin,
                                           direction=direction,
                                           distance=distance)[0]
