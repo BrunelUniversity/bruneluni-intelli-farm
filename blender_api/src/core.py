@@ -17,6 +17,17 @@ class SceneDataDto:
     end_frame: int
 
 
+class MeshEnum(Enum):
+    Plane = "Plane",
+    Iscosphere = "Iscosphere"
+
+
+class OperationEnum:
+    Move = "Move",
+    Rotate = "Rotate",
+    Scale = "Scale"
+
+
 class RenderEngineEnum(Enum):
     Cycles = "Cycles",
     BlenderInternal = "Blender Internal"
@@ -56,9 +67,21 @@ class SceneAdapter(Protocol):
                             complete_handler: Callable[[Any], None]) -> None:
         ...
 
-    def add_iscosphere(self, subdivisions: int, location: VectorType) -> list[VectorType]:
+    def add_mesh(self,
+                 subdivisions: int,
+                 location: VectorType,
+                 mesh: MeshEnum) -> list[VectorType]:
         '''
-        add iscosphere and get real vectors multiplied by world matrix
+        add mesh and get real vectors multiplied by world matrix
+        '''
+        ...
+
+    def transform(self,
+                  object: str,
+                  vector: VectorType,
+                  operation: OperationEnum) -> list[VectorType]:
+        '''
+        transform mesh and get real vectors multiplied by world matrix
         '''
         ...
 
