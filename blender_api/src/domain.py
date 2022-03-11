@@ -53,9 +53,9 @@ class RenderCommands:
                                                       mesh=MeshEnum.Iscosphere)
         self.__scene_adapter.delete_current_object()
         viewport_vectors = self.__scene_adapter.add_mesh(subdivisions=100,
-                                                         location=(-23, 0, 0),
+                                                         location=(-4.87318, 0, 0),
                                                          rotation=(0, 1.5708, 0),
-                                                         scale=(4.698, 8.352, 4.35),
+                                                         scale=(1, 1.771, 1),
                                                          mesh=MeshEnum.Plane)
         self.__scene_adapter.delete_current_object()
         scene_hit_count = 0

@@ -45,7 +45,7 @@ class TestRenderCommands(TestCase):
                                                         call(origin=(0, 0, 0), direction=(1, 0, 3), distance=100)])
         self.__scene_adapter.add_mesh.assert_has_calls([
             call(subdivisions=8, location=(0, 0, 0), rotation=(0,0,0), scale=(10, 10, 10), mesh=MeshEnum.Iscosphere),
-            call(subdivisions=100, location=(-23, 0, 0), rotation=(0, 1.5708, 0), scale=(4.698, 8.352, 4.35), mesh=MeshEnum.Plane)])
+            call(subdivisions=100, location=(-4.87318, 0, 0), rotation=(0, 1.5708, 0), scale=(1, 1.771, 1), mesh=MeshEnum.Plane)])
         assert self.__scene_adapter.delete_current_object.call_count == 2
         assert self.__scene_adapter.cast_ray.call_count == 7
         self.__comms_service.write_json.assert_called_once_with(data={"scene": 0.75, "viewport": float(2 / 3)})
