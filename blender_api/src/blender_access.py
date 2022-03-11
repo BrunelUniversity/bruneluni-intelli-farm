@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from typing import Callable, Any
 from bpy.app import handlers
-from blender_api.src.core import RenderEngineEnum, SceneDataDto, VectorType
+from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, OperationEnum
 import bpy
 
 
@@ -54,16 +54,26 @@ class BlenderSceneAdapter:
         handlers.render_init.append(init_handler)
         handlers.render_complete.append(complete_handler)
 
-    def add_iscosphere(self, subdivisions: int, location: VectorType) -> list[VectorType]:
-        print(f"adding iscosphere of {subdivisions} subdivisions at {str(location)}")
-        bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
-                                              radius=1,
-                                              enter_editmode=False,
-                                              align='WORLD',
-                                              location=location,
-                                              scale=[10, 10, 10])
+    def add_mesh(self,
+                 subdivisions: int,
+                 location: VectorType,
+                 mesh: MeshEnum) -> list[VectorType]:
+        print(f"adding {mesh} of {subdivisions} subdivisions at {str(location)}")
+        if mesh is MeshEnum.Iscosphere:
+            bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
+                                                  radius=1,
+                                                  enter_editmode=False,
+                                                  align='WORLD',
+                                                  location=location,
+                                                  scale=[10, 10, 10])
         active_object = bpy.context.active_object
         return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
+
+    def transform(self,
+                  object: str,
+                  vector: VectorType,
+                  operation: OperationEnum) -> list[VectorType]:
+        raise NotImplemented
 
     def cast_ray(self,
                  origin: VectorType,

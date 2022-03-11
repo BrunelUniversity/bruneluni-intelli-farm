@@ -11,6 +11,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     public class BlenderAnimationContext : IAnimationContext
     {
         private readonly IFileAdapter _fileAdapter;
+        private readonly IPythonBundler _pythonBundler;
         private readonly IRenderManagerFactory _renderManagerFactory;
         private readonly IRenderManagerService _renderManagerService;
         private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
@@ -22,7 +23,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             IFileAdapter fileAdapter,
             IZipAdapter zipAdapter,
             IScriptsRootDirectoryState scriptsRootDirectoryState,
-            IWebClientAdapter webClientAdapter )
+            IWebClientAdapter webClientAdapter,
+            IPythonBundler pythonBundler )
         {
             _renderManagerService = renderManagerService;
             _renderManagerFactory = renderManagerFactory;
@@ -30,6 +32,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _zipAdapter = zipAdapter;
             _scriptsRootDirectoryState = scriptsRootDirectoryState;
             _webClientAdapter = webClientAdapter;
+            _pythonBundler = pythonBundler;
         }
 
         public Result Initialize( )

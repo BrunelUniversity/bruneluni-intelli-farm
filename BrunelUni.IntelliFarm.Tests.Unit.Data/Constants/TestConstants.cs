@@ -3,6 +3,7 @@
     public static class TestConstants
     {
         public const string Directory = "C:\\Test\\TestUser\\Dir";
+        public const string BlenderScriptsModulesDirectory = "C:\\Test\\Modules";
         public const string DataScriptsDir = "C:\\Test\\TestUser\\Dir\\data_scripts";
         public const string DataScriptsTempFile = "C:\\Test\\TestUser\\Dir\\temp\\render.json";
 

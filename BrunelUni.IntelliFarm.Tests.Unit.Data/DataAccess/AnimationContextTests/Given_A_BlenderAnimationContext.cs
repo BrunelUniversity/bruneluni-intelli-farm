@@ -9,12 +9,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public abstract class Given_A_BlenderAnimationContext : GivenWhenThen<IAnimationContext>
     {
-        protected IRenderManagerService MockRenderManagerService;
-        protected IRenderManagerFactory MockRenderManagerFactory;
-        protected IFileAdapter MockFileAdapter;
-        protected IZipAdapter MockZipAdapter;
         private IScriptsRootDirectoryState _fakeScriptsRootDirectoryState;
+        protected IFileAdapter MockFileAdapter;
+        protected IPythonBundler MockPythonBundler;
+        protected IRenderManagerFactory MockRenderManagerFactory;
+        protected IRenderManagerService MockRenderManagerService;
         protected IWebClientAdapter MockWebClientAdapter;
+        protected IZipAdapter MockZipAdapter;
 
         protected override void Given( )
         {
@@ -24,7 +25,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             MockZipAdapter = Substitute.For<IZipAdapter>( );
             _fakeScriptsRootDirectoryState = new FakeScriptsRootDirectoryState( );
             MockWebClientAdapter = Substitute.For<IWebClientAdapter>( );
-            SUT = new BlenderAnimationContext( MockRenderManagerService, MockRenderManagerFactory, MockFileAdapter, MockZipAdapter, _fakeScriptsRootDirectoryState, MockWebClientAdapter );
+            MockPythonBundler = Substitute.For<IPythonBundler>( );
+            SUT = new BlenderAnimationContext( MockRenderManagerService, MockRenderManagerFactory, MockFileAdapter,
+                MockZipAdapter, _fakeScriptsRootDirectoryState, MockWebClientAdapter, MockPythonBundler );
         }
     }
 }

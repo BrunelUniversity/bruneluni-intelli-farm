@@ -10,5 +10,6 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
         public string DataScriptsDir { get; }
         public string DataScriptsTempFile { get; }
         public string BlenderDirectory { get; }
+        public string BlenderScriptsModulesDirectory { get; }
     }
 }

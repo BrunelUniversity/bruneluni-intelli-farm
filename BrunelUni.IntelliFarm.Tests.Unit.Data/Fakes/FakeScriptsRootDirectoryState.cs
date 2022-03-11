@@ -9,5 +9,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.Fakes
         public string DataScriptsDir { get; } = TestConstants.DataScriptsDir;
         public string DataScriptsTempFile { get; } = TestConstants.DataScriptsTempFile;
         public string BlenderDirectory { get; } = TestConstants.BlenderDirectory;
+        public string BlenderScriptsModulesDirectory { get; } = TestConstants.BlenderScriptsModulesDirectory;
     }
 }

@@ -1,15 +1,9 @@
-﻿import os
-import pathlib
+﻿import pathlib
 import sys
 from typing import Callable
 
-print(f"{os.getcwd()}")
-dir = os.path.dirname(f"{os.getcwd()}")
-if not dir in sys.path:
-    sys.path.append(dir)
-
-from blender_api.src.blender_access import FileTempCommsService, BlenderSceneAdapter, InBuiltDateTimeAdapter
-from blender_api.src.domain import RenderCommands
+from src.blender_access import FileTempCommsService, BlenderSceneAdapter, InBuiltDateTimeAdapter
+from src.domain import RenderCommands
 
 FILENAME = f"{pathlib.Path(__file__).parent.parent.resolve()}\\temp\\render.json"
 

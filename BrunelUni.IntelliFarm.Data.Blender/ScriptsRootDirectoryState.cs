@@ -15,15 +15,17 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             Directory = configurationAdapter.Get<AppOptions>( ).Local
                 ? solutionDirectoryGetter.Get( ).Value
                 : Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
-            Directory += "\\blender_api";
-            DataScriptsDir = $"{Directory}\\src";
+            DataScriptsDir = $"{Directory}\\blender_api";
             DataScriptsTempFile = $"{Directory}\\temp\\render.json";
-            BlenderDirectory = $"{Directory}\\blender\\{DataApplicationConstants.BlenderVersion}\\blender.exe";
+            var blendDir = $"{Directory}\\blender\\{DataApplicationConstants.BlenderVersion}";
+            BlenderDirectory = $"{blendDir}\\blender.exe";
+            BlenderScriptsModulesDirectory = $"{blendDir}\\2.93\\scripts\\modules";
         }
 
         public string Directory { get; }
         public string DataScriptsDir { get; }
         public string DataScriptsTempFile { get; }
         public string BlenderDirectory { get; }
+        public string BlenderScriptsModulesDirectory { get; }
     }
 }

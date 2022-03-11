@@ -23,6 +23,7 @@ jobs:
           python-version: "3.9"
       - name: Install dependencies
         run: |
+          cd blender_api
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]
           then
@@ -30,4 +31,5 @@ jobs:
           fi
       - name: Test with pytest
         run: |
+          cd blender_api
           pytest blender_api/tests/

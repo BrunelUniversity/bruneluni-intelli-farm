@@ -1,4 +1,4 @@
-from blender_api.src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter, \
+from src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter, \
     MeshEnum
 from datetime import datetime
 

@@ -47,7 +47,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         [ Test ]
         public void Then_File_Is_Unzipped_After_Its_Downloaded_And_File_Is_Checked_First( )
         {
-            Received.InOrder( () =>
+            Received.InOrder( ( ) =>
             {
                 MockFileAdapter.Exists( Arg.Any<string>( ) );
                 MockWebClientAdapter.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) );
@@ -56,9 +56,12 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         }
 
         [ Test ]
-        public void Then_Success_Is_Returned( )
+        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
+
+        [ Test ]
+        public void Then_Python_Source_Files_Are_Bundled( )
         {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
+            MockPythonBundler.CopySources( TestConstants.BlenderScriptsModulesDirectory, TestConstants.DataScriptsDir );
         }
     }
 }
