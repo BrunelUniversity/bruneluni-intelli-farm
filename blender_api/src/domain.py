@@ -49,7 +49,7 @@ class RenderCommands:
         scene_vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
                                                       location=origin_vector,
                                                       rotation=(0, 0, 0),
-                                                      scale=(10,10,10),
+                                                      scale=(10, 10, 10),
                                                       mesh=MeshEnum.Iscosphere)
         self.__scene_adapter.delete_current_object()
         viewport_vectors = self.__scene_adapter.add_mesh(subdivisions=100,
@@ -71,4 +71,7 @@ class RenderCommands:
                   "viewport": viewport_hit_count / len(viewport_vectors)})
 
     def get_triangle_count(self):
-        ...
+        for object in self.__scene_adapter.get_all_objects():
+            self.__scene_adapter.triangulate_object(obj=object.name)
+        self.__comms_service.write_json(
+            data={"count": sum(list(map(lambda x: x.poly_count, self.__scene_adapter.get_all_objects())))})
