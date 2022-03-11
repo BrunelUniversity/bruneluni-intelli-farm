@@ -61,7 +61,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         [ Test ]
         public void Then_Python_Source_Files_Are_Bundled( )
         {
-            MockPythonBundler.CopySources( TestConstants.BlenderScriptsModulesDirectory, TestConstants.DataScriptsDir );
+            MockPythonBundler.Received( 1 ).CopySources( Arg.Any<string>( ), Arg.Any<string>( ) );
+            MockPythonBundler.Received( ).CopySources( TestConstants.BlenderScriptsModulesDirectory,
+                TestConstants.DataScriptsDir );
         }
     }
 }
