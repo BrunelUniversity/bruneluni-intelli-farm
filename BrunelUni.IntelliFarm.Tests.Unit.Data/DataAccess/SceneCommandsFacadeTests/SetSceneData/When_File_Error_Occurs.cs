@@ -4,12 +4,12 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.update
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests.SetSceneData
 {
-    public class When_Processor_Fails : Given_A_SceneRepository
+    public class When_File_Error_Occurs : Given_A_SceneCommandsFacade
     {
-        private Result _result;
         private const string Message = "message";
+        private Result _result;
 
         protected override void When( )
         {
@@ -17,10 +17,10 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 .GetRenderInfo( )
                 .Returns( new RenderMetaDto( ) );
             MockSceneProcessor.WriteTemp( Arg.Any<RenderDto>( ) )
-                .Returns( Result.Success( ) );
-            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
                 .Returns( Result.Error( Message ) );
-            _result = SUT.Update( new RenderDataDto( ) );
+            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
+                .Returns( Result.Success( ) );
+            _result = SUT.SetSceneData( new RenderDataDto( ) );
         }
 
         [ Test ]

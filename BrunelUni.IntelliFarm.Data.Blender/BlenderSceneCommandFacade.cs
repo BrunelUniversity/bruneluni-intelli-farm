@@ -7,14 +7,14 @@ using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Data.Blender
 {
-    public class BlenderSceneRepository : ISceneRepository
+    public class BlenderSceneCommandFacade : ISceneCommandFacade
     {
-        private readonly ILoggerAdapter<ISceneRepository> _loggerAdapter;
+        private readonly ILoggerAdapter<ISceneCommandFacade> _loggerAdapter;
         private readonly IRenderManagerService _renderManagerService;
         private readonly ISceneProcessor _sceneProcessor;
 
-        public BlenderSceneRepository( ISceneProcessor sceneProcessor, IRenderManagerService renderManagerService,
-            ILoggerAdapter<ISceneRepository> loggerAdapter )
+        public BlenderSceneCommandFacade( ISceneProcessor sceneProcessor, IRenderManagerService renderManagerService,
+            ILoggerAdapter<ISceneCommandFacade> loggerAdapter )
         {
             _sceneProcessor = sceneProcessor;
             _renderManagerService = renderManagerService;
@@ -22,7 +22,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         }
 
 
-        public Result Update( RenderDataDto renderOptions )
+        public Result SetSceneData( RenderDataDto renderOptions )
         {
             var fileResult = _sceneProcessor.WriteTemp( renderOptions );
             if( fileResult.Status == OperationResultEnum.Failed ) { return fileResult; }
@@ -35,7 +35,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return processResult.Status == OperationResultEnum.Failed ? processResult : Result.Success( );
         }
 
-        public ObjectResult<RenderDataDto> Read( )
+        public ObjectResult<RenderDataDto> GetSceneData( )
         {
             var processResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
@@ -61,7 +61,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             };
         }
 
-        public RayCoverageResultDto GetCoverage( RayCoverageInputDto rayCoverageInputDto )
+        public RayCoverageResultDto GetSceneAndViewportCoverage( RayCoverageInputDto rayCoverageInputDto )
         {
             _loggerAdapter.LogInfo( $"coverage subdivisions are {rayCoverageInputDto.Subdivisions}" );
             var writeResult = _sceneProcessor.WriteTemp( rayCoverageInputDto );
@@ -74,6 +74,24 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             if( readResult.Status == OperationResultEnum.Failed ) throw new IOException( readResult.Msg );
             _sceneProcessor.ClearTemp( );
             return readResult.Value;
+        }
+
+        public ObjectResult<RenderResultDto> Render( )
+        {
+            var processorResult = _sceneProcessor.RunSceneProcessAndExit(
+                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
+                "render_frame",
+                true );
+            if( processorResult.Status == OperationResultEnum.Failed )
+                return new ObjectResult<RenderResultDto>
+                {
+                    Status = processorResult.Status,
+                    Msg = processorResult.Msg
+                };
+
+            var fileResult = _sceneProcessor.ReadTemp<RenderResultDto>( );
+            _sceneProcessor.ClearTemp( );
+            return fileResult;
         }
     }
 }

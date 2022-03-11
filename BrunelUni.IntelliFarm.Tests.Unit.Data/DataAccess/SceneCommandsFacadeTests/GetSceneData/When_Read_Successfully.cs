@@ -4,9 +4,9 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.Read
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests.GetSceneData
 {
-    public class When_Read_Successfully : Given_A_SceneRepository
+    public class When_Read_Successfully : Given_A_SceneCommandsFacade
     {
         private ObjectResult<RenderDataDto> _result;
 
@@ -30,7 +30,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                         MaxBounces = 4
                     }
                 } );
-            _result = SUT.Read( );
+            _result = SUT.GetSceneData( );
         }
 
         [ Test ]

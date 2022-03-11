@@ -16,12 +16,10 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
         private readonly IFeasabilityRespository _feasabilityRespository;
         private readonly IFileAdapter _fileAdapter;
         private readonly ILoggerAdapter<SamplesTestApp> _loggerAdapter;
-        private readonly IRenderEventRepository _renderEventRepository;
         private readonly SamplesState _samplesState;
-        private readonly ISceneRepository _sceneRepository;
+        private readonly ISceneCommandFacade _sceneCommandFacade;
 
-        public SamplesTestApp( ISceneRepository sceneRepository,
-            IRenderEventRepository renderEventRepository,
+        public SamplesTestApp( ISceneCommandFacade sceneCommandFacade,
             IAnimationContext animationContext,
             ILoggerAdapter<SamplesTestApp> loggerAdapter,
             SamplesState samplesState,
@@ -31,8 +29,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
             IConfigurationAdapter configurationAdapter,
             IBatchService batchService )
         {
-            _sceneRepository = sceneRepository;
-            _renderEventRepository = renderEventRepository;
+            _sceneCommandFacade = sceneCommandFacade;
             _animationContext = animationContext;
             _loggerAdapter = loggerAdapter;
             _samplesState = samplesState;
@@ -53,7 +50,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
             foreach( var file in _samplesState.Files )
             {
                 _animationContext.InitializeScene( file.File );
-                var result = _sceneRepository.Read( );
+                var result = _sceneCommandFacade.GetSceneData( );
                 if( result.Status == OperationResultEnum.Failed )
                 {
                     throw new Exception( "failed to communicate with blender" );
@@ -63,7 +60,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                 {
                     for( var j = 0; j < _samplesState.Samples.Iterations; j++ )
                     {
-                        var dataResult = _sceneRepository.Update( new RenderDataDto
+                        var dataResult = _sceneCommandFacade.SetSceneData( new RenderDataDto
                         {
                             StartFrame = 1,
                             EndFrame = 1,
@@ -76,7 +73,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                             throw new Exception( "error occured with updating samples" );
                         }
 
-                        var renderResult = _renderEventRepository.Create( );
+                        var renderResult = _sceneCommandFacade.Render( );
                         if( renderResult.Status == OperationResultEnum.Failed )
                         {
                             throw new Exception( "error occured with rendering" );

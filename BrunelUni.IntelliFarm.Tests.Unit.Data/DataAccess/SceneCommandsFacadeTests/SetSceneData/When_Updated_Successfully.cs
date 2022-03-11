@@ -4,9 +4,9 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.update
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests.SetSceneData
 {
-    public class When_Updated_Successfully : Given_A_SceneRepository
+    public class When_Updated_Successfully : Given_A_SceneCommandsFacade
     {
         private const string BlendFile = "C:\\path\\path\\test.blend";
         private RenderDataDto _data;
@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
                 {
                     BlendFilePath = BlendFile
                 } );
-            _result = SUT.Update( _data );
+            _result = SUT.SetSceneData( _data );
         }
 
         [ Test ]
@@ -54,7 +54,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests.
         [ Test ]
         public void Then_Correct_Script_Was_Ran_With_Blender_File( )
         {
-            MockSceneProcessor.Received( ).RunSceneProcessAndExit( Arg.Any<string>( ), "set_scene_data", Arg.Any<bool>( ) );
+            MockSceneProcessor.Received( )
+                .RunSceneProcessAndExit( Arg.Any<string>( ), "set_scene_data", Arg.Any<bool>( ) );
         }
 
         [ Test ]

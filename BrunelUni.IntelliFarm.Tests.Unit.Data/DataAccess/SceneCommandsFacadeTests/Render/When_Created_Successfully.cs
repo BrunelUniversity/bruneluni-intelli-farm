@@ -4,9 +4,9 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.EventRepositoryTests.Create
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests.Render
 {
-    public class When_Created_Successfully : Given_An_EventRepository
+    public class When_Created_Successfully : Given_A_SceneCommandsFacade
     {
         private ObjectResult<RenderResultDto> _result;
 
@@ -30,7 +30,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.EventRepositoryTests.
                 } );
             MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
                 .Returns( Result.Success( ) );
-            _result = SUT.Create( );
+            _result = SUT.Render( );
         }
 
         [ Test ]

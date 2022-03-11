@@ -4,9 +4,9 @@ using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests
 {
-    public class When_Get_Coverage_Is_Called : Given_A_SceneRepository
+    public class When_Get_Coverage_Is_Called : Given_A_SceneCommandsFacade
     {
         private string _blendFilePath;
         private RayCoverageInputDto _rayCoverageInputDto;
@@ -41,7 +41,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
             {
                 Subdivisions = 4
             };
-            _result = SUT.GetCoverage( _rayCoverageInputDto );
+            _result = SUT.GetSceneAndViewportCoverage( _rayCoverageInputDto );
         }
 
         [ Test ]

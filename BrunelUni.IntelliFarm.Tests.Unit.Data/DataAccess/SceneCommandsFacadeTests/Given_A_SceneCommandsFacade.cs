@@ -4,11 +4,11 @@ using BrunelUni.IntelliFarm.Data.Blender;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using NSubstitute;
 
-namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
+namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTests
 {
-    public class Given_A_SceneRepository : GivenWhenThen<ISceneRepository>
+    public class Given_A_SceneCommandsFacade : GivenWhenThen<ISceneCommandFacade>
     {
-        private ILoggerAdapter<ISceneRepository> _loggerAdapter;
+        private ILoggerAdapter<ISceneCommandFacade> _loggerAdapter;
         protected IRenderManagerService MockRenderManagerService;
         protected ISceneProcessor MockSceneProcessor;
 
@@ -16,8 +16,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
         {
             MockSceneProcessor = Substitute.For<ISceneProcessor>( );
             MockRenderManagerService = Substitute.For<IRenderManagerService>( );
-            _loggerAdapter = Substitute.For<ILoggerAdapter<ISceneRepository>>( );
-            SUT = new BlenderSceneRepository( MockSceneProcessor, MockRenderManagerService, _loggerAdapter );
+            _loggerAdapter = Substitute.For<ILoggerAdapter<ISceneCommandFacade>>( );
+            SUT = new BlenderSceneCommandFacade( MockSceneProcessor, MockRenderManagerService, _loggerAdapter );
         }
     }
 }
