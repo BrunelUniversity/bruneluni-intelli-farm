@@ -38,7 +38,13 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public Result Initialize( )
         {
             if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status == OperationResultEnum.Success
-              ) return Result.Success( );
+              )
+            {
+                _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
+                    _scriptsRootDirectoryState.DataScriptsDir );
+                return Result.Success( );
+            }
+
             var webResult = _webClientAdapter.DownloadFile(
                 $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip",
                 "blender.zip" );
