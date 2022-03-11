@@ -46,7 +46,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             }
 
             var webResult = _webClientAdapter.DownloadFile(
-                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersion}.zip",
+                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersionFull}.zip",
                 "blender.zip" );
             if( webResult.Status == OperationResultEnum.Failed ) { return webResult; }
 
