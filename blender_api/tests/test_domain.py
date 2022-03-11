@@ -66,10 +66,10 @@ class TestRenderCommands(TestCase):
         actual_count = self.__sut.get_triangle_count()
 
         # assert
-        assert 16 == actual_count
         self.__scene_adapter.triangulate_object.assert_has_calls([
             call(obj="Cube.001"),
             call(obj="Cube.002"),
             call(obj="Cube.003")
         ])
         assert 2 == self.__scene_adapter.get_all_objects.call_count
+        self.__comms_service.write_json.assert_called_once_with(data={"count": 16})
