@@ -70,6 +70,8 @@ class SceneAdapter(Protocol):
     def add_mesh(self,
                  subdivisions: int,
                  location: VectorType,
+                 rotation: VectorType,
+                 scale: VectorType,
                  mesh: MeshEnum) -> list[VectorType]:
         '''
         add mesh and get real vectors multiplied by world matrix
@@ -92,4 +94,7 @@ class SceneAdapter(Protocol):
         ...
 
     def delete_current_object(self) -> None:
+        ...
+
+    def get_current_object_vertex_vectors(self) -> list[VectorType]:
         ...

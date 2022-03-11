@@ -50,10 +50,9 @@ class RenderCommands:
                                                       location=origin_vector,
                                                       mesh=MeshEnum.Iscosphere)
         self.__scene_adapter.delete_current_object()
-        viewport_vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
+        self.__scene_adapter.add_mesh(subdivisions=subdivisions,
                                                          location=origin_vector,
                                                          mesh=MeshEnum.Plane)
-        self.__scene_adapter.delete_current_object()
         self.__scene_adapter.transform(object="",
                                        vector=(-23, 0, 0),
                                        operation=OperationEnum.Move)
@@ -63,6 +62,8 @@ class RenderCommands:
         self.__scene_adapter.transform(object="",
                                        vector=(0, 1.5708, 0),
                                        operation=OperationEnum.Rotate)
+        viewport_vectors = self.__scene_adapter.get_current_object_vertex_vectors()
+        self.__scene_adapter.delete_current_object()
         scene_hit_count = 0
         for vector in scene_vectors:
             if self.__scene_adapter.cast_ray(origin=origin_vector, direction=vector, distance=100):

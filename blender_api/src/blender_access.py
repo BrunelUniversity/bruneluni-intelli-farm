@@ -8,6 +8,7 @@ from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, Opera
 import bpy
 import bmesh
 
+
 class BlenderSceneAdapter:
 
     def set_render_engine(self, engine: RenderEngineEnum) -> None:
@@ -57,17 +58,19 @@ class BlenderSceneAdapter:
     def add_mesh(self,
                  subdivisions: int,
                  location: VectorType,
+                 rotation: VectorType,
+                 scale: VectorType,
                  mesh: MeshEnum) -> list[VectorType]:
         print(f"adding {mesh} of {subdivisions} subdivisions at {str(location)}")
         if mesh is MeshEnum.Iscosphere:
             bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=subdivisions,
-                                                  radius=1,
-                                                  enter_editmode=False,
-                                                  align='WORLD',
                                                   location=location,
-                                                  scale=[10, 10, 10])
+                                                  rotation=rotation,
+                                                  scale=scale)
         if mesh is MeshEnum.Plane:
-            bpy.ops.mesh.primitive_plane_add()
+            bpy.ops.mesh.primitive_plane_add(location=location,
+                                             rotation=rotation,
+                                             scale=scale)
             ob = bpy.context.object
             me = ob.data
             bm = bmesh.new()
@@ -109,6 +112,10 @@ class BlenderSceneAdapter:
     def delete_current_object(self) -> None:
         print("delete current object")
         bpy.ops.object.delete(use_global=False, confirm=False)
+
+    def get_current_object_vertex_vectors(self) -> list[VectorType]:
+        active_object = bpy.context.active_object
+        return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
 
 
 class FileTempCommsService:
