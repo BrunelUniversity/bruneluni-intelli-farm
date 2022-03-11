@@ -9,6 +9,8 @@ namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
         public RenderDataDto GetSceneData( );
         public RayCoverageResultDto GetSceneAndViewportCoverage( RayCoverageInputDto rayCoverageInputDto );
 
+        public TriangleCountDto GetTriangleCount( );
+
         [ Description( "triggers a render and returns the time taken to render" ) ]
         public RenderResultDto Render( );
     }

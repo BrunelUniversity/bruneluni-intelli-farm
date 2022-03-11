@@ -54,6 +54,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             return readResult;
         }
 
+        public TriangleCountDto GetTriangleCount( ) { return new TriangleCountDto( ); }
+
         public RenderResultDto Render( )
         {
             _sceneProcessor.RunSceneProcessAndExit(
