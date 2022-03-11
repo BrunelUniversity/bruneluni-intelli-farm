@@ -40,6 +40,9 @@
         <Content Include="..\blender_api\.idea\workspace.xml">
             <Link>blender_api\.idea\workspace.xml</Link>
         </Content>
+        <Content Include="..\blender_api\requirements.txt">
+            <Link>blender_api\requirements.txt</Link>
+        </Content>
         <Content Include="..\blender_api\__init__.py">
             <Link>blender_api\__init__.py</Link>
         </Content>
