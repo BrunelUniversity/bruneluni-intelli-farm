@@ -23,13 +23,14 @@ class TestRenderCommands(TestCase):
         self.__scene_adapter.delete_current_object = MagicMock()
         self.__scene_adapter.cast_ray.side_effect = [True, False, True, True, True, True, False]
         self.__comms_service.read_json = MagicMock(return_value={"subdivisions": 8})
-        self.__scene_adapter.add_mesh = MagicMock(return_value=[(0, 0, 1),
-                                                                (0, 0, 2),
-                                                                (0, 0, 3),
-                                                                (0, 0, 4),
-                                                                (1, 0, 1),
-                                                                (1, 0, 2),
-                                                                (1, 0, 3)])
+        self.__scene_adapter.add_mesh = MagicMock()
+        self.__scene_adapter.add_mesh.side_effect = [[(0, 0, 1),
+                                                      (0, 0, 2),
+                                                      (0, 0, 3),
+                                                      (0, 0, 4)],
+                                                     [(1, 0, 1),
+                                                      (1, 0, 2),
+                                                      (1, 0, 3)]]
 
         # act
         self.__sut.get_scene_and_viewpoint_coverage()
@@ -42,21 +43,14 @@ class TestRenderCommands(TestCase):
                                                         call(origin=(0, 0, 0), direction=(1, 0, 1), distance=100),
                                                         call(origin=(0, 0, 0), direction=(1, 0, 2), distance=100),
                                                         call(origin=(0, 0, 0), direction=(1, 0, 3), distance=100)])
-        self.__scene_adapter.add_mesh.assert_called_with(subdivisions=8,
-                                                         location=(0, 0, 0),
-                                                         mesh=MeshEnum.Iscosphere)
-        self.__scene_adapter.add_mesh.assert_called_with(subdivisions=6,
-                                                         location=(0, 0, 0),
-                                                         mesh=MeshEnum.Plane)
-        self.__scene_adapter.transform.assert_called_with(object="",
-                                                          vector=(-23, 0, 0),
-                                                          operation=OperationEnum.Move)
-        self.__scene_adapter.transform.assert_called_with(object="",
-                                                          vector=(4.698, 8.352, 4.35),
-                                                          operation=OperationEnum.Scale)
-        self.__scene_adapter.transform.assert_called_with(object="",
-                                                          vector=(0, 1.5708, 0),
-                                                          operation=OperationEnum.Rotate)
-        self.__scene_adapter.delete_current_object.assert_called_once()
-        assert self.__scene_adapter.cast_ray.call_count == 4
-        self.__comms_service.write_json.assert_called_once_with(data={"scene": 0.75, "viewport": float(2/3)})
+        self.__scene_adapter.add_mesh.assert_has_calls([
+            call(subdivisions=8, location=(0, 0, 0), mesh=MeshEnum.Iscosphere),
+            call(subdivisions=8, location=(0, 0, 0), mesh=MeshEnum.Plane)])
+        self.__scene_adapter.transform.assert_has_calls([
+            call(object="", vector=(-23, 0, 0), operation=OperationEnum.Move),
+            call(object="", vector=(4.698, 8.352, 4.35), operation=OperationEnum.Scale),
+            call(object="", vector=(0, 1.5708, 0), operation=OperationEnum.Rotate)
+        ])
+        assert self.__scene_adapter.delete_current_object.call_count == 2
+        assert self.__scene_adapter.cast_ray.call_count == 7
+        self.__comms_service.write_json.assert_called_once_with(data={"scene": 0.75, "viewport": float(2 / 3)})

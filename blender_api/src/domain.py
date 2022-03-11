@@ -1,5 +1,5 @@
 from src.core import RenderEngineEnum, SceneDataDto, TempCommsService, SceneAdapter, DateTimeAdapter, \
-    MeshEnum
+    MeshEnum, OperationEnum
 from datetime import datetime
 
 
@@ -40,17 +40,36 @@ class RenderCommands:
 
     def render_frame(self):
         self.__scene_adapter.set_render_engine(engine=RenderEngineEnum.Cycles)
-        self.__scene_adapter.add_render_handlers(init_handler=lambda scene: self.init_handler(), complete_handler=lambda scene: self.complete_handler())
+        self.__scene_adapter.add_render_handlers(init_handler=lambda scene: self.init_handler(),
+                                                 complete_handler=lambda scene: self.complete_handler())
 
     def get_scene_and_viewpoint_coverage(self):
         subdivisions = self.__comms_service.read_json()["subdivisions"]
         origin_vector = (0, 0, 0)
-        vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
-                                                location=origin_vector,
-                                                mesh=MeshEnum.Iscosphere)
-        hit_count = 0
+        scene_vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
+                                                      location=origin_vector,
+                                                      mesh=MeshEnum.Iscosphere)
         self.__scene_adapter.delete_current_object()
-        for vector in vectors:
-            if self.__scene_adapter.cast_ray(origin=origin_vector,direction=vector,distance=100):
-                hit_count = hit_count + 1
-        self.__comms_service.write_json(data={"percentage": hit_count/len(vectors)})
+        viewport_vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
+                                                         location=origin_vector,
+                                                         mesh=MeshEnum.Plane)
+        self.__scene_adapter.delete_current_object()
+        self.__scene_adapter.transform(object="",
+                                       vector=(-23, 0, 0),
+                                       operation=OperationEnum.Move)
+        self.__scene_adapter.transform(object="",
+                                       vector=(4.698, 8.352, 4.35),
+                                       operation=OperationEnum.Scale)
+        self.__scene_adapter.transform(object="",
+                                       vector=(0, 1.5708, 0),
+                                       operation=OperationEnum.Rotate)
+        scene_hit_count = 0
+        for vector in scene_vectors:
+            if self.__scene_adapter.cast_ray(origin=origin_vector, direction=vector, distance=100):
+                scene_hit_count = scene_hit_count + 1
+        viewport_hit_count = 0
+        for vector in viewport_vectors:
+            if self.__scene_adapter.cast_ray(origin=origin_vector, direction=vector, distance=100):
+                viewport_hit_count = viewport_hit_count + 1
+        self.__comms_service.write_json(
+            data={"scene": scene_hit_count / len(scene_vectors), "viewport": viewport_hit_count / len(viewport_vectors)})
