@@ -48,21 +48,15 @@ class RenderCommands:
         origin_vector = (0, 0, 0)
         scene_vectors = self.__scene_adapter.add_mesh(subdivisions=subdivisions,
                                                       location=origin_vector,
+                                                      rotation=(0, 0, 0),
+                                                      scale=(10,10,10),
                                                       mesh=MeshEnum.Iscosphere)
         self.__scene_adapter.delete_current_object()
-        self.__scene_adapter.add_mesh(subdivisions=subdivisions,
-                                                         location=origin_vector,
+        viewport_vectors = self.__scene_adapter.add_mesh(subdivisions=100,
+                                                         location=(-23, 0, 0),
+                                                         rotation=(0, 1.5708, 0),
+                                                         scale=(4.698, 8.352, 4.35),
                                                          mesh=MeshEnum.Plane)
-        self.__scene_adapter.transform(object="",
-                                       vector=(-23, 0, 0),
-                                       operation=OperationEnum.Move)
-        self.__scene_adapter.transform(object="",
-                                       vector=(4.698, 8.352, 4.35),
-                                       operation=OperationEnum.Scale)
-        self.__scene_adapter.transform(object="",
-                                       vector=(0, 1.5708, 0),
-                                       operation=OperationEnum.Rotate)
-        viewport_vectors = self.__scene_adapter.get_current_object_vertex_vectors()
         self.__scene_adapter.delete_current_object()
         scene_hit_count = 0
         for vector in scene_vectors:
@@ -73,4 +67,5 @@ class RenderCommands:
             if self.__scene_adapter.cast_ray(origin=origin_vector, direction=vector, distance=100):
                 viewport_hit_count = viewport_hit_count + 1
         self.__comms_service.write_json(
-            data={"scene": scene_hit_count / len(scene_vectors), "viewport": viewport_hit_count / len(viewport_vectors)})
+            data={"scene": scene_hit_count / len(scene_vectors),
+                  "viewport": viewport_hit_count / len(viewport_vectors)})
