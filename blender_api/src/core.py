@@ -16,7 +16,7 @@ class SceneDataDto:
     start_frame: int
     end_frame: int
 
-
+@dataclass
 class ObjectDto:
     name: str
     poly_count: int

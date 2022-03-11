@@ -117,11 +117,18 @@ class BlenderSceneAdapter:
         active_object = bpy.context.active_object
         return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
 
-    def triangulate_object(self, obj: str) -> ObjectDto:
-        raise NotImplemented
+    def triangulate_object(self, obj: str):
+        me = bpy.data.scenes[0].objects[obj].data
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        bm.to_mesh(me)
+        bm.free()
 
     def get_all_objects(self) -> list[ObjectDto]:
-        raise NotImplemented
+        objects = bpy.data.scenes[0].objects
+        meshes = list(filter(lambda x: x.type == "MESH", objects))
+        return list(map(lambda x: ObjectDto(name=x.name, poly_count=len(x.data.polygons)), meshes))
 
 
 class FileTempCommsService:
