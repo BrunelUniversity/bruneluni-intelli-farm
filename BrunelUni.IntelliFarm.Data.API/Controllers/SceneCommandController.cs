@@ -13,8 +13,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
         private readonly MvcAdapter _mvcAdapter;
         private readonly ISceneCommandFacade _sceneCommandFacade;
 
-        public SceneCommandController( MvcAdapter mvcAdapter, ISceneCommandFacade sceneCommandFacade,
-            IRenderManagerService renderManagerService )
+        public SceneCommandController( MvcAdapter mvcAdapter, ISceneCommandFacade sceneCommandFacade )
         {
             _mvcAdapter = mvcAdapter;
             _sceneCommandFacade = sceneCommandFacade;
@@ -22,7 +21,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
 
         [ HttpGet ]
         [ Route( "render-data" ) ]
-        public IActionResult GetRenderInfo( )
+        public IActionResult GetRenderData( )
         {
             var result = _sceneCommandFacade.GetSceneData( );
             return _mvcAdapter.OkResult( result );
@@ -30,7 +29,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
 
         [ HttpPut ]
         [ Route( "render-data" ) ]
-        public IActionResult UpdateRenderInfo( [ FromBody ] RenderDataDto renderOptions )
+        public IActionResult SetRenderData( [ FromBody ] RenderDataDto renderOptions )
         {
             return _mvcAdapter.Success( "file ammended" );
         }
@@ -45,9 +44,17 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
 
         [ HttpPost ]
         [ Route( "render" ) ]
-        public IActionResult CreateRenderEvent( )
+        public IActionResult Render( )
         {
             var result = _sceneCommandFacade.Render( );
+            return _mvcAdapter.OkResult( result );
+        }
+
+        [ HttpGet ]
+        [ Route( "triangle-count" ) ]
+        public IActionResult GetTriangles( )
+        {
+            var result = _sceneCommandFacade.GetTriangleCount( );
             return _mvcAdapter.OkResult( result );
         }
     }
