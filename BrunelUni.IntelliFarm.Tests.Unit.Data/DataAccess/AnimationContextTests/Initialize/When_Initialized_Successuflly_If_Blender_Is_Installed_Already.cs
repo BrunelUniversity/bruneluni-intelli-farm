@@ -1,5 +1,6 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
+using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 .Returns( Result.Success( ) );
             _result = SUT.Initialize( );
         }
-        
+
         [ Test ]
         public void Then_File_Was_Not_Downloaded( )
         {
@@ -29,9 +30,14 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         }
 
         [ Test ]
-        public void Then_Success_Is_Returned( )
+        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
+
+        [ Test ]
+        public void Then_Python_Source_Files_Are_Bundled( )
         {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
+            MockPythonBundler.Received( 1 ).CopySources( Arg.Any<string>( ), Arg.Any<string>( ) );
+            MockPythonBundler.Received( ).CopySources( TestConstants.BlenderScriptsModulesDirectory,
+                TestConstants.DataScriptsDir );
         }
     }
 }
