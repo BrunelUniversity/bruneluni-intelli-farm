@@ -71,4 +71,4 @@ class RenderCommands:
                   "viewport": viewport_hit_count / len(viewport_vectors)})
 
     def get_triangle_count(self):
-        raise NotImplemented
+        ...
