@@ -19,6 +19,7 @@ class TestRenderCommands(TestCase):
         # arrange
         self.__comms_service.write_json = MagicMock()
         self.__scene_adapter.cast_ray = MagicMock()
+        self.__scene_adapter.transform = MagicMock()
         self.__scene_adapter.delete_current_object = MagicMock()
         self.__scene_adapter.cast_ray.side_effect = [True, False, True, True]
         self.__comms_service.read_json = MagicMock(return_value={"subdivisions": 8})

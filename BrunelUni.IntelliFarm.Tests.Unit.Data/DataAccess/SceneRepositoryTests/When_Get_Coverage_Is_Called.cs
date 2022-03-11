@@ -69,7 +69,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
             MockSceneProcessor.Received( )
                 .RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
             MockSceneProcessor.Received( 1 )
-                .RunSceneProcessAndExit( _blendFilePath, "get_scene_and_viewpoint_coverage", false );
+                .RunSceneProcessAndExit( _blendFilePath, "get_scene_and_viewport_coverage", false );
         }
     }
 }

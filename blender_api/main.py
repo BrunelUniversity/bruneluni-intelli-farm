@@ -18,7 +18,7 @@ class CommandsDispatcher:
             "render_frame": self.__render_commands.render_frame,
             "get_scene_data": self.__render_commands.get_scene_data,
             "set_scene_data": self.__render_commands.set_scene_data,
-            "get_scene_and_viewpoint_coverage": self.__render_commands.get_scene_and_viewpoint_coverage
+            "get_scene_and_viewport_coverage": self.__render_commands.get_scene_and_viewpoint_coverage
         })
 
     @staticmethod

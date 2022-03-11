@@ -79,7 +79,7 @@ class SceneAdapter(Protocol):
     def transform(self,
                   object: str,
                   vector: VectorType,
-                  operation: OperationEnum) -> list[VectorType]:
+                  operation: OperationEnum):
         '''
         transform mesh and get real vectors multiplied by world matrix
         '''

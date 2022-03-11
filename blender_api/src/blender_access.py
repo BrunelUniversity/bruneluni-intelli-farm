@@ -6,7 +6,7 @@ from typing import Callable, Any
 from bpy.app import handlers
 from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, OperationEnum
 import bpy
-
+import bmesh
 
 class BlenderSceneAdapter:
 
@@ -66,14 +66,36 @@ class BlenderSceneAdapter:
                                                   align='WORLD',
                                                   location=location,
                                                   scale=[10, 10, 10])
+        if mesh is MeshEnum.Plane:
+            bpy.ops.mesh.primitive_plane_add()
+            ob = bpy.context.object
+            me = ob.data
+            bm = bmesh.new()
+            bm.from_mesh(me)
+            bmesh.ops.subdivide_edges(bm,
+                                      edges=bm.edges,
+                                      cuts=subdivisions,
+                                      use_grid_fill=True)
+            bm.to_mesh(me)
+            me.update()
         active_object = bpy.context.active_object
         return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
 
     def transform(self,
                   object: str,
                   vector: VectorType,
-                  operation: OperationEnum) -> list[VectorType]:
-        raise NotImplemented
+                  operation: OperationEnum):
+        print(f"{operation} {object} {vector}")
+        if object == "":
+            this_object = bpy.context.object
+        else:
+            this_object = bpy.data.scenes[0].objects[object]
+        if operation is OperationEnum.Rotate:
+            this_object.rotation_euler = vector
+        if operation is OperationEnum.Move:
+            this_object.location = vector
+        if operation is OperationEnum.Scale:
+            this_object.scale = vector
 
     def cast_ray(self,
                  origin: VectorType,

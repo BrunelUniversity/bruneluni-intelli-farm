@@ -68,7 +68,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             if( writeResult.Status == OperationResultEnum.Failed ) throw new IOException( writeResult.Msg );
             var blenderResult = _sceneProcessor.RunSceneProcessAndExit(
                 _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "get_scene_and_viewpoint_coverage", false );
+                "get_scene_and_viewport_coverage", false );
             if( blenderResult.Status == OperationResultEnum.Failed ) throw new IOException( blenderResult.Msg );
             var readResult = _sceneProcessor.ReadTemp<RayCoverageResultDto>( );
             if( readResult.Status == OperationResultEnum.Failed ) throw new IOException( readResult.Msg );
