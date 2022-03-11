@@ -42,7 +42,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
         {
             MockSceneProcessor
                 .Received( 1 )
-                .ReadTemp<RenderDataDto>( );
+                .ReadTemp<TriangleCountDto>( );
             MockSceneProcessor.Received( 1 ).ClearTemp( );
         }
 
@@ -52,7 +52,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
             Received.InOrder( ( ) =>
             {
                 MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) );
-                MockSceneProcessor.ReadTemp<RenderDataDto>( );
+                MockSceneProcessor.ReadTemp<TriangleCountDto>( );
                 MockSceneProcessor.ClearTemp( );
             } );
         }
