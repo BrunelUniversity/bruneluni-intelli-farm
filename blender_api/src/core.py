@@ -17,6 +17,10 @@ class SceneDataDto:
     end_frame: int
 
 
+class ObjectDto:
+    name: str
+    poly_count: int
+
 class MeshEnum(Enum):
     Plane = "Plane",
     Iscosphere = "Iscosphere"
@@ -97,4 +101,10 @@ class SceneAdapter(Protocol):
         ...
 
     def get_current_object_vertex_vectors(self) -> list[VectorType]:
+        ...
+
+    def triangulate_object(self, obj: str) -> ObjectDto:
+        ...
+
+    def get_all_objects(self) -> list[ObjectDto]:
         ...

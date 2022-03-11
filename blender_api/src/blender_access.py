@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from typing import Callable, Any
 from bpy.app import handlers
-from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, OperationEnum
+from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, OperationEnum, ObjectDto
 import bpy
 import bmesh
 
@@ -116,6 +116,12 @@ class BlenderSceneAdapter:
     def get_current_object_vertex_vectors(self) -> list[VectorType]:
         active_object = bpy.context.active_object
         return [active_object.matrix_world @ _object.co for _object in active_object.data.vertices]
+
+    def triangulate_object(self, obj: str) -> ObjectDto:
+        raise NotImplemented
+
+    def get_all_objects(self) -> list[ObjectDto]:
+        raise NotImplemented
 
 
 class FileTempCommsService:

@@ -69,3 +69,6 @@ class RenderCommands:
         self.__comms_service.write_json(
             data={"scene": scene_hit_count / len(scene_vectors),
                   "viewport": viewport_hit_count / len(viewport_vectors)})
+
+    def get_triangle_count(self):
+        raise NotImplemented
