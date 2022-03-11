@@ -46,6 +46,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
             var zipResult =
                 _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
+            _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
+                _scriptsRootDirectoryState.DataScriptsDir );
             return zipResult.Status == OperationResultEnum.Failed ? zipResult : Result.Success( );
         }
 
