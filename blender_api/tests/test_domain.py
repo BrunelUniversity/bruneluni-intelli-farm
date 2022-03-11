@@ -59,4 +59,4 @@ class TestRenderCommands(TestCase):
                                                           operation=OperationEnum.Rotate)
         self.__scene_adapter.delete_current_object.assert_called_once()
         assert self.__scene_adapter.cast_ray.call_count == 4
-        self.__comms_service.write_json.assert_called_once_with(data={"coverage_percentage": 0.75, "viewport_percentage": float(2/3)})
+        self.__comms_service.write_json.assert_called_once_with(data={"scene": 0.75, "viewport": float(2/3)})

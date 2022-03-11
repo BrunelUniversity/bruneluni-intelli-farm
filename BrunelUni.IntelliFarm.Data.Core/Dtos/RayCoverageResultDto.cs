@@ -2,6 +2,7 @@
 {
     public class RayCoverageResultDto : RenderDto
     {
-        public double Percentage { get; set; }
+        public double Scene { get; set; }
+        public double Viewport { get; set; }
     }
 }

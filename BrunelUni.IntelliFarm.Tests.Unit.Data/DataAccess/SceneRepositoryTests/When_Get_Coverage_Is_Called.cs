@@ -27,7 +27,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneRepositoryTests
                 .Returns( Result.Success( ) );
             _rayCoverageResultDto = new RayCoverageResultDto
             {
-                Percentage = 50.0
+                Scene = 50.0,
+                Viewport = 25.0
             };
             MockSceneProcessor
                 .ReadTemp<RayCoverageResultDto>( )

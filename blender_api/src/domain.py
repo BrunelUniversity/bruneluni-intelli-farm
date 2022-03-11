@@ -53,4 +53,4 @@ class RenderCommands:
         for vector in vectors:
             if self.__scene_adapter.cast_ray(origin=origin_vector,direction=vector,distance=100):
                 hit_count = hit_count + 1
-        self.__comms_service.write_json(data={"viewport_percentage": hit_count/len(vectors)})
+        self.__comms_service.write_json(data={"percentage": hit_count/len(vectors)})
