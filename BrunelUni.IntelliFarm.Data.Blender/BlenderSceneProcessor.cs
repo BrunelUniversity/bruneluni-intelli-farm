@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -28,30 +27,23 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _loggerAdapter = loggerAdapter;
         }
 
-        public ObjectResult<T> ReadTemp<T>( ) where T : RenderDto
+        public T ReadTemp<T>( ) where T : RenderDto
         {
             var fileResult = _fileAdapter.ReadFile( _scriptsRootDirectoryState.DataScriptsTempFile );
             if( fileResult.Status == OperationResultEnum.Failed )
             {
-                return new ObjectResult<T>
-                {
-                    Status = OperationResultEnum.Failed,
-                    Msg = fileResult.Msg
-                };
+                throw new IOException( $"failed to read msg: {fileResult.Msg}" );
             }
 
-            return new ObjectResult<T>
-            {
-                Value = _serializer.Deserialize<T>( fileResult.Value ),
-                Status = OperationResultEnum.Success
-            };
+            return _serializer.Deserialize<T>( fileResult.Value );
         }
 
-        public Result WriteTemp( RenderDto renderDto )
+        public void WriteTemp( RenderDto renderDto )
         {
             var result = _serializer.Serialize( renderDto );
             var fileResult = _fileAdapter.WriteFile( _scriptsRootDirectoryState.DataScriptsTempFile, result );
-            return fileResult.Status == OperationResultEnum.Failed ? fileResult : Result.Success( );
+            if( fileResult.Status == OperationResultEnum.Failed )
+                throw new IOException( $"failed to write msg: {fileResult.Msg}" );
         }
 
         public void ClearTemp( )
@@ -61,7 +53,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                 throw new IOException( $"file error {fileResult.Msg}" );
         }
 
-        public Result RunSceneProcessAndExit( string pathToBlend, string script, bool render )
+        public void RunSceneProcessAndExit( string pathToBlend, string script, bool render )
         {
             var args = $"{pathToBlend} -b -P {_scriptsRootDirectoryState.DataScriptsDir}\\main.py";
             if( render )
@@ -70,7 +62,6 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                 args += $" -- {script}";
             _loggerAdapter.LogInfo( $"blender args: {args}" );
             var result = _processor.RunAndWait( _scriptsRootDirectoryState.BlenderDirectory, args );
-            return result.Status == OperationResultEnum.Failed ? result : Result.Success( );
         }
     }
 }

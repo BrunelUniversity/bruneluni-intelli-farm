@@ -1,13 +1,12 @@
-﻿using Aidan.Common.Core;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 
 namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface ISceneProcessor
     {
-        ObjectResult<T> ReadTemp<T>( ) where T : RenderDto;
-        Result WriteTemp( RenderDto renderDto );
+        T ReadTemp<T>( ) where T : RenderDto;
+        void WriteTemp( RenderDto renderDto );
         void ClearTemp( );
-        Result RunSceneProcessAndExit( string pathToBlend, string script, bool render );
+        void RunSceneProcessAndExit( string pathToBlend, string script, bool render );
     }
 }

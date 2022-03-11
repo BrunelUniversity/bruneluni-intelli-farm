@@ -1,6 +1,4 @@
-﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -8,33 +6,26 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
 {
     public class When_Read_Successfully : Given_A_SceneCommandsFacade
     {
-        private ObjectResult<RenderDataDto> _result;
+        private RenderDataDto _renderDataDto;
+        private RenderDataDto _result;
 
         protected override void When( )
         {
-            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
-                .Returns( Result.Success( ) );
             MockRenderManagerService.RenderManager
                 .GetRenderInfo( )
                 .Returns( new RenderMetaDto
                 {
                     BlendFilePath = "test"
                 } );
+            _renderDataDto = new RenderDataDto
+            {
+                Samples = 100,
+                MaxBounces = 4
+            };
             MockSceneProcessor.ReadTemp<RenderDataDto>( )
-                .Returns( new ObjectResult<RenderDataDto>
-                {
-                    Status = OperationResultEnum.Success,
-                    Value = new RenderDataDto
-                    {
-                        Samples = 100,
-                        MaxBounces = 4
-                    }
-                } );
+                .Returns( _renderDataDto );
             _result = SUT.GetSceneData( );
         }
-
-        [ Test ]
-        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
 
         [ Test ]
         public void Then_Blender_Is_Ran_With_Correct_Args( )
@@ -66,5 +57,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
                 MockSceneProcessor.ClearTemp( );
             } );
         }
+
+        [ Test ]
+        public void Then_Correct_Data_Was_Returned( ) { Assert.AreSame( _renderDataDto, _result ); }
     }
 }

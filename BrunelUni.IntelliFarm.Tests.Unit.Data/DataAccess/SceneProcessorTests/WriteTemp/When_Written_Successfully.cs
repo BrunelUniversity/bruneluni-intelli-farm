@@ -1,5 +1,4 @@
 ﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
@@ -9,9 +8,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.W
 {
     public class When_Written_Successfully : Given_A_SceneProcessor
     {
-        private Result _result;
-        private RenderDataDto _renderDataDto;
         private const string ValueToWriteTo = "value to write to";
+        private RenderDataDto _renderDataDto;
 
         protected override void When( )
         {
@@ -20,7 +18,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.W
             MockSerializer.Serialize( Arg.Any<RenderDataDto>( ) )
                 .Returns( ValueToWriteTo );
             _renderDataDto = new RenderDataDto( );
-            _result = SUT.WriteTemp( _renderDataDto );
+            SUT.WriteTemp( _renderDataDto );
         }
 
         [ Test ]
@@ -30,12 +28,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.W
             MockFileAdapter.Received( ).WriteFile( TestConstants.DataScriptsTempFile, ValueToWriteTo );
             MockSerializer.Received( 1 ).Serialize( Arg.Any<RenderDataDto>( ) );
             MockSerializer.Received( ).Serialize( _renderDataDto );
-        }
-
-        [ Test ]
-        public void Then_Result_Is_Successful( )
-        {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
         }
     }
 }

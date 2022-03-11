@@ -1,5 +1,4 @@
 ﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
 using NUnit.Framework;
@@ -8,13 +7,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public class When_Initialized_Successuflly_If_Blender_Is_Installed_Already : Given_A_BlenderAnimationContext
     {
-        private Result _result;
-
         protected override void When( )
         {
+            MockZipAdapter.ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) ).Returns( Result.Success( ) );
+            MockWebClientAdapter.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) ).Returns( Result.Success( ) );
             MockFileAdapter.Exists( Arg.Any<string>( ) )
                 .Returns( Result.Success( ) );
-            _result = SUT.Initialize( );
+            SUT.Initialize( );
         }
 
         [ Test ]
@@ -28,9 +27,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         {
             MockZipAdapter.DidNotReceive( ).ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
         }
-
-        [ Test ]
-        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
 
         [ Test ]
         public void Then_Python_Source_Files_Are_Bundled( )

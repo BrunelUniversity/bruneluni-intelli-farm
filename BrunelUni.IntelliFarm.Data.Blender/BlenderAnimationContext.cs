@@ -1,5 +1,6 @@
 ﻿using System;
-using Aidan.Common.Core;
+using System.IO;
+using System.Net;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core;
@@ -35,26 +36,28 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _pythonBundler = pythonBundler;
         }
 
-        public Result Initialize( )
+        public void Initialize( )
         {
-            if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status == OperationResultEnum.Success
-              )
+            if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status ==
+                OperationResultEnum.Success )
             {
                 _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
                     _scriptsRootDirectoryState.DataScriptsDir );
-                return Result.Success( );
+                return;
             }
 
             var webResult = _webClientAdapter.DownloadFile(
                 $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersionFull}.zip",
                 "blender.zip" );
-            if( webResult.Status == OperationResultEnum.Failed ) { return webResult; }
+            if( webResult.Status == OperationResultEnum.Failed )
+                throw new WebException( $"failing to download file msg: {webResult.Msg}" );
 
             var zipResult =
                 _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
             _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
                 _scriptsRootDirectoryState.DataScriptsDir );
-            return zipResult.Status == OperationResultEnum.Failed ? zipResult : Result.Success( );
+            if( zipResult.Status == OperationResultEnum.Failed )
+                throw new IOException( $"failed to zip file {zipResult.Msg}" );
         }
 
         public void InitializeScene( string filePath )

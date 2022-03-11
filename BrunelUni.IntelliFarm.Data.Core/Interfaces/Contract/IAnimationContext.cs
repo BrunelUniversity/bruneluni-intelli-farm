@@ -1,10 +1,8 @@
-﻿using Aidan.Common.Core;
-
-namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
+﻿namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface IAnimationContext
     {
-        Result Initialize( );
+        void Initialize( );
         void InitializeScene( string filePath );
     }
 }

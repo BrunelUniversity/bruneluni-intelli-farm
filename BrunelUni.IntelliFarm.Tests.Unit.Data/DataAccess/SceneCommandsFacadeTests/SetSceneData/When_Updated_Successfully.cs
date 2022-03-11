@@ -1,6 +1,4 @@
-﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -10,7 +8,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
     {
         private const string BlendFile = "C:\\path\\path\\test.blend";
         private RenderDataDto _data;
-        private Result _result;
 
         protected override void When( )
         {
@@ -19,17 +16,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
                 MaxBounces = 4,
                 Samples = 100
             };
-            MockSceneProcessor.WriteTemp( Arg.Any<RenderDataDto>( ) )
-                .Returns( Result.Success( ) );
-            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
-                .Returns( Result.Success( ) );
             MockRenderManagerService.RenderManager
                 .GetRenderInfo( )
                 .Returns( new RenderMetaDto
                 {
                     BlendFilePath = BlendFile
                 } );
-            _result = SUT.SetSceneData( _data );
+            SUT.SetSceneData( _data );
         }
 
         [ Test ]
@@ -65,9 +58,6 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
             MockSceneProcessor.Received( 1 ).WriteTemp( Arg.Any<RenderDto>( ) );
             MockSceneProcessor.Received( ).WriteTemp( _data );
         }
-
-        [ Test ]
-        public void Then_Success_Was_Returned( ) { Assert.AreEqual( _result.Status, OperationResultEnum.Success ); }
 
         [ Test ]
         public void Then_Process_Is_Run_Before_Reading_Then_Cleared( )

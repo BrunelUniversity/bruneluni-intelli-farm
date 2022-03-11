@@ -9,10 +9,10 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
 {
     public class When_Read_Successfully : Given_A_SceneProcessor
     {
-        private ObjectResult<string> _objectResult;
-        private ObjectResult<RenderDataDto> _result;
-        private RenderDataDto _renderDataDto;
         private const string ContentValue = "test";
+        private ObjectResult<string> _objectResult;
+        private RenderDataDto _renderDataDto;
+        private RenderDataDto _result;
 
         protected override void When( )
         {
@@ -35,10 +35,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
         }
 
         [ Test ]
-        public void Then_Data_Was_Returned_Successfully( )
+        public void Then_Correct_Data_Was_Serialized( )
         {
-            Assert.AreSame( _renderDataDto, _result.Value );
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
+            MockSerializer.Received( 1 ).Deserialize<RenderDataDto>( Arg.Any<string>( ) );
+            MockSerializer.Received( ).Deserialize<RenderDataDto>( _objectResult.Value );
         }
+
+        [ Test ]
+        public void Then_Correct_Data_Was_Returned( ) { Assert.AreSame( _renderDataDto, _result ); }
     }
 }

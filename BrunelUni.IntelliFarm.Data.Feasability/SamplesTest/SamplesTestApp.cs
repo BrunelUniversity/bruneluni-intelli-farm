@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Aidan.Common.Core.Enum;
+﻿using System.Collections.Generic;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -50,17 +48,13 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
             foreach( var file in _samplesState.Files )
             {
                 _animationContext.InitializeScene( file.File );
-                var result = _sceneCommandFacade.GetSceneData( );
-                if( result.Status == OperationResultEnum.Failed )
-                {
-                    throw new Exception( "failed to communicate with blender" );
-                }
+                _sceneCommandFacade.GetSceneData( );
 
                 for( var i = 0; i < _samplesState.Bounces.Iterations; i++ )
                 {
                     for( var j = 0; j < _samplesState.Samples.Iterations; j++ )
                     {
-                        var dataResult = _sceneCommandFacade.SetSceneData( new RenderDataDto
+                        _sceneCommandFacade.SetSceneData( new RenderDataDto
                         {
                             StartFrame = 1,
                             EndFrame = 1,
@@ -68,23 +62,15 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                             DiffuseBounces = _samplesState.Bounces.Value,
                             Samples = _samplesState.Samples.Value
                         } );
-                        if( dataResult.Status == OperationResultEnum.Failed )
-                        {
-                            throw new Exception( "error occured with updating samples" );
-                        }
 
                         var renderResult = _sceneCommandFacade.Render( );
-                        if( renderResult.Status == OperationResultEnum.Failed )
-                        {
-                            throw new Exception( "error occured with rendering" );
-                        }
 
                         _loggerAdapter.LogInfo(
-                            $"render time was {renderResult.Value.RenderTime} seconds with samples of {_samplesState.Samples.Value} and bounces of {_samplesState.Bounces.Value}" );
+                            $"render time was {renderResult.RenderTime} seconds with samples of {_samplesState.Samples.Value} and bounces of {_samplesState.Bounces.Value}" );
                         _samplesState.RenderResults.Add( new RenderSamplesResultDto
                         {
                             Samples = _samplesState.Samples.Value,
-                            RenderTime = renderResult.Value.RenderTime
+                            RenderTime = renderResult.RenderTime
                         } );
 
                         var filePath = _fileAdapter.GetCurrentDirectory( ).Value;
@@ -97,7 +83,7 @@ namespace BrunelUni.IntelliFarm.Data.Feasability.SamplesTest
                                 MaxBounces = _samplesState.Bounces.Value,
                                 Samples = _samplesState.Samples.Value,
                                 PolyCount = file.PolyCount,
-                                RenderTimeSeconds = renderResult.Value.RenderTime,
+                                RenderTimeSeconds = renderResult.RenderTime,
                                 Device = appOptions.Device,
                                 Session = _batchService.Session,
                                 Clusters = 1

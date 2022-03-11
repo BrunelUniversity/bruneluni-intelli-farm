@@ -1,6 +1,4 @@
-﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -16,15 +14,10 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
         protected override void When( )
         {
             _blendFilePath = "test//path";
-            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
-                .Returns( Result.Success( ) );
             MockRenderManagerService.RenderManager.GetRenderInfo( ).Returns( new RenderMetaDto
             {
                 BlendFilePath = _blendFilePath
             } );
-            MockSceneProcessor
-                .WriteTemp( Arg.Any<RayCoverageInputDto>( ) )
-                .Returns( Result.Success( ) );
             _rayCoverageResultDto = new RayCoverageResultDto
             {
                 Scene = 50.0,
@@ -32,11 +25,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
             };
             MockSceneProcessor
                 .ReadTemp<RayCoverageResultDto>( )
-                .Returns( new ObjectResult<RayCoverageResultDto>
-                {
-                    Status = OperationResultEnum.Success,
-                    Value = _rayCoverageResultDto
-                } );
+                .Returns( _rayCoverageResultDto );
             _rayCoverageInputDto = new RayCoverageInputDto
             {
                 Subdivisions = 4

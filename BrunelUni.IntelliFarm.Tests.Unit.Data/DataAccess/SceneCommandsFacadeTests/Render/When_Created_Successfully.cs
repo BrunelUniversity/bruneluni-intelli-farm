@@ -1,6 +1,4 @@
-﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -8,7 +6,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
 {
     public class When_Created_Successfully : Given_A_SceneCommandsFacade
     {
-        private ObjectResult<RenderResultDto> _result;
+        private RenderResultDto _result;
 
         protected override void When( )
         {
@@ -20,25 +18,15 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneCommandsFacadeTe
                 } );
             MockSceneProcessor
                 .ReadTemp<RenderResultDto>( )
-                .Returns( new ObjectResult<RenderResultDto>
+                .Returns( new RenderResultDto
                 {
-                    Status = OperationResultEnum.Success,
-                    Value = new RenderResultDto
-                    {
-                        RenderTime = 2.22
-                    }
+                    RenderTime = 2.22
                 } );
-            MockSceneProcessor.RunSceneProcessAndExit( Arg.Any<string>( ), Arg.Any<string>( ), Arg.Any<bool>( ) )
-                .Returns( Result.Success( ) );
             _result = SUT.Render( );
         }
 
         [ Test ]
-        public void Then_Success_Is_Returned( )
-        {
-            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
-            Assert.AreEqual( 2.22, _result.Value.RenderTime );
-        }
+        public void Then_Valid_Time_Is_Returned( ) { Assert.AreEqual( 2.22, _result.RenderTime ); }
 
         [ Test ]
         public void Then_Blender_Is_Ran_With_Correct_Args( )

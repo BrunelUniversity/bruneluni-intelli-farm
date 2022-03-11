@@ -1,5 +1,4 @@
 ﻿using Aidan.Common.Core;
-using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,13 +9,12 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
     {
         private const string BlendFile = "C:\\Users\\roboc\\asset_1.blend";
         private const string Script = "writer";
-        private Result _result;
 
         protected override void When( )
         {
             MockProcessor.RunAndWait( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( Result.Success( ) );
-            _result = SUT.RunSceneProcessAndExit( BlendFile, Script, false );
+            SUT.RunSceneProcessAndExit( BlendFile, Script, false );
         }
 
         [ Test ]
@@ -26,8 +24,5 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.SceneProcessorTests.R
             MockProcessor.Received( ).RunAndWait( TestConstants.BlenderDirectory,
                 $"{BlendFile} -b -P {TestConstants.DataScriptsDir}\\main.py -- {Script}" );
         }
-
-        [ Test ]
-        public void Then_Success_Is_Returned( ) { Assert.AreEqual( OperationResultEnum.Success, _result.Status ); }
     }
 }

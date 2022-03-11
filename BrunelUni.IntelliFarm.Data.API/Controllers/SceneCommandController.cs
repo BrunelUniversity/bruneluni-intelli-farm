@@ -1,5 +1,4 @@
-﻿using Aidan.Common.Core.Enum;
-using Aidan.Common.Utils.Web;
+﻿using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Data.API.Filters;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -26,19 +25,14 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
         public IActionResult GetRenderInfo( )
         {
             var result = _sceneCommandFacade.GetSceneData( );
-            return result.Status == OperationResultEnum.Success
-                ? _mvcAdapter.OkResult( result.Value )
-                : _mvcAdapter.BadRequestError( result.Msg );
+            return _mvcAdapter.OkResult( result );
         }
 
         [ HttpPut ]
         [ Route( "render-data" ) ]
         public IActionResult UpdateRenderInfo( [ FromBody ] RenderDataDto renderOptions )
         {
-            var result = _sceneCommandFacade.SetSceneData( renderOptions );
-            return result.Status == OperationResultEnum.Success
-                ? _mvcAdapter.Success( "file ammended" )
-                : _mvcAdapter.BadRequestError( result.Msg );
+            return _mvcAdapter.Success( "file ammended" );
         }
 
         [ HttpGet ]
@@ -54,9 +48,7 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
         public IActionResult CreateRenderEvent( )
         {
             var result = _sceneCommandFacade.Render( );
-            return result.Status == OperationResultEnum.Failed
-                ? _mvcAdapter.BadRequestError( result.Msg )
-                : _mvcAdapter.OkResult( result.Value );
+            return _mvcAdapter.OkResult( result );
         }
     }
 }
