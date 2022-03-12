@@ -2,8 +2,7 @@
 import sys
 from typing import Callable
 
-from src.blender_access import FileTempCommsService, BlenderSceneAdapter, InBuiltDateTimeAdapter, \
-    Win32NamedPipeTempCommsService
+from src.blender_access import FileTempCommsService, BlenderSceneAdapter, InBuiltDateTimeAdapter
 from src.domain import RenderCommands
 
 FILENAME = f"{pathlib.Path(__file__).parent.parent.resolve()}\\temp\\render.json"
@@ -12,7 +11,7 @@ FILENAME = f"{pathlib.Path(__file__).parent.parent.resolve()}\\temp\\render.json
 class CommandsDispatcher:
 
     def __init__(self):
-        self.__render_commands = RenderCommands(comms_service=Win32NamedPipeTempCommsService(filename=FILENAME),
+        self.__render_commands = RenderCommands(comms_service=FileTempCommsService(filename=FILENAME),
                                                 scene_adapter=BlenderSceneAdapter(),
                                                 date_time_adapter=InBuiltDateTimeAdapter())
         self.__commands = dict({
