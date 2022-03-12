@@ -1,8 +1,11 @@
 import errno
 import json
 import os
+from ctypes.wintypes import HANDLE
 from datetime import datetime
 from typing import Callable, Any
+
+import win32file
 from bpy.app import handlers
 from src.core import RenderEngineEnum, SceneDataDto, VectorType, MeshEnum, OperationEnum, ObjectDto
 import bpy
@@ -147,6 +150,41 @@ class FileTempCommsService:
         with open(self.__filename, 'w') as opened_file:
             print(f"writing to file\n{json.dumps(data, indent=4, sort_keys=True)}")
             opened_file.write(json.dumps(data))
+
+
+class Win32NamedPipeTempCommsService:
+
+    def __init__(self, filename: str):
+        self.__filename = filename
+
+    def read_json(self) -> dict:
+        print("reading from named pipe client")
+        handle = self.__connect_to_pipe()
+        _, data = win32file.ReadFile(handle, 4096)
+        message_string = data.decode('utf-8')
+        win32file.CloseHandle(handle)
+        print("read from named pipe client")
+        return json.loads(message_string)
+
+    def write_json(self, data: dict):
+        print("writing from named pipe client")
+        handle = self.__connect_to_pipe()
+        message_bytes = json.dumps(data).encode('utf-8')
+        win32file.WriteFile(handle, message_bytes)
+        win32file.CloseHandle(handle)
+        print("written from named pipe client")
+
+    def __connect_to_pipe(self) -> HANDLE:
+        print(f"connecting to named pipe at {self.__filename}")
+        file_handle = win32file.CreateFile(
+            f"\\\\.\\pipe\\{self.__filename}",
+            win32file.GENERIC_READ | win32file.GENERIC_WRITE,
+            0,
+            None,
+            win32file.OPEN_EXISTING,
+            0,
+            None)
+        return file_handle
 
 
 class InBuiltDateTimeAdapter:
