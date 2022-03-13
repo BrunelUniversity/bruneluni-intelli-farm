@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock, call
 
-from src.core import TempCommsService, SceneAdapter, DateTimeAdapter, MeshEnum, OperationEnum, ObjectDto
+from src.core import TempCommsService, SceneAdapter, DateTimeAdapter, MeshEnum, OperationEnum, ObjectDto, SceneDataDto
 from src.domain import RenderCommands, StateHelper
 
 
@@ -16,6 +16,26 @@ class TestRenderCommands(TestCase):
                                     scene_adapter=self.__scene_adapter,
                                     date_time_adapter=self.__date_time_adapter,
                                     state_helper=self.__state_helper)
+
+    def test_when_get_scene_data(self):
+        # arrange
+        expected = SceneDataDto(samples=100,
+                                max_bounces=4,
+                                diffuse_bounces=4,
+                                glossy_bounces=4,
+                                transmission_bounces=4,
+                                transparent_max_bounces=4,
+                                volume_bounces=4,
+                                start_frame=1,
+                                end_frame=1)
+        self.__scene_adapter.get_scene_data = MagicMock(return_value=expected)
+        self.__state_helper.set_data_out = MagicMock()
+
+        # act
+        self.__sut.get_scene_data()
+
+        # assert
+        self.__state_helper.set_data_out.assert_called_once_with(data=expected.__dict__)
 
     def test_when_get_coverage_called(self):
         # arrange
