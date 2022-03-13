@@ -1,4 +1,5 @@
-﻿using Aidan.Common.Core.Interfaces.Contract;
+﻿using System;
+using Aidan.Common.Core.Interfaces.Contract;
 using Aidan.Common.Utils.Test;
 using BrunelUni.IntelliFarm.Data.Blender;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -25,7 +26,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         private ILoggerAdapter<ISceneProcessor> _loggerAdapter;
         private ScriptsRootDirectoryDto _scriptsRootDirectoryDto;
         private CommandMetaDto _commandMeta;
-        private INamedPipeServer _fakeNamePipeServer;
+        private FakeNamedPipeServer _fakeNamePipeServer;
+        private string _exampleObjectString;
+        private RenderDataDto _dataIn;
 
         public Given_An_InAndOutCommand_When_Ran( bool render, string endOfArgs )
         {
@@ -36,6 +39,11 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         protected override void Given( )
         {
             _fakeNamePipeServer = new FakeNamedPipeServer( );
+            _exampleObjectString = "{ \"Example\": \"Field\" }";
+            _fakeNamePipeServer
+                .Spy
+                .Send( Arg.Any<string>( ), Arg.Any<Action>( ) )
+                .Returns( _exampleObjectString );
             _renderMetaDto = new RenderMetaDto( );
             _sceneProcessor = Substitute.For<ISceneProcessor>( );
             _serializer = Substitute.For<ISerializer>( );
@@ -59,12 +67,13 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 
         protected override void When( )
         {
-            SUT.Run<RenderDataDto, RenderDataDto>( new RenderDataDto
+            _dataIn = new RenderDataDto
             {
                 DiffuseBounces = 1,
                 EndFrame = 2,
                 GlossyBounces = 3
-            } );
+            };
+            SUT.Run<RenderDataDto, RenderDataDto>( _dataIn );
         }
 
         [ Test ]
@@ -73,6 +82,19 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             _sceneProcessor.Received( ).RunSceneProcess( TestConstants.BlenderDirectory,
                 $"-b -P {TestConstants.DataScriptsDir}\\main.py{_endOfArgs}" );
             _sceneProcessor.Received( 1 ).RunSceneProcess( Arg.Any<string>( ), Arg.Any<string>( ) );
+        }
+
+        [ Test ]
+        public void Then_Correct_Objects_Are_Serialized_And_Deserialized( )
+        {
+            _serializer.Received( 1 ).Serialize( Arg.Any<object>( ) );
+            _serializer.Received( ).Serialize( Arg.Is<DataInDto>( o =>
+                ( ( RenderDataDto )o.Data ).DiffuseBounces == 1 &&
+                ( ( RenderDataDto )o.Data ).EndFrame == 2 &&
+                ( ( RenderDataDto )o.Data ).GlossyBounces == 3 &&
+                o.Command == _command ) );
+            _serializer.Received( 1 ).Deserialize<RenderDataDto>( Arg.Any<string>( ) );
+            _serializer.Received( ).Deserialize<RenderDataDto>( _exampleObjectString );
         }
     }
 }
