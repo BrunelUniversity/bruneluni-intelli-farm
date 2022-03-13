@@ -8,9 +8,9 @@ from src.domain import RenderCommands
 class TestRenderCommands(TestCase):
 
     def setUp(self) -> None:
-        self.__comms_service: TempCommsService = Mock()
-        self.__scene_adapter: SceneAdapter = Mock()
-        self.__date_time_adapter: DateTimeAdapter = Mock()
+        self.__comms_service: TempCommsService = Mock(spec=TempCommsService)
+        self.__scene_adapter: SceneAdapter = Mock(spec=SceneAdapter)
+        self.__date_time_adapter: DateTimeAdapter = Mock(spec=DateTimeAdapter)
         self.__sut = RenderCommands(comms_service=self.__comms_service,
                                     scene_adapter=self.__scene_adapter,
                                     date_time_adapter=self.__date_time_adapter)

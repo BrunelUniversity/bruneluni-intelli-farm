@@ -17,13 +17,15 @@ namespace BrunelUni.IntelliFarm.Data.API
                 .BindDataLayer( )
                 .AddTransient<MvcAdapter>( )
                 .AddTransient<RenderFileFilter>( )
-                .AddTransient<BlenderInstallFilter>()
+                .AddTransient<BlenderInstallFilter>( )
                 .AddControllers( )
                 .BindJsonOptions( CaseEnum.Snake );
 
-        public void Configure( IApplicationBuilder applicationBuilder, IWebHostEnvironment env ) =>
+        public void Configure( IApplicationBuilder applicationBuilder, IWebHostEnvironment env )
+        {
             applicationBuilder
                 .UseRouting( )
                 .UseEndpoints( endpoints => endpoints.MapControllers( ) );
+        }
     }
 }

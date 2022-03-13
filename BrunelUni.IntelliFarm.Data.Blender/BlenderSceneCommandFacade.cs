@@ -1,80 +1,73 @@
-﻿using Aidan.Common.Core.Interfaces.Contract;
-using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Data.Blender
 {
     public class BlenderSceneCommandFacade : ISceneCommandFacade
     {
-        private readonly ILoggerAdapter<ISceneCommandFacade> _loggerAdapter;
+        private readonly ICommandInAndOutFactory _commandInAndOutFactory;
+        private readonly ICommandInFactory _commandInFactory;
+        private readonly ICommandOutFactory _commandOutFactory;
         private readonly IRenderManagerService _renderManagerService;
-        private readonly ISceneProcessor _sceneProcessor;
+        private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
 
-        public BlenderSceneCommandFacade( ISceneProcessor sceneProcessor, IRenderManagerService renderManagerService,
-            ILoggerAdapter<ISceneCommandFacade> loggerAdapter )
+        public BlenderSceneCommandFacade( ICommandInFactory commandInFactory,
+            IRenderManagerService renderManagerService,
+            ICommandOutFactory commandOutFactory,
+            ICommandInAndOutFactory commandInAndOutFactory,
+            IScriptsRootDirectoryState scriptsRootDirectoryState )
         {
-            _sceneProcessor = sceneProcessor;
+            _commandInFactory = commandInFactory;
             _renderManagerService = renderManagerService;
-            _loggerAdapter = loggerAdapter;
+            _commandOutFactory = commandOutFactory;
+            _commandInAndOutFactory = commandInAndOutFactory;
+            _scriptsRootDirectoryState = scriptsRootDirectoryState;
         }
-
 
         public void SetSceneData( RenderDataDto renderOptions )
         {
-            _sceneProcessor.WriteTemp( renderOptions );
-
-            _sceneProcessor.RunSceneProcessAndExit(
-                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "set_scene_data",
-                false );
-            _sceneProcessor.ClearTemp( );
+            _commandInFactory
+                .Factory( CreateMeta( "set_scene_data", false ) )
+                .Run( renderOptions );
         }
 
         public RenderDataDto GetSceneData( )
         {
-            _sceneProcessor.RunSceneProcessAndExit(
-                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "get_scene_data",
-                false );
-
-            var data = _sceneProcessor.ReadTemp<RenderDataDto>( );
-            _sceneProcessor.ClearTemp( );
-            return data;
+            return _commandOutFactory
+                .Factory( CreateMeta( "get_scene_data", false ) )
+                .Run<RenderDataDto>( );
         }
 
         public RayCoverageResultDto GetSceneAndViewportCoverage( RayCoverageInputDto rayCoverageInputDto )
         {
-            _loggerAdapter.LogInfo( $"coverage subdivisions are {rayCoverageInputDto.Subdivisions}" );
-            _sceneProcessor.WriteTemp( rayCoverageInputDto );
-            _sceneProcessor.RunSceneProcessAndExit(
-                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "get_scene_and_viewport_coverage", false );
-            var readResult = _sceneProcessor.ReadTemp<RayCoverageResultDto>( );
-            _sceneProcessor.ClearTemp( );
-            return readResult;
+            return _commandInAndOutFactory
+                .Factory( CreateMeta( "get_scene_and_viewport_coverage", false ) )
+                .Run<RayCoverageInputDto, RayCoverageResultDto>( rayCoverageInputDto );
         }
 
         public TriangleCountDto GetTriangleCount( )
         {
-            _sceneProcessor.RunSceneProcessAndExit(
-                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "get_triangles_count",
-                false );
-
-            var data = _sceneProcessor.ReadTemp<TriangleCountDto>( );
-            _sceneProcessor.ClearTemp( );
-            return data;
+            return _commandOutFactory
+                .Factory( CreateMeta( "get_triangles_count", false ) )
+                .Run<TriangleCountDto>( );
         }
 
         public RenderResultDto Render( )
         {
-            _sceneProcessor.RunSceneProcessAndExit(
-                _renderManagerService.RenderManager.GetRenderInfo( ).BlendFilePath,
-                "render_frame",
-                true );
-            var fileResult = _sceneProcessor.ReadTemp<RenderResultDto>( );
-            _sceneProcessor.ClearTemp( );
-            return fileResult;
+            return _commandOutFactory
+                .Factory( CreateMeta( "render_frame", true ) )
+                .Run<RenderResultDto>( );
+        }
+
+        private CommandMetaDto CreateMeta( string commandName, bool render )
+        {
+            return new CommandMetaDto
+            {
+                Command = commandName,
+                Render = render,
+                RenderMetaDto = _renderManagerService.RenderManager.GetRenderInfo( ),
+                ScriptsRootDirectoryDto = _scriptsRootDirectoryState.ScriptsRootDirectoryDto
+            };
         }
     }
 }

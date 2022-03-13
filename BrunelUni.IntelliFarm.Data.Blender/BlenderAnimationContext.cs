@@ -38,11 +38,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public void Initialize( )
         {
-            if( _fileAdapter.Exists( _scriptsRootDirectoryState.BlenderDirectory ).Status ==
+            if( _fileAdapter.Exists( _scriptsRootDirectoryState.ScriptsRootDirectoryDto.BlenderDirectory ).Status ==
                 OperationResultEnum.Success )
             {
-                _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
-                    _scriptsRootDirectoryState.DataScriptsDir );
+                _pythonBundler.Bundle(
+                    _scriptsRootDirectoryState.ScriptsRootDirectoryDto.BlenderScriptsModulesDirectory,
+                    _scriptsRootDirectoryState.ScriptsRootDirectoryDto.DataScriptsDir );
                 return;
             }
 
@@ -53,11 +54,12 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                 throw new WebException( $"failing to download file msg: {webResult.Msg}" );
 
             var zipResult =
-                _zipAdapter.ExtractToDirectory( "blender.zip", $"{_scriptsRootDirectoryState.Directory}\\blender" );
-            _pythonBundler.CopySources( _scriptsRootDirectoryState.BlenderScriptsModulesDirectory,
-                _scriptsRootDirectoryState.DataScriptsDir );
+                _zipAdapter.ExtractToDirectory( "blender.zip",
+                    $"{_scriptsRootDirectoryState.ScriptsRootDirectoryDto.Directory}\\blender" );
             if( zipResult.Status == OperationResultEnum.Failed )
                 throw new IOException( $"failed to zip file {zipResult.Msg}" );
+            _pythonBundler.Bundle( _scriptsRootDirectoryState.ScriptsRootDirectoryDto.BlenderScriptsModulesDirectory,
+                _scriptsRootDirectoryState.ScriptsRootDirectoryDto.DataScriptsDir );
         }
 
         public void InitializeScene( string filePath )

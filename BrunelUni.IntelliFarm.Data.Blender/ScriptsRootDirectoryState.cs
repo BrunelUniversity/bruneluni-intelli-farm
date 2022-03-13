@@ -12,21 +12,21 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         public ScriptsRootDirectoryState( IConfigurationAdapter configurationAdapter,
             ISolutionDirectoryGetter solutionDirectoryGetter )
         {
-            Directory = configurationAdapter.Get<AppOptions>( ).Local
-                ? solutionDirectoryGetter.Get( ).Value
-                : Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location );
-            DataScriptsDir = $"{Directory}\\blender_api";
-            DataScriptsTempFile = $"{Directory}\\temp\\render.json";
-            var blendDir = $"{Directory}\\blender\\{DataApplicationConstants.BlenderVersionFull}";
-            BlenderDirectory = $"{blendDir}\\blender.exe";
-            BlenderScriptsModulesDirectory =
+            ScriptsRootDirectoryDto = new ScriptsRootDirectoryDto
+            {
+                Directory = configurationAdapter.Get<AppOptions>( ).Local
+                    ? solutionDirectoryGetter.Get( ).Value
+                    : Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location )
+            };
+            ScriptsRootDirectoryDto.DataScriptsDir = $"{ScriptsRootDirectoryDto.Directory}\\blender_api";
+            ScriptsRootDirectoryDto.DataScriptsTempFile = $"{ScriptsRootDirectoryDto.Directory}\\temp\\render.json";
+            var blendDir =
+                $"{ScriptsRootDirectoryDto.Directory}\\blender\\{DataApplicationConstants.BlenderVersionFull}";
+            ScriptsRootDirectoryDto.BlenderDirectory = $"{blendDir}\\blender.exe";
+            ScriptsRootDirectoryDto.BlenderScriptsModulesDirectory =
                 $"{blendDir}\\{DataApplicationConstants.BlenderVersionShort}\\scripts\\modules";
         }
 
-        public string Directory { get; }
-        public string DataScriptsDir { get; }
-        public string DataScriptsTempFile { get; }
-        public string BlenderDirectory { get; }
-        public string BlenderScriptsModulesDirectory { get; }
+        public ScriptsRootDirectoryDto ScriptsRootDirectoryDto { get; }
     }
 }

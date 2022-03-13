@@ -29,8 +29,9 @@ namespace BrunelUni.IntelliFarm.Data.API.Controllers
 
         [ HttpPut ]
         [ Route( "render-data" ) ]
-        public IActionResult SetRenderData( [ FromBody ] RenderDataDto renderOptions )
+        public IActionResult SetRenderData( [ FromBody ] RenderDataDto data )
         {
+            _sceneCommandFacade.SetSceneData( data );
             return _mvcAdapter.Success( "file ammended" );
         }
 

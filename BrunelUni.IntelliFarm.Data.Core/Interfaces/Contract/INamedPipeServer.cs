@@ -1,7 +1,9 @@
-﻿namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
+﻿using System;
+
+namespace BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract
 {
     public interface INamedPipeServer
     {
-        void Start( );
+        string Send( string message, Action fireAndForgetAfterPipeCreated );
     }
 }

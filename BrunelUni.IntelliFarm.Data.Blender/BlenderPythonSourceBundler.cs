@@ -6,8 +6,9 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 {
     public class BlenderPythonSourceBundler : IPythonBundler
     {
-        public void CopySources( string toSource, string fromSource )
+        public void Bundle( string toSource, string fromSource )
         {
+            if( Directory.Exists( $"{toSource}\\src" ) ) Directory.Delete( $"{toSource}\\src", true );
             Directory.CreateDirectory( $"{toSource}\\src" );
             var files = from f in Directory.EnumerateFiles( $"{fromSource}\\src" )
                 where f.EndsWith( ".py" )
