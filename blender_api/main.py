@@ -12,7 +12,7 @@ except ImportError:
     pip.main(['install', 'pywin32'])
     from src.blender_access import Win32NamedPipeTempCommsService
 from src.blender_access import BlenderSceneAdapter, InBuiltDateTimeAdapter
-from src.core import TempCommsService
+from src.core import TempCommsService, SceneAdapter, DateTimeAdapter
 from src.domain import RenderCommands, StateHelper
 
 FILENAME = f"{pathlib.Path(__file__).parent.parent.resolve()}\\temp\\render.json"
@@ -20,12 +20,17 @@ FILENAME = f"{pathlib.Path(__file__).parent.parent.resolve()}\\temp\\render.json
 
 class CommandsDispatcher:
 
-    def __init__(self, temp_comms_service: TempCommsService):
+    def __init__(self,
+                 temp_comms_service: TempCommsService,
+                 scene_adapter: SceneAdapter,
+                 date_time_adapter: DateTimeAdapter):
+        self.__date_time_adapter = date_time_adapter
+        self.__scene_adapter = scene_adapter
         self.__temp_comms_service = temp_comms_service
         self.__state = {}
         self.__state_helper = StateHelper(state=self.__state)
-        self.__render_commands = RenderCommands(scene_adapter=BlenderSceneAdapter(),
-                                                date_time_adapter=InBuiltDateTimeAdapter(),
+        self.__render_commands = RenderCommands(scene_adapter=self.__scene_adapter,
+                                                date_time_adapter=self.__date_time_adapter,
                                                 state_helper=self.__state_helper,
                                                 temp_comms_service=temp_comms_service)
         self.__commands = dict({
@@ -55,5 +60,9 @@ class CommandsDispatcher:
 
 
 temp_comms_service = Win32NamedPipeTempCommsService(filename="blender-api-pipe")
-commands = CommandsDispatcher(temp_comms_service=temp_comms_service)
+scene_adapter = BlenderSceneAdapter()
+date_time_adapter = InBuiltDateTimeAdapter()
+commands = CommandsDispatcher(temp_comms_service=temp_comms_service,
+                              scene_adapter=scene_adapter,
+                              date_time_adapter=date_time_adapter)
 commands.get_command()
