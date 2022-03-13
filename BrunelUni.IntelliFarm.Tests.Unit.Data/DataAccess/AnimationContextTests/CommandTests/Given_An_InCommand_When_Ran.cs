@@ -10,6 +10,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
     public class Given_An_InCommand_When_Ran : GivenWhenThen<ICommandIn>
     {
         private string _command;
+        private ICommandInAndOut _commandInAndOut;
         private ICommandInAndOutFactory _commandInAndOutFactory;
         private CommandMetaDto _commandMeta;
         private RenderDataDto _dataIn;
@@ -19,6 +20,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 
         protected override void Given( )
         {
+            _commandInAndOut = Substitute.For<ICommandInAndOut>( );
             _renderMetaDto = new RenderMetaDto( );
             _scriptsRootDirectoryDto = new ScriptsRootDirectoryDto( );
             _command = "some-command";
@@ -30,6 +32,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 ScriptsRootDirectoryDto = _scriptsRootDirectoryDto
             };
             _commandInAndOutFactory = Substitute.For<ICommandInAndOutFactory>( );
+            _commandInAndOutFactory
+                .Factory( Arg.Any<CommandMetaDto>( ) )
+                .Returns( _commandInAndOut );
             SUT = new BlenderCommandIn( _commandMeta, _commandInAndOutFactory );
         }
 
@@ -44,9 +49,14 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         {
             _commandInAndOutFactory.Received( ).Factory( Arg.Any<CommandMetaDto>( ) );
             _commandInAndOutFactory.Received( 1 ).Factory( _commandMeta );
-            _commandInAndOutFactory.Factory( _commandMeta ).Received( 1 )
+            _commandInAndOutFactory
+                .Factory( _commandMeta )
+                .Received( 1 )
                 .Run<RenderDataDto, RenderDataDto>( Arg.Any<RenderDataDto>( ) );
-            _commandInAndOutFactory.Factory( _commandMeta ).Received( ).Run<RenderDataDto, RenderDataDto>( _dataIn );
+            _commandInAndOutFactory
+                .Factory( _commandMeta )
+                .Received( )
+                .Run<RenderDataDto, RenderDataDto>( _dataIn );
         }
     }
 }
