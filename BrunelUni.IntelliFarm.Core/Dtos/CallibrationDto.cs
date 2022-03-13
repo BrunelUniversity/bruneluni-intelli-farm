@@ -1,10 +1,9 @@
 ﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-
     public class CallibrationDto
     {
-        public RenderTimeTinyType TimeFor0PolyViewpoint { get; set; }
-        public RenderTimeTinyType TimeFor80Poly100Coverage { get; set; }
-        public PercentageTinyType [ ] CoveragePerFrame { get; set; }
+        public double TimeFor0PolyViewpoint { get; set; }
+        public double TimeFor80Poly100Coverage0Bounces100Samples { get; set; }
+        public double TimeFor80Poly100Coverage0Bounces50Samples { get; set; }
     }
 }

@@ -8,4 +8,8 @@
       <PackageReference Include="Aidan.Common.Core" Version="1.0.31" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj" />
+    </ItemGroup>
+
 </Project>
