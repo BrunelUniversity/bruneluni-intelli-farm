@@ -37,6 +37,28 @@ class TestRenderCommands(TestCase):
         # assert
         self.__state_helper.set_data_out.assert_called_once_with(data=expected.__dict__)
 
+    def test_when_set_scene_data(self):
+        # arrange
+        expected = SceneDataDto(samples=100,
+                                max_bounces=4,
+                                diffuse_bounces=4,
+                                glossy_bounces=4,
+                                transmission_bounces=4,
+                                transparent_max_bounces=4,
+                                volume_bounces=4,
+                                start_frame=1,
+                                end_frame=1)
+        self.__state_helper.read_data_in = MagicMock(return_value=expected.__dict__)
+        self.__scene_adapter.set_scene_data = MagicMock()
+        self.__scene_adapter.save_file = MagicMock()
+
+        # act
+        self.__sut.set_scene_data()
+
+        # assert
+        self.__scene_adapter.set_scene_data.assert_called_once_with(data=expected)
+        self.__scene_adapter.save_file.assert_called_once()
+
     def test_when_get_coverage_called(self):
         # arrange
         self.__state_helper.read_data_in = MagicMock(return_value={"subdivisions": 8})
