@@ -1,7 +1,8 @@
 from unittest import TestCase
 from unittest.mock import Mock, MagicMock, call
 
-from src.core import TempCommsService, SceneAdapter, DateTimeAdapter, MeshEnum, OperationEnum, ObjectDto, SceneDataDto
+from src.core import TempCommsService, SceneAdapter, DateTimeAdapter, MeshEnum, OperationEnum, ObjectDto, SceneDataDto, \
+    RenderEngineEnum
 from src.domain import RenderCommands, StateHelper
 
 
@@ -58,6 +59,18 @@ class TestRenderCommands(TestCase):
         # assert
         self.__scene_adapter.set_scene_data.assert_called_once_with(data=expected)
         self.__scene_adapter.save_file.assert_called_once()
+
+    def test_when_render_called(self):
+        # arrange
+        self.__scene_adapter.set_render_engine = MagicMock()
+        self.__scene_adapter.add_render_handlers = MagicMock()
+
+        # act
+        self.__sut.render_frame()
+
+        # assert
+        self.__scene_adapter.set_render_engine.assert_called_once_with(engine=RenderEngineEnum.Cycles)
+        self.__scene_adapter.add_render_handlers.assert_called_once()
 
     def test_when_get_coverage_called(self):
         # arrange
