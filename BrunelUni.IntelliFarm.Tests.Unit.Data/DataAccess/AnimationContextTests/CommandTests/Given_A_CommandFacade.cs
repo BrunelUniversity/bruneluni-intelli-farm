@@ -41,14 +41,24 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             _renderManagerService
                 .RenderManager
                 .GetRenderInfo( )
-                .BlendFilePath
-                .Returns( BlendFile );
+                .Returns( new RenderMetaDto
+                {
+                    BlendFilePath = BlendFile
+                } );
             ScriptsRootDirectoryState = new FakeScriptsRootDirectoryState( );
             SUT = new BlenderSceneCommandFacade( MockCommandInFactory,
                 _renderManagerService,
                 MockCommandOutFactory,
                 MockCommandInAndOutFactory,
                 ScriptsRootDirectoryState );
+        }
+
+        protected bool AssertMeta( CommandMetaDto c, string command, bool render )
+        {
+            return c.Render == render &&
+                   c.Command == command &&
+                   c.RenderMetaDto.BlendFilePath == BlendFile &&
+                   c.ScriptsRootDirectoryDto == ScriptsRootDirectoryState.ScriptsRootDirectoryDto;
         }
     }
 }

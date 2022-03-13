@@ -20,11 +20,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         public void Then_Out_Command_Is_Created( )
         {
             MockCommandOutFactory.Received( 1 ).Factory( Arg.Any<CommandMetaDto>( ) );
-            MockCommandOutFactory.Received( ).Factory( Arg.Is<CommandMetaDto>( c =>
-                c.Render == false &&
-                c.Command == "" &&
-                c.RenderMetaDto.BlendFilePath == BlendFile &&
-                c.ScriptsRootDirectoryDto == ScriptsRootDirectoryState.ScriptsRootDirectoryDto ) );
+            MockCommandOutFactory
+                .Received( )
+                .Factory( Arg.Is<CommandMetaDto>( c => AssertMeta( c, "get_scene_data", false ) ) );
         }
 
         [ Test ]
