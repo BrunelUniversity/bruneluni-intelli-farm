@@ -51,7 +51,7 @@ namespace BrunelUni.IntelliFarm.Domain
                                      Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
                                          SceneCoverageMultForHMaxExpCalc );
             var baseBounceRate = Cov100BounceRate;
-            if( frameData.MaxDiffuseBounces > 4 )
+            if( frameData.MaxDiffuseBounces > 4 && frameData.MaxDiffuseBounces < 15 )
             {
                 baseBounceRate -= 0.2;
             }
