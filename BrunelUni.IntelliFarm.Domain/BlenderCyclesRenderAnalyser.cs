@@ -7,7 +7,7 @@ namespace BrunelUni.IntelliFarm.Domain
     public class BlenderCyclesRenderAnalyser : IRenderAnalyser
     {
         private const double SceneCoverageMultForHMaxExpCalc = -0.74;
-        private const double PolyExp = 0.07;
+        private const double PolyExp = 0.06;
         private const double BouncesHmaxLogisticRegressionFunctionMult = 4.65;
         private const double BouncesAndCovHMinCalcExp = 0.19;
         private const double SceneCoverageMultForHMinExpCalc = 0.08;
@@ -51,9 +51,25 @@ namespace BrunelUni.IntelliFarm.Domain
                                      Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
                                          SceneCoverageMultForHMaxExpCalc );
             var baseBounceRate = Cov100BounceRate;
-            if( frameData.MaxDiffuseBounces > 4 && frameData.MaxDiffuseBounces < 15 )
+            if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 10 && frameData.TriangleCount < 1000000 )
             {
                 baseBounceRate -= 0.2;
+            }
+            if( frameData.MaxDiffuseBounces > 10 && frameData.MaxDiffuseBounces <= 15 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.15;
+            }
+            if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 6 && frameData.TriangleCount > 1000000 )
+            {
+                baseBounceRate -= 0.1;
+            }
+            if( frameData.MaxDiffuseBounces > 6 && frameData.MaxDiffuseBounces <= 10 && frameData.TriangleCount > 1000000 )
+            {
+                baseBounceRate -= 0.25;
+            }
+            if( frameData.MaxDiffuseBounces > 10 && frameData.MaxDiffuseBounces <= 15 && frameData.TriangleCount > 1000000 )
+            {
+                baseBounceRate -= 0.15;
             }
             var bounceRate = baseBounceRate + ( bounceIndex * BounceRateDiff );
 
