@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <PackageReference Include="Aidan.Common.Utils" Version="1.0.30" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     </ItemGroup>
 
     <ItemGroup>

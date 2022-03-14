@@ -12,6 +12,9 @@ namespace BrunelUni.IntelliFarm.Domain
             throw new NotImplementedException( );
         }
 
-        public double GetPredictedTime( CallibrationDto callibrationDto, FrameMetaData frameData ) { throw new NotImplementedException( ); }
+        public double GetPredictedTime( CallibrationDto callibrationDto, FrameMetaData frameData )
+        {
+            return 0;
+        }
     }
 }
