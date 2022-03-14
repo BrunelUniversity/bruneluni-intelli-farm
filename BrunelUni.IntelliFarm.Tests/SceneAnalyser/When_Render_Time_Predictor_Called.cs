@@ -10,6 +10,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
     [ TestFixture( 80, 100, 62.5, 10, 100.0, 154.0, 97, double.NaN ) ]
     [ TestFixture( 80, 100, 50, 3, 100.0, 118.0, 97, double.NaN ) ]
     [ TestFixture( 80, 100, 25, 5, 100.0, 93, 97, double.NaN ) ]
+    [ TestFixture( 648, 65, 87.5, 5, 100.0, 186, 130.5, double.NaN ) ]
     public class When_Render_Time_Predictor_Called : Given_A_RenderAnalyser
     {
         private readonly int _polyCount;
