@@ -51,13 +51,33 @@ namespace BrunelUni.IntelliFarm.Domain
                                      Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
                                          SceneCoverageMultForHMaxExpCalc );
             var baseBounceRate = Cov100BounceRate;
-            if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 10 && frameData.TriangleCount < 1000000 )
+            if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 10 && frameData.TriangleCount < 20000 )
             {
                 baseBounceRate -= 0.2;
             }
-            if( frameData.MaxDiffuseBounces > 10 && frameData.MaxDiffuseBounces <= 15 && frameData.TriangleCount < 1000000 )
+            if( frameData.MaxDiffuseBounces > 10 && frameData.MaxDiffuseBounces <= 15 && frameData.TriangleCount < 20000 )
             {
                 baseBounceRate -= 0.15;
+            }
+            if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 5 && frameData.TriangleCount > 20000 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.1;
+            }
+            if( frameData.MaxDiffuseBounces > 5 && frameData.MaxDiffuseBounces <= 6 && frameData.TriangleCount > 20000 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.125;
+            }
+            if( frameData.MaxDiffuseBounces > 6 && frameData.MaxDiffuseBounces < 8 && frameData.TriangleCount > 20000 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.15;
+            }
+            if( frameData.MaxDiffuseBounces >= 8 && frameData.MaxDiffuseBounces <= 10 && frameData.TriangleCount > 20000 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.2;
+            }
+            if( frameData.MaxDiffuseBounces > 10 && frameData.MaxDiffuseBounces <= 15 && frameData.TriangleCount > 20000 && frameData.TriangleCount < 1000000 )
+            {
+                baseBounceRate -= 0.25;
             }
             if( frameData.MaxDiffuseBounces >= 4 && frameData.MaxDiffuseBounces <= 6 && frameData.TriangleCount > 1000000 )
             {
