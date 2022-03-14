@@ -64,6 +64,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         [ Test ]
         public void Then_Prediction_Is_Valid_With_Respect_To_20s_Tolerance( )
         {
+            Console.WriteLine( Math.Abs( _predictedTime - _actualRenderTime ) );
             Assert.LessOrEqual( Math.Abs( _predictedTime - _actualRenderTime ), 20 );
         }
     }
