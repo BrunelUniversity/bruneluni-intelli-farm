@@ -6,9 +6,9 @@ namespace BrunelUni.IntelliFarm.Domain
 {
     public class BlenderCyclesRenderAnalyser : IRenderAnalyser
     {
-        private const double SceneCoverageMultForHMaxExpCalc = -0.85;
+        private const double SceneCoverageMultForHMaxExpCalc = -0.74;
         private const double PolyExp = 0.07;
-        private const double BouncesHmaxLogisticRegressionFunctionMult = 4.9;
+        private const double BouncesHmaxLogisticRegressionFunctionMult = 4.6525;
         private const double BouncesAndCovHMinCalcExp = 0.19;
         private const double SceneCoverageMultForHMinExpCalc = 0.08;
         private const int HMaxRange = 9;
@@ -24,11 +24,18 @@ namespace BrunelUni.IntelliFarm.Domain
         public double GetPredictedTime( CallibrationDto callibrationDto, FrameMetaData frameData )
         {
             // poly calc
-            var polyExpMultiplier = callibrationDto.TimeFor80Poly100Coverage0Bounces100Samples / Math.Pow( 80, PolyExp );
-            var exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces = polyExpMultiplier * Math.Pow( frameData.TriangleCount, PolyExp );
-            var samplesMultiplier = (double) frameData.Samples / 100;
-            
+            var exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces =
+                callibrationDto.TimeFor80Poly100Coverage0Bounces100Samples;
+            if( frameData.TriangleCount > 1280 )
+            {
+                var polyExpMultiplier =
+                    callibrationDto.TimeFor80Poly100Coverage0Bounces100Samples / Math.Pow( 80, PolyExp );
+                exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces =
+                    polyExpMultiplier * Math.Pow( frameData.TriangleCount, PolyExp );
+            }
+
             // samples calc
+            var samplesMultiplier = (double) frameData.Samples / 100;
             var exactPolyAndSamRenderTimeFor100SceneCov100ViewCov0Bounces =
                 samplesMultiplier * exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces;
             
@@ -39,18 +46,21 @@ namespace BrunelUni.IntelliFarm.Domain
             var bounceHMinExactCov = bounceHMinExpMult *
                                      Math.Pow( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc,
                                          BouncesAndCovHMinCalcExp );
-            var bounceIndex = HMaxRange - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc );
+            var bounceIndex = 8 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc );
             var bounceHMaxExactCov = bounceHmaxFor100Cov *
-                                     Math.Pow( bounceIndex, SceneCoverageMultForHMaxExpCalc );
+                                     Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
+                                         SceneCoverageMultForHMaxExpCalc );
             var bounceRate = Cov100BounceRate + ( bounceIndex * BounceRateDiff );
 
 
-
+            Console.WriteLine( bounceHMinExactCov );
+            Console.WriteLine( bounceHMaxExactCov );
+            
             // bounces calc
             var lastValue = bounceHMinExactCov;
-            for( int i = 0; i <= frameData.MaxDiffuseBounces; i++ )
+            for( var i = 0; i < frameData.MaxDiffuseBounces; i++ )
             {
-                lastValue *= ( 1 + bounceRate * ( 1 - lastValue / bounceHMaxExactCov ) );
+                lastValue = lastValue * ( 1.0 + ( bounceRate * ( 1.0 - ( lastValue / bounceHMaxExactCov ) ) ) );
             }
 
             return lastValue;

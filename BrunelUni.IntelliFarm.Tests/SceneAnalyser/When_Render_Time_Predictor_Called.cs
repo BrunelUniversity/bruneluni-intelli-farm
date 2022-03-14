@@ -4,15 +4,11 @@ using NUnit.Framework;
 
 namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 {
-    [ TestFixture(
-        648,
-        65,
-        87.5,
-        5,
-        100.0,
-        168.0,
-        130.5,
-        7.5 ) ]
+    [ TestFixture( 80, 100, 100.0, 10, 100.0, 416.0, 97, double.NaN ) ]
+    [ TestFixture( 80, 100, 75.0, 10, 100.0, 203.98, 97, double.NaN ) ]
+    [ TestFixture( 80, 100, 62.5, 10, 100.0, 154.0, 97, double.NaN ) ]
+    [ TestFixture( 80, 100, 50, 3, 100.0, 118.0, 97, double.NaN ) ]
+    [ TestFixture( 80, 100, 25, 5, 100.0, 93, 97, double.NaN ) ]
     public class When_Render_Time_Predictor_Called : Given_A_RenderAnalyser
     {
         private readonly int _polyCount;
@@ -64,6 +60,8 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         [ Test ]
         public void Then_Prediction_Is_Valid_With_Respect_To_20s_Tolerance( )
         {
+            Console.WriteLine( $"predicted: {_predictedTime}");
+            Console.WriteLine( $"actual: {_actualRenderTime}");
             Console.WriteLine( Math.Abs( _predictedTime - _actualRenderTime ) );
             Assert.LessOrEqual( Math.Abs( _predictedTime - _actualRenderTime ), 20 );
         }
