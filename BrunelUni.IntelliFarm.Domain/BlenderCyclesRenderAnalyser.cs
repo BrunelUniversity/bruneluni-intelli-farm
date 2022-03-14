@@ -4,7 +4,7 @@ using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Domain
 {
-    public class RenderAnalyser : IRenderAnalyser
+    public class BlenderCyclesRenderAnalyser : IRenderAnalyser
     {
         public(Guid clientId, int [ ] frameNums) [ ] GetFrameNumberBatches(
             (int framenum, double predictedTime, Guid clientId) frameAnaylsis )
@@ -12,6 +12,6 @@ namespace BrunelUni.IntelliFarm.Domain
             throw new NotImplementedException( );
         }
 
-        public double GetPredictedTime( ClientDto clientDto, FrameDto frameDto ) { throw new NotImplementedException( ); }
+        public double GetPredictedTime( CallibrationDto callibrationDto, FrameMetaData frameData ) { throw new NotImplementedException( ); }
     }
 }

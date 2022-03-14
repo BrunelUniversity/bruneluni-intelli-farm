@@ -4,4 +4,13 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Aidan.Common.Utils" Version="1.0.30" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Domain\BrunelUni.IntelliFarm.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

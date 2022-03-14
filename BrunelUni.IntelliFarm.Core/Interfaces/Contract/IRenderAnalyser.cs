@@ -8,6 +8,6 @@ namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
         ( Guid clientId, int [ ] frameNums ) [ ] GetFrameNumberBatches(
             ( int framenum, double predictedTime, Guid clientId ) frameAnaylsis );
 
-        double GetPredictedTime( ClientDto clientDto, FrameDto frameDto );
+        double GetPredictedTime( CallibrationDto callibrationDto, FrameMetaData frameData );
     }
 }
