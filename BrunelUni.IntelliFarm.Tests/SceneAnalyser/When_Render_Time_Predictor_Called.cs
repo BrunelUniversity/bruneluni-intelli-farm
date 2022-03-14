@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 {
+    [ TestFixture( 80, 100, 100.0, 3, 100.0, 269, 97, double.NaN ) ]
     [ TestFixture( 80, 100, 100.0, 10, 100.0, 416.0, 97, double.NaN ) ]
     [ TestFixture( 80, 100, 75.0, 10, 100.0, 203.98, 97, double.NaN ) ]
     [ TestFixture( 80, 100, 62.5, 10, 100.0, 154.0, 97, double.NaN ) ]

@@ -8,11 +8,11 @@ namespace BrunelUni.IntelliFarm.Domain
     {
         private const double SceneCoverageMultForHMaxExpCalc = -0.74;
         private const double PolyExp = 0.07;
-        private const double BouncesHmaxLogisticRegressionFunctionMult = 4.6525;
+        private const double BouncesHmaxLogisticRegressionFunctionMult = 4.65;
         private const double BouncesAndCovHMinCalcExp = 0.19;
         private const double SceneCoverageMultForHMinExpCalc = 0.08;
         private const int HMaxRange = 9;
-        private const double Cov100BounceRate = 0.4125;
+        private const double Cov100BounceRate = 0.5625;
         private const double BounceRateDiff = 0.1;
 
         public(Guid clientId, int [ ] frameNums) [ ] GetFrameNumberBatches(
@@ -50,7 +50,12 @@ namespace BrunelUni.IntelliFarm.Domain
             var bounceHMaxExactCov = bounceHmaxFor100Cov *
                                      Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
                                          SceneCoverageMultForHMaxExpCalc );
-            var bounceRate = Cov100BounceRate + ( bounceIndex * BounceRateDiff );
+            var baseBounceRate = Cov100BounceRate;
+            if( frameData.MaxDiffuseBounces > 5 )
+            {
+                baseBounceRate -= 0.15;
+            }
+            var bounceRate = baseBounceRate + ( bounceIndex * BounceRateDiff );
 
 
             Console.WriteLine( bounceHMinExactCov );
