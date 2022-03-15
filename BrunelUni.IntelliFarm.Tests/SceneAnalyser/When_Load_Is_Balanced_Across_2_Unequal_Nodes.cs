@@ -42,8 +42,13 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 
             var totalTime = _orderedResults.Sum( x => x.predictedRenderTime );
 
+            Console.WriteLine($"total time: {totalTime}");
+            
             var time1Bucket = totalTime * bucket1Mult;
             var time2Bucket = totalTime * bucket2Mult;
+            
+            Console.WriteLine($"total time 1: {time1Bucket}");
+            Console.WriteLine($"total time 2: {time2Bucket}");
             
             var bucket1 =
                 new List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef
@@ -136,14 +141,14 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 
             Console.WriteLine($"total between buckets: {bucket1.Count + bucket2.Count}, total of whole list: {totalOfWhole}");
             
-            Console.WriteLine( $"predicted bucket 1: {bucket1.Sum( x => x.predictedRenderTime )* 1/bucket1Mult}" );
-            Console.WriteLine( $"predicted bucket 2: {bucket2.Sum( x => x.predictedRenderTime )* 1/bucket2Mult}" );
+            Console.WriteLine( $"predicted bucket 1: {(bucket1.Sum( x => x.predictedRenderTime ))* (bucket2Mult)}" );
+            Console.WriteLine( $"predicted bucket 2: {(bucket2.Sum( x => x.predictedRenderTime ))* (bucket1Mult)}" );
             
-            Console.WriteLine( $"actual bucket 1: {bucket1.Sum( x => x.actualRenderTime )* 1/bucket1Mult}" );
-            Console.WriteLine( $"actual bucket 2: {bucket2.Sum( x => x.actualRenderTime )* 1/bucket2Mult}" );
-            
-            var sumBucket1 = bucket1.Sum( x => x.actualRenderTime ) * 1/bucket1Mult;
-            var sumBucket2 = bucket2.Sum( x => x.actualRenderTime ) * 1/bucket2Mult;
+            Console.WriteLine( $"actual bucket 1: {bucket1.Sum( x => x.actualRenderTime )* (bucket2Mult)}" );
+            Console.WriteLine( $"actual bucket 2: {bucket2.Sum( x => x.actualRenderTime )* (bucket1Mult)}" );
+
+            var sumBucket1 = bucket1.Sum( x => x.actualRenderTime ) * ( bucket2Mult );
+            var sumBucket2 = bucket2.Sum( x => x.actualRenderTime ) * ( bucket1Mult );
             
             Console.WriteLine( $"load imbalance seconds: {Math.Abs( sumBucket1 - sumBucket2 )}" );
     
