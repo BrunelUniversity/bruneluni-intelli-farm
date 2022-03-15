@@ -5,6 +5,9 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    env:
+      AWS_ID: ${{ secrets.AWS_ID }}
+      AWS_TOKEN: ${{ secrets.AWS_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
