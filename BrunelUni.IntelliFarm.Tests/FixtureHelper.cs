@@ -69,10 +69,18 @@ namespace BrunelUni.IntelliFarm.Tests
             TimeFor80Poly100Coverage0Bounces100Samples = 97
         };
 
-        public static object [ ] GetWeyOrderFixture => WeyFixture
-            .Select( ( x, i ) => new { Index = i, Value = x } )
-            .GroupBy( x => x.Index / 100 )
-            .Select( x => x.Select( v => v.Value ).ToList( ) )
-            .ToArray( );
+        public static object [ ] GetWeyOrderFixture
+        {
+            get
+            {
+                var toReturn = WeyFixture.ToList( )
+                    .Select( ( x, i ) => new { Index = i, Value = x } )
+                    .GroupBy( x => x.Index / 100 )
+                    .Select( x => new PredictorFixtureDtoCollection( x.Select( v => v.Value ).ToList( ) ) )
+                    .ToList( );
+                toReturn.Add( new PredictorFixtureDtoCollection( WeyFixture.ToList( ) ) );
+                return toReturn.ToArray( );
+            }
+        }
     }
 }
