@@ -6,13 +6,13 @@ using NUnit.Framework;
 namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 {
     [ TestFixtureSource( nameof( WeyOrderFixture2 ) ) ]
-    public class When_Load_Is_Balanced_Across_2_Equal_Nodes : Given_A_RenderAnalyser
+    public class When_Load_Is_Balanced_Across_2_Unequal_Nodes : Given_A_RenderAnalyser
     {
         private readonly List<PredictorFixtureDto> _predictorFixtureDtos;
         private List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)> _results = new List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)>();
         private List<( double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)> _orderedResults;
 
-        public When_Load_Is_Balanced_Across_2_Equal_Nodes( List<PredictorFixtureDto> predictorFixtureDtos )
+        public When_Load_Is_Balanced_Across_2_Unequal_Nodes( List<PredictorFixtureDto> predictorFixtureDtos )
         {
             _predictorFixtureDtos = predictorFixtureDtos;
         }
@@ -23,14 +23,28 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
             {
                 _results.Add( ( SUT.GetPredictedTime( FixtureHelper.GetWeyCalibrationData, dto.FrameMetaData ), dto.ActualRenderTime, dto ) );
             }
-
+            
             _orderedResults = _results.OrderByDescending( x => x.predictedRenderTime ).ToList( );
-
         }
 
         [ Test ]
         public void Then_The_Difference_In_Render_Time_Must_Be_Within_A_Given_Tolerance( )
         {
+            // fastest == calculations are relative to speed of bucket 1 (fastest completing bucket)
+            var bucket1Speed = 1;
+            
+            // slowest == calculations are relative to speed of bucket 1 (fastest completing bucket)
+            var bucket2Speed = 0.5;
+            var totalBucketSpeedDivisor = bucket1Speed + bucket2Speed;
+
+            var bucket1Mult = bucket1Speed / totalBucketSpeedDivisor;
+            var bucket2Mult = bucket2Speed / totalBucketSpeedDivisor;
+
+            var totalTime = _orderedResults.Sum( x => x.predictedRenderTime );
+
+            var time1Bucket = totalTime * bucket1Mult;
+            var time2Bucket = totalTime * bucket2Mult;
+            
             var bucket1 =
                 new List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef
                     )>( );
@@ -42,7 +56,6 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
             var bucket2Complete = false;
             var totalOfWhole = _orderedResults.Count;
             var smallestValue = _orderedResults.Min( x => x.predictedRenderTime );
-            var totalTimeForEach = _orderedResults.Sum( x => x.predictedRenderTime ) / 2;
             while(_orderedResults.Any())
             {
                 var result = _orderedResults[ 0 ];
@@ -51,11 +64,11 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
                 var bucket2Times = bucket2.Sum( x => x.predictedRenderTime );
                 if( !bucket1Complete )
                 {
-                    if( bucket1Times + result.predictedRenderTime > totalTimeForEach )
+                    if( bucket1Times + result.predictedRenderTime > time1Bucket )
                     {
                         foreach( var newResult in _orderedResults )
                         {
-                            if( bucket1Times + newResult.predictedRenderTime > totalTimeForEach )
+                            if( bucket1Times + newResult.predictedRenderTime > time1Bucket )
                             {
                                 if( _orderedResults.IndexOf( newResult ) == _orderedResults.Count - 1 )
                                 {
@@ -80,14 +93,22 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
                     }
                 }
 
-                result = _orderedResults[ 0 ];
+                if( _orderedResults.Any( ) )
+                {
+                    result = _orderedResults[ 0 ];
+                }
+                else
+                {
+                    break;
+                }
+
                 if( !bucket2Complete )
                 {
-                    if( bucket2Times + result.predictedRenderTime > totalTimeForEach )
+                    if( bucket2Times + result.predictedRenderTime > time2Bucket )
                     {
                         foreach( var newResult in _orderedResults )
                         {
-                            if( bucket2Times + newResult.predictedRenderTime > totalTimeForEach )
+                            if( bucket2Times + newResult.predictedRenderTime > time2Bucket )
                             {
                                 if( _orderedResults.IndexOf( newResult ) == _orderedResults.Count - 1 )
                                 {
@@ -115,20 +136,20 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 
             Console.WriteLine($"total between buckets: {bucket1.Count + bucket2.Count}, total of whole list: {totalOfWhole}");
             
-            Console.WriteLine( $"predicted bucket 1: {bucket1.Sum( x => x.predictedRenderTime )}" );
-            Console.WriteLine( $"predicted bucket 2: {bucket2.Sum( x => x.predictedRenderTime )}" );
+            Console.WriteLine( $"predicted bucket 1: {bucket1.Sum( x => x.predictedRenderTime )* 1/bucket1Mult}" );
+            Console.WriteLine( $"predicted bucket 2: {bucket2.Sum( x => x.predictedRenderTime )* 1/bucket2Mult}" );
             
-            Console.WriteLine( $"actual bucket 1: {bucket1.Sum( x => x.actualRenderTime )}" );
-            Console.WriteLine( $"actual bucket 2: {bucket2.Sum( x => x.actualRenderTime )}" );
+            Console.WriteLine( $"actual bucket 1: {bucket1.Sum( x => x.actualRenderTime )* 1/bucket1Mult}" );
+            Console.WriteLine( $"actual bucket 2: {bucket2.Sum( x => x.actualRenderTime )* 1/bucket2Mult}" );
             
-            var sumBucket1 = bucket1.Sum( x => x.actualRenderTime );
-            var sumBucket2 = bucket2.Sum( x => x.actualRenderTime );
+            var sumBucket1 = bucket1.Sum( x => x.actualRenderTime ) * 1/bucket1Mult;
+            var sumBucket2 = bucket2.Sum( x => x.actualRenderTime ) * 1/bucket2Mult;
             
             Console.WriteLine( $"load imbalance seconds: {Math.Abs( sumBucket1 - sumBucket2 )}" );
+    
+            Console.WriteLine($"{Math.Round(Math.Abs(((sumBucket1 - sumBucket2)/(totalTime)))*100, 2)}% imbalance");
             
-            Console.WriteLine($"{Math.Round(Math.Abs(((sumBucket1 - sumBucket2)/(totalTimeForEach * 2)))*100, 2)}% imbalance");
-            
-            Assert.Less( Math.Abs( sumBucket1 - sumBucket2 ), ( totalTimeForEach * 2 * 0.02 ) + smallestValue );
+            Assert.Less( Math.Abs( sumBucket1 - sumBucket2 ), ( totalTime * 0.02 ) + smallestValue );
         }
     }
 }

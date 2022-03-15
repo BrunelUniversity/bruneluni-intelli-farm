@@ -12,6 +12,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         }
 
         public static PredictorFixtureDto [ ] WeyFixture => FixtureHelper.WeyFixture;
-        public static object[ ] WeyOrderFixture => FixtureHelper.GetWeyOrderFixture;
+        public static object[ ] WeyOrderFixture1 => FixtureHelper.GetWeyOrderFixture1;
+        public static object[ ] WeyOrderFixture2 => FixtureHelper.GetWeyOrderFixture2;
     }
 }
