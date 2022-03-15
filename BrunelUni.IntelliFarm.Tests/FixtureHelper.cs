@@ -36,7 +36,6 @@ namespace BrunelUni.IntelliFarm.Tests
             using var sr = new StreamReader( resp.GetResponseStream( ) );
 
             var contents = sr.ReadToEnd( );
-            Console.WriteLine( contents );
             var dtos = JsonConvert.DeserializeObject<List<FeasabilityDto>>( contents );
             return dtos;
         }

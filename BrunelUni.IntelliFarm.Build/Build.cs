@@ -40,7 +40,9 @@ class Build : NukeBuild
         .DependsOn( Compile )
         .Executes( ( ) =>
         {
-            DotNetTest( s => s.SetProjectFile( Solution ) );
+            DotNetTest( s => s
+                .SetVerbosity( DotNetVerbosity.Detailed )
+                .SetProjectFile( Solution ) );
         } );
 
     public static int Main( ) => Execute<Build>( x => x.Test );
