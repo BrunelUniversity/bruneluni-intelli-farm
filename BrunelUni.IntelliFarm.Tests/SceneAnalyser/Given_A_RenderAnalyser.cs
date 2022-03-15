@@ -10,5 +10,8 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         {
             SUT = new BlenderCyclesRenderAnalyser( );
         }
+
+        public static PredictorFixtureDto [ ] WeyFixture => FixtureHelper.WeyFixture;
+        public static object[ ] WeyOrderFixture => FixtureHelper.GetWeyOrderFixture;
     }
 }

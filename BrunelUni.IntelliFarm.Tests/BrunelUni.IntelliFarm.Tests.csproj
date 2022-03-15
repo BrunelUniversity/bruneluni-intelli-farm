@@ -6,6 +6,8 @@
 
     <ItemGroup>
       <PackageReference Include="Aidan.Common.Utils" Version="1.0.30" />
+      <PackageReference Include="AWSSDK.Core" Version="3.7.8.10" />
+      <PackageReference Include="AWSSDK.S3" Version="3.7.8.8" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     </ItemGroup>
 
