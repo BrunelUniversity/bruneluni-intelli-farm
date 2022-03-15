@@ -9,5 +9,4 @@ build-job:
     - |
       dotnet tool install Nuke.GlobalTool --global
       export PATH=$HOME/.dotnet/tools:$PATH
-      nuke -Solution BrunelUni.IntelliFarm.sln
       nuke -Solution BrunelUni.IntelliFarm.Data.sln
