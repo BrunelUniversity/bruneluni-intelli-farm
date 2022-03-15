@@ -41,7 +41,6 @@ class Build : NukeBuild
         .Executes( ( ) =>
         {
             DotNetTest( s => s
-                .SetVerbosity( DotNetVerbosity.Detailed )
                 .SetProjectFile( Solution ) );
         } );
 
