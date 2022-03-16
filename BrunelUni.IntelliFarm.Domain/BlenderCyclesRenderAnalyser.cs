@@ -6,15 +6,6 @@ namespace BrunelUni.IntelliFarm.Domain
 {
     public class BlenderCyclesRenderAnalyser : IRenderAnalyser
     {
-        private const double SceneCoverageMultForHMaxExpCalc = -0.74;
-        private const double PolyExp = 0.06;
-        private const double BouncesHmaxLogisticRegressionFunctionMult = 4.65;
-        private const double BouncesAndCovHMinCalcExp = 0.19;
-        private const double SceneCoverageMultForHMinExpCalc = 0.08;
-        private const int HMaxRange = 9;
-        private const double Cov100BounceRate = 0.5625;
-        private const double BounceRateDiff = 0.1;
-
         public(Guid clientId, int [ ] frameNums) [ ] GetFrameNumberBatches(
             (int framenum, double predictedTime, Guid clientId) frameAnaylsis )
         {
@@ -29,9 +20,9 @@ namespace BrunelUni.IntelliFarm.Domain
             if( frameData.TriangleCount > 1280 )
             {
                 var polyExpMultiplier =
-                    callibrationDto.TimeFor80Poly100Coverage0Bounces100Samples / Math.Pow( 80, PolyExp );
+                    callibrationDto.TimeFor80Poly100Coverage0Bounces100Samples / Math.Pow( 80, SceneHeuristicsConstants.PolyExp );
                 exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces =
-                    polyExpMultiplier * Math.Pow( frameData.TriangleCount, PolyExp );
+                    polyExpMultiplier * Math.Pow( frameData.TriangleCount, SceneHeuristicsConstants.PolyExp );
             }
 
             // samples calc
@@ -40,19 +31,19 @@ namespace BrunelUni.IntelliFarm.Domain
                 samplesMultiplier * exactPolyRenderTimeFor100Sam100SceneCov100ViewCov0Bounces;
             
             // scene coverage calc
-            var bounceHmaxFor100Cov = exactPolyAndSamRenderTimeFor100SceneCov100ViewCov0Bounces * BouncesHmaxLogisticRegressionFunctionMult;
+            var bounceHmaxFor100Cov = exactPolyAndSamRenderTimeFor100SceneCov100ViewCov0Bounces * SceneHeuristicsConstants.BouncesHmaxLogisticRegressionFunctionMult;
             var bounceHMinExpMult = exactPolyAndSamRenderTimeFor100SceneCov100ViewCov0Bounces /
-                              Math.Pow( 8, BouncesAndCovHMinCalcExp );
+                              Math.Pow( 8, SceneHeuristicsConstants.BouncesAndCovHMinCalcExp );
             var bounceHMinExactCov = bounceHMinExpMult *
-                                     Math.Pow( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc,
-                                         BouncesAndCovHMinCalcExp );
-            var bounceIndex = 8 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc );
+                                     Math.Pow( frameData.SceneCoverage * SceneHeuristicsConstants.SceneCoverageMultForHMinExpCalc,
+                                         SceneHeuristicsConstants.BouncesAndCovHMinCalcExp );
+            var bounceIndex = 8 - ( frameData.SceneCoverage * SceneHeuristicsConstants.SceneCoverageMultForHMinExpCalc );
             var bounceHMaxExactCov = bounceHmaxFor100Cov *
-                                     Math.Pow( 9 - ( frameData.SceneCoverage * SceneCoverageMultForHMinExpCalc ),
-                                         SceneCoverageMultForHMaxExpCalc );
-            var baseBounceRate = Cov100BounceRate;
+                                     Math.Pow( 9 - ( frameData.SceneCoverage * SceneHeuristicsConstants.SceneCoverageMultForHMinExpCalc ),
+                                         SceneHeuristicsConstants.SceneCoverageMultForHMaxExpCalc );
+            var baseBounceRate = SceneHeuristicsConstants.Cov100BounceRate;
 
-            var bounceRate = baseBounceRate + ( bounceIndex * BounceRateDiff );
+            var bounceRate = baseBounceRate + ( bounceIndex * SceneHeuristicsConstants.BounceRateDiff );
 
             // bounces calc
             var lastValue = bounceHMinExactCov;
