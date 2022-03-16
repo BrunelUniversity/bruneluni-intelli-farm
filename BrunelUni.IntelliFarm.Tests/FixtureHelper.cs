@@ -65,7 +65,8 @@ namespace BrunelUni.IntelliFarm.Tests
 
         public static CallibrationDto GetWeyCalibrationData => new CallibrationDto
         {
-            TimeFor0PolyViewpoint = double.NaN,
+            // time for 0 poly count isn't known for the wey data fixture but viewport coverage is always 100%
+            TimeFor0PolyViewpoint = 7,
             TimeFor80Poly100Coverage0Bounces100Samples = 97
         };
 

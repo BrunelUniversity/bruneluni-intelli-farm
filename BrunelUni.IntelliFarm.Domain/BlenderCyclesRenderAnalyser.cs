@@ -61,7 +61,12 @@ namespace BrunelUni.IntelliFarm.Domain
                 lastValue = lastValue * ( 1.0 + ( bounceRate * ( 1.0 - ( lastValue / bounceHMaxExactCov ) ) ) );
             }
 
-            return lastValue;
+            var viewportWorldSpace = 100 - frameData.ViewportCoverage;
+
+            var viewportWorldTime = callibrationDto.TimeFor0PolyViewpoint * ( viewportWorldSpace / 100 );
+            var viewportObjectsTime = lastValue * ( frameData.ViewportCoverage / 100 );
+
+            return viewportWorldTime + viewportObjectsTime;
         }
     }
 }
