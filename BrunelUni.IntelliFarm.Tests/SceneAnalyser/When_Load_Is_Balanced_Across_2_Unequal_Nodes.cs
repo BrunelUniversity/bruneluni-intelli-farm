@@ -23,8 +23,8 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         [ Test ]
         public void Then_The_Difference_In_Render_Time_Must_Be_Within_A_Given_Tolerance( )
         {
-            AssertToleranceForBucket( _predictorFixtureDtos, _results, 0, 0.0185 );
-            AssertToleranceForBucket( _predictorFixtureDtos, _results, 1, 0.0185 );
+            AssertToleranceForBucket( _predictorFixtureDtos, _results, 0, 0.0185, 1.0 );
+            AssertToleranceForBucket( _predictorFixtureDtos, _results, 1, 0.0185, 2.0 );
         }
     }
 }

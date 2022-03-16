@@ -19,7 +19,11 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         public static PredictorFixtureDto [ ] WeyFixture => FixtureHelper.WeyFixture;
         public static object[ ] WeyOrderFixture1 => FixtureHelper.GetWeyOrderFixture1;
         public static object[ ] WeyOrderFixture2 => FixtureHelper.GetWeyOrderFixture2;
-        public void AssertToleranceForBucket( List<PredictorFixtureDto> predictorFixtureDtos, List<BucketDto> buckets, int index, double tolerance )
+        public void AssertToleranceForBucket( List<PredictorFixtureDto> predictorFixtureDtos,
+            List<BucketDto> buckets,
+            int index,
+            double tolerance,
+            double mult )
         {
             var bucket = buckets[ index ];
             var predictedBucket = bucket.Frames.Sum( x => x.predictedTime );
@@ -29,6 +33,8 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
                 actualBucket.Add( predictorFixtureDtos.First( x => x.Frame.Id == frame.id ).ActualRenderTime );
             }
             var actualBucketTimes = actualBucket.Sum( );
+            Console.WriteLine($"actual time for node{index}: {mult*actualBucketTimes}");
+            System.Diagnostics.Debug.WriteLine($"predicted time for node{index}: {mult*predictedBucket}");
             var totalPredictedTime = buckets.SelectMany( x => x.Frames ).Sum( x => x.predictedTime );
             var totalActualTime = predictorFixtureDtos.Sum( x => x.ActualRenderTime );
             var predictedTotalTimeProportion = predictedBucket / ( totalPredictedTime );
