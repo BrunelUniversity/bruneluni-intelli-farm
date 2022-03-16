@@ -93,8 +93,13 @@ namespace BrunelUni.IntelliFarm.Tests
                     .GroupBy( x => x.Index / 100 )
                     .Select( x => new PredictorFixtureDtoCollection( x.Select( v => v.Value ).ToList( ) ) )
                     .ToList( );
+                var toReturn500 = weyFixture.ToList( )
+                    .Select( ( x, i ) => new { Index = i, Value = x } )
+                    .GroupBy( x => x.Index / 500 )
+                    .Select( x => new PredictorFixtureDtoCollection( x.Select( v => v.Value ).ToList( ) ) )
+                    .ToList( );
+                toReturn.AddRange( toReturn500 );
                 toReturn.Add( new PredictorFixtureDtoCollection( weyFixture.ToList( ) ) );
-                toReturn.Add( new PredictorFixtureDtoCollection( weyFixture.Skip( 20 ).Take( 20 ).ToList( ) ) );
                 return toReturn.ToArray( );
             }
         }

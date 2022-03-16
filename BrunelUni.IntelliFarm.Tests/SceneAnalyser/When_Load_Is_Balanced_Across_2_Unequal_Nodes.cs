@@ -50,6 +50,9 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
             Console.WriteLine($"total time 1: {time1Bucket}");
             Console.WriteLine($"total time 2: {time2Bucket}");
             
+            Console.WriteLine($"total time 1 normalized: {time1Bucket*1/bucket1Mult}");
+            Console.WriteLine($"total time 2 normalized: {time2Bucket*1/bucket2Mult}");
+            
             var bucket1 =
                 new List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef
                     )>( );
@@ -141,20 +144,26 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 
             Console.WriteLine($"total between buckets: {bucket1.Count + bucket2.Count}, total of whole list: {totalOfWhole}");
             
-            Console.WriteLine( $"predicted bucket 1: {(bucket1.Sum( x => x.predictedRenderTime ))* (bucket2Mult)}" );
-            Console.WriteLine( $"predicted bucket 2: {(bucket2.Sum( x => x.predictedRenderTime ))* (bucket1Mult)}" );
+            var predictedBucket1 = bucket1.Sum( x => x.predictedRenderTime );
+            var predictedBucket2 = bucket2.Sum( x => x.predictedRenderTime );
             
-            Console.WriteLine( $"actual bucket 1: {bucket1.Sum( x => x.actualRenderTime )* (bucket2Mult)}" );
-            Console.WriteLine( $"actual bucket 2: {bucket2.Sum( x => x.actualRenderTime )* (bucket1Mult)}" );
+            var actualBucket1 = bucket1.Sum( x => x.actualRenderTime );
+            var actualBucket2 = bucket2.Sum( x => x.actualRenderTime );
 
-            var sumBucket1 = bucket1.Sum( x => x.actualRenderTime ) * ( bucket2Mult );
-            var sumBucket2 = bucket2.Sum( x => x.actualRenderTime ) * ( bucket1Mult );
+            var predictedTotalTimeProportion1 = predictedBucket1 / (predictedBucket1+predictedBucket2);
+            var predictedTotalTimeProportion2 = predictedBucket2 / (predictedBucket1+predictedBucket2);
             
-            Console.WriteLine( $"load imbalance seconds: {Math.Abs( sumBucket1 - sumBucket2 )}" );
-    
-            Console.WriteLine($"{Math.Round(Math.Abs(((sumBucket1 - sumBucket2)/(totalTime)))*100, 2)}% imbalance");
+            var actualTotalTimeProportion1 = actualBucket1 / (actualBucket1+actualBucket2);
+            var actualTotalTimeProportion2 = actualBucket2 / (actualBucket1+actualBucket2);
+
+            var propDiff1 = predictedTotalTimeProportion1 - actualTotalTimeProportion1;
+            var propDiff2 = predictedTotalTimeProportion2 - actualTotalTimeProportion2;
             
-            Assert.Less( Math.Abs( sumBucket1 - sumBucket2 ), ( totalTime * 0.02 ) + smallestValue );
+            Console.WriteLine($"proportion1 diff: {Math.Round(propDiff1*100, 3)}%");
+            Console.WriteLine($"proportion2 diff: {Math.Round(propDiff2*100, 3)}%");
+
+            Assert.Less( Math.Abs( propDiff1 ), 0.0185 );
+            Assert.Less( Math.Abs( propDiff2 ), 0.0185 );
         }
     }
 }
