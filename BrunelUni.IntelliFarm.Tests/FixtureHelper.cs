@@ -49,7 +49,7 @@ namespace BrunelUni.IntelliFarm.Tests
                 var data = LoadWeyFixture( );
                 var fixtureData = data.Select( x => new PredictorFixtureDto
                 {
-                    FrameMetaData = new FrameMetaData
+                    Frame = new FrameDto
                     {
                         MaxDiffuseBounces = x.MaxBounces,
                         Samples = x.Samples,
@@ -63,7 +63,7 @@ namespace BrunelUni.IntelliFarm.Tests
             }
         }
 
-        public static CallibrationDto GetWeyCalibrationData => new CallibrationDto
+        public static ClientDto GetWeyClientData => new ClientDto
         {
             // time for 0 poly count isn't known for the wey data fixture but viewport coverage is always 100%
             TimeFor0PolyViewpoint = 7,

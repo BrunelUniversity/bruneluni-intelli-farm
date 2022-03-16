@@ -4,15 +4,15 @@ namespace BrunelUni.IntelliFarm.Tests
 {
     public class PredictorFixtureDto
     {
-        public FrameMetaData FrameMetaData { get; set; }
+        public FrameDto Frame { get; set; }
         public double ActualRenderTime { get; set; }
 
         public override string ToString( ) =>
-            $"samples: {FrameMetaData.Samples} " +
-            $"coverage: {FrameMetaData.SceneCoverage} " +
-            $"tri_count: {FrameMetaData.TriangleCount} " +
-            $"viewport_cov: {FrameMetaData.ViewportCoverage} " +
-            $"bounces: {FrameMetaData.MaxDiffuseBounces} " +
+            $"samples: {Frame.Samples} " +
+            $"coverage: {Frame.SceneCoverage} " +
+            $"tri_count: {Frame.TriangleCount} " +
+            $"viewport_cov: {Frame.ViewportCoverage} " +
+            $"bounces: {Frame.MaxDiffuseBounces} " +
             $"actual_render_time: {ActualRenderTime}";
     }
 }

@@ -21,7 +21,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         {
             foreach( var dto in _predictorFixtureDtos )
             {
-                _results.Add( ( SUT.GetPredictedTime( FixtureHelper.GetWeyCalibrationData, dto.FrameMetaData ), dto.ActualRenderTime, dto ) );
+                _results.Add( ( SUT.GetPredictedTime( FixtureHelper.GetWeyClientData, dto.Frame ), dto.ActualRenderTime, dto ) );
             }
 
             _orderedResults = _results.OrderByDescending( x => x.predictedRenderTime ).ToList( );

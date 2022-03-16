@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using NUnit.Framework;
 
 namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
@@ -11,6 +12,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
         private readonly List<PredictorFixtureDto> _predictorFixtureDtos;
         private List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)> _results = new List<(double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)>();
         private List<( double predictedRenderTime, double actualRenderTime, PredictorFixtureDto predictorDataRef)> _orderedResults;
+        private BucketDto[] _bucketsNew;
 
         public When_Load_Is_Balanced_Across_2_Unequal_Nodes( List<PredictorFixtureDto> predictorFixtureDtos )
         {
@@ -19,9 +21,22 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 
         protected override void When( )
         {
+            var fastClient = FixtureHelper.GetWeyClientData;
+            var slowerClient = new ClientDto
+            {
+                TimeFor0PolyViewpoint = 5,
+                TimeFor80Poly100Coverage0Bounces100Samples = fastClient.TimeFor80Poly100Coverage0Bounces100Samples =
+                    2 * fastClient.TimeFor80Poly100Coverage0Bounces100Samples
+            };
+            _bucketsNew = SUT.GetBuckets( new [ ]
+            {
+                FixtureHelper.GetWeyClientData,
+                slowerClient
+            }, _predictorFixtureDtos.Select( x => x.Frame ).ToArray( ) );
+            
             foreach( var dto in _predictorFixtureDtos )
             {
-                _results.Add( ( SUT.GetPredictedTime( FixtureHelper.GetWeyCalibrationData, dto.FrameMetaData ), dto.ActualRenderTime, dto ) );
+                _results.Add( ( SUT.GetPredictedTime( FixtureHelper.GetWeyClientData, dto.Frame ), dto.ActualRenderTime, dto ) );
             }
             
             _orderedResults = _results.OrderByDescending( x => x.predictedRenderTime ).ToList( );
@@ -142,6 +157,8 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
                 }
             }
 
+            _ = _bucketsNew;
+            
             Console.WriteLine($"total between buckets: {bucket1.Count + bucket2.Count}, total of whole list: {totalOfWhole}");
             
             var predictedBucket1 = bucket1.Sum( x => x.predictedRenderTime );
