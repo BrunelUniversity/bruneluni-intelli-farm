@@ -1,8 +1,9 @@
 ﻿using System;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.RenderClient
 {
-    public class NavigationService
+    public class WpfNavigationService : INavigationService
     {
         public event Action<string> Navigate;
 

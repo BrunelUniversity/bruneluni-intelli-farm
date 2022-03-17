@@ -1,14 +1,15 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.RenderClient.Pages
 {
     public partial class CreateDevicePage : Page
     {
-        private readonly NavigationService _navigationService;
-        public CreateDevicePage( NavigationService navigationService )
+        private readonly INavigationService _wpfNavigationService;
+        public CreateDevicePage( INavigationService wpfNavigationService )
         {
-            _navigationService = navigationService;
+            _wpfNavigationService = wpfNavigationService;
             InitializeComponent( );
         }
 
@@ -19,6 +20,6 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             // call API
         }
         private void HomeNavButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) =>
-            _navigationService.NavigateTo( AppConstants.MainPageRouteName );
+            _wpfNavigationService.NavigateTo( AppConstants.MainPageRouteName );
     }
 }

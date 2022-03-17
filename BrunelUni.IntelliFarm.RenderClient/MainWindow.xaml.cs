@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.RenderClient.Pages;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,14 +11,13 @@ namespace BrunelUni.IntelliFarm.RenderClient
     public partial class MainWindow : Window
     {
         private readonly IHost _host;
-        private NavigationService NavigationService => _host.Services.GetService<NavigationService>( )!;
+        private INavigationService WpfNavigationService => _host.Services.GetService<INavigationService>( )!;
 
         public MainWindow( )
         {
             _host = Host.CreateDefaultBuilder( )
                 .ConfigureServices( ( hostContext, services ) =>
                     services.BindCrosscuttingLayer( )
-                        .AddSingleton<NavigationService>( )
                         .AddTransient<CreateDevicePage>( )
                         .AddTransient<MainPage>( )
                         .AddTransient<RenderPage>( )
@@ -25,8 +25,8 @@ namespace BrunelUni.IntelliFarm.RenderClient
                 .Build( );
             
             InitializeComponent( );
-            NavigationService.Navigate += OnNavigate;
-            NavigationService.NavigateTo( AppConstants.MainPageRouteName );
+            WpfNavigationService.Navigate += OnNavigate;
+            WpfNavigationService.NavigateTo( AppConstants.MainPageRouteName );
         }
 
         private void OnNavigate( string obj )

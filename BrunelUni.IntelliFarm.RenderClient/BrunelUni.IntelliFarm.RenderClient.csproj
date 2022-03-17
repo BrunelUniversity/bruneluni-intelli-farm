@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj" />
     </ItemGroup>
 
