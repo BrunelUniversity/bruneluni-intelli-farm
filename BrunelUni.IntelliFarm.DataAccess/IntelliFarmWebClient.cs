@@ -2,22 +2,29 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
+using Newtonsoft.Json;
 
 namespace BrunelUni.IntelliFarm.DataAccess
 {
     public class IntelliFarmWebClient : IWebClient
     {
         private readonly IConfigurationAdapter _configurationAdapter;
-        private readonly ISerializer _serializer;
+        private readonly IJsonCamelAndPascalCaseSerializer _serializer;
+        private readonly ILoggerAdapter<IWebClient> _loggerAdapter;
+        private readonly string _baseUrl;
 
         public IntelliFarmWebClient( IConfigurationAdapter configurationAdapter,
-            ISerializer serializer )
+            IJsonCamelAndPascalCaseSerializer serializer,
+            ILoggerAdapter<IWebClient> loggerAdapter )
         {
             _configurationAdapter = configurationAdapter;
             _serializer = serializer;
+            _loggerAdapter = loggerAdapter;
+            _baseUrl = _configurationAdapter.Get<MainAppOptions>( ).ApiBaseUrl;
         }
 
         public byte[] GetAsBytes( string endpoint )
@@ -36,10 +43,26 @@ namespace BrunelUni.IntelliFarm.DataAccess
         public string DownloadFile( string endpoint, string filename )
         {
             var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
-            var appOptions = _configurationAdapter.Get<MainAppOptions>( );
             using var webClient = new WebClient( );
-            webClient.DownloadFile( $"{appOptions.ApiBaseUrl}{endpoint}", path );
+            webClient.DownloadFile( $"{_baseUrl}{endpoint}", path );
             return path;
+        }
+
+        public T Create<T>( string endpoint, T body )
+        {
+            using var client = new HttpClient( );
+            client.BaseAddress = new Uri( _baseUrl );
+            var request = new HttpRequestMessage( HttpMethod.Post, endpoint );
+            var content = _serializer.Serialize( body );
+            _loggerAdapter.LogInfo( $"POST {content}" );
+            request.Content = new StringContent( content,
+                Encoding.UTF8,
+                "application/json" );
+            var task = client.SendAsync( request );
+            task.Wait( );
+            var taskRead = task.Result.Content.ReadAsStringAsync( );
+            taskRead.Wait( );
+            return JsonConvert.DeserializeObject<T>( taskRead.Result );
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BrunelUni.IntelliFarm.Core.Dtos
     {
         public Guid Id { get; set; } = Guid.NewGuid( );
         public string Name { get; set; }
-        public double TimeFor0PolyViewpoint { get; set; } = double.NaN;
-        public double TimeFor80Poly100Coverage0Bounces100Samples { get; set; } = double.NaN;
+        public double TimeFor0PolyViewpoint { get; set; } = 0.0;
+        public double TimeFor80Poly100Coverage0Bounces100Samples { get; set; } = 0.0;
     }
 }

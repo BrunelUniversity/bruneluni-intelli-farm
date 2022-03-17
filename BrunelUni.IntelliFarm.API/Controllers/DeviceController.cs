@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BrunelUni.IntelliFarm.API.Controllers
 {
-    [ Microsoft.AspNetCore.Components.Route("device") ]
+    [ Route("device") ]
     public class DeviceController : ControllerBase
     {
         [ HttpPost ]

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BrunelUni.IntelliFarm.API.Controllers
 {
-    [ Microsoft.AspNetCore.Components.Route("scene") ]
+    [ Route("scene") ]
     public class SceneController : ControllerBase
     {
         [ HttpPost ]
