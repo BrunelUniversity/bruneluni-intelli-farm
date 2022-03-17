@@ -2,7 +2,7 @@
 {
     public interface IRemoteFileService
     {
-        byte [ ] GetBytes( string path );
-        byte [ ] WriteBytes( string path );
+        string Get( string path );
+        string Write( string path );
     }
 }

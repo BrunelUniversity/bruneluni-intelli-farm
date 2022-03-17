@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using Amazon;
-using Amazon.S3;
-using Amazon.S3.Model;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
+using BrunelUni.IntelliFarm.DataAccess;
 using Newtonsoft.Json;
 
 namespace BrunelUni.IntelliFarm.Tests
@@ -17,25 +13,9 @@ namespace BrunelUni.IntelliFarm.Tests
         [ System.ComponentModel.Description( "loads fixture from wey laptop" ) ]
         private static IEnumerable<FeasabilityDto> LoadWeyFixture( )
         {
-            using var client = new AmazonS3Client(
-                Environment.GetEnvironmentVariable( "AWS_ID" ),
-                Environment.GetEnvironmentVariable( "AWS_TOKEN" ),
-                RegionEndpoint.GetBySystemName( "eu-west-2" ) );
-            var request = new GetPreSignedUrlRequest
-            {
-                BucketName = "intelli-farm",
-                Key = "test-fixture-data/fixture-data-wey.json",
-                Expires = DateTime.UtcNow.AddMinutes( 10 ),
-                Verb = HttpVerb.GET,
-                Protocol = Protocol.HTTPS
-            };
-            var url = client.GetPreSignedURL( request );
-            var req = WebRequest.Create( url );
-            var resp = req.GetResponse( );
-
-            using var sr = new StreamReader( resp.GetResponseStream( ) );
-
-            var contents = sr.ReadToEnd( );
+            var fileService = new S3RemoteFileService( Environment.GetEnvironmentVariable( "AWS_ID" ),
+                Environment.GetEnvironmentVariable( "AWS_TOKEN" ) );
+            var contents = fileService.Get( "test-fixture-data/fixture-data-wey.json" );
             var dtos = JsonConvert.DeserializeObject<List<FeasabilityDto>>( contents );
             return dtos;
         }
