@@ -12,8 +12,16 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             InitializeComponent( );
         }
 
-        private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) { throw new System.NotImplementedException( ); }
-        private void CreateButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) { throw new System.NotImplementedException( ); }
+        private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
+        {
+            // open file dialog, zip file, convert it to bytes
+        }
+
+        private void CreateButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
+        {
+            // check that file exists
+            // call API
+        }
         private void HomeNavButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) =>
             _navigationService.NavigateTo( AppConstants.MainPageRouteName );
     }
