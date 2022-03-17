@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
         <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj" />
     </ItemGroup>
 

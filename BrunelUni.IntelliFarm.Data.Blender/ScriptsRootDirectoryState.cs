@@ -1,6 +1,5 @@
-﻿using System.IO;
-using System.Reflection;
-using Aidan.Common.Core.Interfaces.Contract;
+﻿using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -10,13 +9,11 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     public class ScriptsRootDirectoryState : IScriptsRootDirectoryState
     {
         public ScriptsRootDirectoryState( IConfigurationAdapter configurationAdapter,
-            ISolutionDirectoryGetter solutionDirectoryGetter )
+            ICurrentPathService currentPathService )
         {
             ScriptsRootDirectoryDto = new ScriptsRootDirectoryDto
             {
-                Directory = configurationAdapter.Get<AppOptions>( ).Local
-                    ? solutionDirectoryGetter.Get( ).Value
-                    : Path.GetDirectoryName( Assembly.GetExecutingAssembly( ).Location )
+                Directory = currentPathService.GetCurrent( configurationAdapter.Get<AppOptions>( ).Local )
             };
             ScriptsRootDirectoryDto.DataScriptsDir = $"{ScriptsRootDirectoryDto.Directory}\\blender_api";
             ScriptsRootDirectoryDto.DataScriptsTempFile = $"{ScriptsRootDirectoryDto.Directory}\\temp\\render.json";
