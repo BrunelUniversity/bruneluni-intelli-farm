@@ -1,0 +1,15 @@
+﻿<Page x:Class="BrunelUni.IntelliFarm.RenderClient.Pages.CreateScenePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Pages"
+      mc:Ignorable="d"
+      Title="CreateScenePage" Height="450" Width="800">
+    <Grid>
+        <TextBlock>
+            Create Scene Page
+        </TextBlock>
+        <Button Width="100" Height="20" Click="ButtonBase_OnClick">Main</Button>
+    </Grid>
+</Page>
