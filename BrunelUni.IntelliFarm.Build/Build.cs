@@ -13,31 +13,7 @@ class Build : NukeBuild
 
     [ Solution ] readonly Solution Solution;
 
-    Target Clean => _ => _
-        .Executes( ( ) =>
-        {
-        } );
-
-    Target Restore => _ => _
-        .DependsOn( Clean )
-        .Executes( ( ) =>
-        {
-            DotNetRestore( s => s
-                .SetProjectFile( Solution ) );
-        } );
-
-    Target Compile => _ => _
-        .DependsOn( Restore )
-        .Executes( ( ) =>
-        {
-            DotNetBuild( s => s
-                .SetProjectFile( Solution )
-                .SetConfiguration( Configuration )
-                .EnableNoRestore( ) );
-        } );
-
     Target Test => _ => _
-        .DependsOn( Compile )
         .Executes( ( ) =>
         {
             DotNetTest( s => s
