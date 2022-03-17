@@ -17,7 +17,7 @@ namespace BrunelUni.IntelliFarm.RenderClient
             _host = Host.CreateDefaultBuilder( )
                 .ConfigureServices( ( hostContext, services ) =>
                     services.BindCrosscuttingLayer( )
-                        .AddTransient<NavigationService>( )
+                        .AddSingleton<NavigationService>( )
                         .AddTransient<CreateDevicePage>( )
                         .AddTransient<MainPage>( )
                         .AddTransient<RenderPage>( )
@@ -26,6 +26,7 @@ namespace BrunelUni.IntelliFarm.RenderClient
             
             InitializeComponent( );
             NavigationService.Navigate += OnNavigate;
+            NavigationService.NavigateTo( AppConstants.MainPageRouteName );
         }
 
         private void OnNavigate( string obj )
@@ -37,10 +38,10 @@ namespace BrunelUni.IntelliFarm.RenderClient
         private Type GetPageRoute( string route ) =>
             route switch
             {
-                "main" => typeof( MainPage ),
-                "create-scene" => typeof( CreateScenePage ),
-                "create-device" => typeof( CreateDevicePage ),
-                "render" => typeof( RenderPage ),
+                AppConstants.MainPageRouteName => typeof( MainPage ),
+                AppConstants.CreateSceneRouteName => typeof( CreateScenePage ),
+                AppConstants.CreateDeviceRouteName => typeof( CreateDevicePage ),
+                AppConstants.RenderRouteName => typeof( RenderPage ),
                 _ => throw new ArgumentException( "route not found" )
             };
     }

@@ -12,13 +12,9 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             InitializeComponent( );
         }
 
-        private void HomeButton_OnClick( object sender, RoutedEventArgs e )
-        {
-            _navigationService.NavigateTo( "main" );
-        }
-
         private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) { throw new System.NotImplementedException( ); }
         private void CreateButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) { throw new System.NotImplementedException( ); }
-        private void HomeNavButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) { throw new System.NotImplementedException( ); }
+        private void HomeNavButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) =>
+            _navigationService.NavigateTo( AppConstants.MainPageRouteName );
     }
 }
