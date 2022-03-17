@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
@@ -27,25 +28,32 @@ namespace BrunelUni.IntelliFarm.DataAccess
             _baseUrl = _configurationAdapter.Get<MainAppOptions>( ).ApiBaseUrl;
         }
 
-        public byte[] GetAsBytes( string endpoint )
-        {
-            var appOptions = _configurationAdapter.Get<MainAppOptions>( );
-            using var httpClient = new HttpClient( );
-            httpClient.BaseAddress = new Uri( appOptions.ApiBaseUrl );
-            
-            var task = httpClient.GetAsync( endpoint );
-            task.Wait( );
-            var responseTask = task.Result.Content.ReadAsByteArrayAsync( );
-            responseTask.Wait( );
-            return responseTask.Result;
-        }
-
         public string DownloadFile( string endpoint, string filename )
         {
             var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
             using var webClient = new WebClient( );
             webClient.DownloadFile( $"{_baseUrl}{endpoint}", path );
             return path;
+        }
+
+        public string UploadFile( string endpoint, string filename )
+        {
+            var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
+            using var client = new HttpClient( );
+            client.BaseAddress = new Uri( _baseUrl );
+            client.DefaultRequestHeaders.Accept.Clear( );
+            client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
+
+            var content = new MultipartFormDataContent( );
+            var fileContent = new ByteArrayContent( File.ReadAllBytes( path ) );
+            content.Add( fileContent, "file", filename );
+
+            var postTask = client.PostAsync( "upload-file", content );
+            postTask.Wait( );
+            var response = postTask.Result;
+            var readStringTask = response.Content.ReadAsStringAsync( );
+            readStringTask.Wait( );
+            return readStringTask.Result;
         }
 
         public T Create<T>( string endpoint, T body )

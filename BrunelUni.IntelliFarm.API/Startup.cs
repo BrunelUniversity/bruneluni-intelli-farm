@@ -4,6 +4,7 @@ using BrunelUni.IntelliFarm.Data.DIModule;
 using BrunelUni.IntelliFarm.DIModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,6 +24,10 @@ namespace BrunelUni.IntelliFarm.API
                 .BindIntelliFarm( )
                 .AddTransient<MvcAdapter>( );
             serviceCollection.AddControllers( );
+            serviceCollection.Configure<KestrelServerOptions>( options =>
+            {
+                options.AllowSynchronousIO = true;
+            } );
         }
 
         public void Configure( IApplicationBuilder applicationBuilder, IWebHostEnvironment env ) =>

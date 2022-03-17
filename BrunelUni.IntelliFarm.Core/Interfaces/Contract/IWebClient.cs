@@ -3,6 +3,7 @@
     public interface IWebClient
     {
         public string DownloadFile( string endpoint, string filename );
+        public string UploadFile( string endpoint, string filename );
         public T Create<T>( string endpoint, T body );
     }
 }

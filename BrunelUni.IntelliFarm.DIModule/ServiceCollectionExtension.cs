@@ -2,6 +2,7 @@
 using Aidan.Common.DependencyInjection;
 using BrunelUni.IntelliFarm.Core;
 using BrunelUni.IntelliFarm.DataAccess;
+using BrunelUni.IntelliFarm.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BrunelUni.IntelliFarm.DIModule
@@ -12,6 +13,7 @@ namespace BrunelUni.IntelliFarm.DIModule
             serviceCollection.BindServices( new Action [ ]
             {
                 MainInitializer.Initialize,
+                DomainInitializer.Initialize,
                 DataAccessInitializer.Initialize
             }, ApplicationConstants.RootNamespace );
     }

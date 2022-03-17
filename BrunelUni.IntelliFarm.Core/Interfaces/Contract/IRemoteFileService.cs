@@ -4,8 +4,7 @@ namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
 {
     public interface IRemoteFileService
     {
-        string Get( string path );
+        public void CreateFromStream( Stream data, string path );
         Stream GetStream( string path );
-        string Write( string path );
     }
 }

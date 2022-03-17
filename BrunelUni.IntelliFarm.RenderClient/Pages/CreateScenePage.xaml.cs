@@ -7,14 +7,19 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
     public partial class CreateScenePage : Page
     {
         private readonly INavigationService _wpfNavigationService;
-        public CreateScenePage( INavigationService wpfNavigationService )
+        private readonly IWebClient _webClient;
+
+        public CreateScenePage( INavigationService wpfNavigationService,
+            IWebClient webClient )
         {
             _wpfNavigationService = wpfNavigationService;
+            _webClient = webClient;
             InitializeComponent( );
         }
 
         private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
         {
+            _webClient.UploadFile( "upload-file", "calibration.zip" );
             // open file dialog, zip file, convert it to bytes
         }
 

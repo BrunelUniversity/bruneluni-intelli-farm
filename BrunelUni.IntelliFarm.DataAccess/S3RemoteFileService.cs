@@ -37,7 +37,20 @@ namespace BrunelUni.IntelliFarm.DataAccess
             task.Wait( );
             return task.Result.ResponseStream;
         }
-
-        public string Write( string path ) { throw new System.NotImplementedException( ); }
+        
+        public void CreateFromStream( Stream data, string path )
+        {
+            using var client = new AmazonS3Client(
+                _id,
+                _secret,
+                RegionEndpoint.GetBySystemName( S3Region ) );
+            var task = client.PutObjectAsync( new PutObjectRequest
+            {
+                BucketName = IntelliFarmS3Name,
+                Key = path,
+                InputStream = data
+            } );
+            task.Wait( );
+        }
     }
 }
