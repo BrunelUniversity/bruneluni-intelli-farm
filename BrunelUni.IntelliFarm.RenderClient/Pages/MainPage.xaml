@@ -28,7 +28,7 @@
         <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
                              Text="Intelli-Farm" />
         <controls:LargeButton Grid.Row="4" Grid.Column="2" x:Name="CreateClientNavButton"
-                              Text="Create Project"
+                              Text="Create Client"
                               OnClick="CreateClient_OnOnClick" />
         <controls:LargeButton Grid.Row="5" Grid.Column="2" x:Name="CreateProjectNavButton"
                               Text="Create Project"
