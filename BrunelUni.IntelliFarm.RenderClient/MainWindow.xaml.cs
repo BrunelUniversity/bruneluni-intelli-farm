@@ -40,6 +40,14 @@ namespace BrunelUni.IntelliFarm.RenderClient
             InitializeComponent( );
             WpfNavigationService.Navigate += OnNavigate;
             WpfNavigationService.NavigateTo( AppConstants.MainPageRouteName );
+            ClearLogs( );
+        }
+
+        private void ClearLogs( )
+        {
+            var fileService = _host.Services.GetService<IFileAdapter>( );
+            var logsFile = $"{fileService?.GetCurrentDirectory( ).Value}\\current-logs.txt";
+            var result = fileService?.WriteFile( logsFile, "" );
         }
 
         private void OnNavigate( string obj )
