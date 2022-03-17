@@ -2,6 +2,6 @@
 {
     public interface IWebClient
     {
-        public byte[] GetAsBytes( string endpoint );
+        public string DownloadFile( string endpoint, string filename );
     }
 }

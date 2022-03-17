@@ -7,9 +7,9 @@ namespace BrunelUni.IntelliFarm.API.Controllers
     public class DeviceController : ControllerBase
     {
         [ HttpPost ]
-        public IActionResult CreateScene( [ FromBody ] SceneDto scene )
+        public IActionResult CreateDevice( [ FromBody ] ClientDto device )
         {
-            return Ok( "project created successfully" );
+            return Ok( device );
         }
     }
 }

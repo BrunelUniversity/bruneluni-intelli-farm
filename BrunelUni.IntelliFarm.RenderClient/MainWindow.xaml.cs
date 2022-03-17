@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Text.Json;
 using System.Windows;
+using Aidan.Common.Core.Interfaces.Contract;
+using Aidan.Common.Utils.Utils;
+using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
+using BrunelUni.IntelliFarm.Data.DIModule;
+using BrunelUni.IntelliFarm.DIModule;
 using BrunelUni.IntelliFarm.RenderClient.Pages;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace BrunelUni.IntelliFarm.RenderClient
@@ -18,10 +25,16 @@ namespace BrunelUni.IntelliFarm.RenderClient
             _host = Host.CreateDefaultBuilder( )
                 .ConfigureServices( ( hostContext, services ) =>
                     services.BindCrosscuttingLayer( )
+                        .BindIntelliFarm( )
+                        .BindDataLayer( )
                         .AddTransient<CreateDevicePage>( )
                         .AddTransient<MainPage>( )
                         .AddTransient<RenderPage>( )
-                        .AddTransient<CreateScenePage>( ) )
+                        .AddTransient<CreateScenePage>( )
+                        .RemoveAll( typeof( ILoggerAdapter<> ) )
+                        .AddTransient( typeof( ILoggerAdapter<> ), typeof( WpfLogger<> ) )
+                        .AddTransient<JsonNamingPolicy, SnakeCaseJsonNamingPolicy>( )
+                        .AddTransient<ISerializer, JsonSnakeCaseSerialzier>( ) )
                 .Build( );
             
             InitializeComponent( );

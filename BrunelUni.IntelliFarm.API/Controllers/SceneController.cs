@@ -9,7 +9,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         [ HttpPost ]
         public IActionResult CreateScene( [ FromBody ] SceneDto scene )
         {
-            return Ok( "project created successfully" );
+            return Ok( scene );
         }
     }
 }

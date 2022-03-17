@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
@@ -29,6 +31,15 @@ namespace BrunelUni.IntelliFarm.DataAccess
             var responseTask = task.Result.Content.ReadAsByteArrayAsync( );
             responseTask.Wait( );
             return responseTask.Result;
+        }
+
+        public string DownloadFile( string endpoint, string filename )
+        {
+            var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
+            var appOptions = _configurationAdapter.Get<MainAppOptions>( );
+            using var webClient = new WebClient( );
+            webClient.DownloadFile( $"{appOptions.ApiBaseUrl}{endpoint}", path );
+            return path;
         }
     }
 }

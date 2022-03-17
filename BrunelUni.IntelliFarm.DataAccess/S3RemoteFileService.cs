@@ -19,7 +19,11 @@ namespace BrunelUni.IntelliFarm.DataAccess
             _secret = secret;
         }
         
-        public string Get( string path )
+        public string Get( string path ) =>
+            new StreamReader( GetStream( path ) )
+                .ReadToEnd( );
+
+        public Stream GetStream( string path )
         {
             using var client = new AmazonS3Client(
                 _id,
@@ -31,11 +35,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
                 Key = path
             } );
             task.Wait( );
-            var resp = task.Result.ResponseStream;
-
-            using var sr = new StreamReader( resp );
-
-            return sr.ReadToEnd( );
+            return task.Result.ResponseStream;
         }
 
         public string Write( string path ) { throw new System.NotImplementedException( ); }

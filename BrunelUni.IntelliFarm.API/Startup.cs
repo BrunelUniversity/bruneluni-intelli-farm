@@ -2,6 +2,7 @@
 using Aidan.Common.Utils.Web;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.Data.DIModule;
+using BrunelUni.IntelliFarm.DIModule;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,12 +15,13 @@ namespace BrunelUni.IntelliFarm.API
         private readonly IConfiguration _configuration;
 
         public Startup( IConfiguration configuration ) { _configuration = configuration; }
-        
+
         public void ConfigureServices( IServiceCollection serviceCollection )
         {
             serviceCollection
                 .BindCrosscuttingLayer( )
                 .BindDataLayer( )
+                .BindIntelliFarm( )
                 .AddTransient<MvcAdapter>( );
             serviceCollection.AddControllers( )
                 .BindJsonOptions( CaseEnum.Snake );

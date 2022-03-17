@@ -2,7 +2,7 @@
 {
     public class AppOptions
     {
-        public string Auth0Domain { get; set; }
-        public string Auth0ClientId { get; set; }
+        public string AwsToken { get; set; }
+        public string AwsId { get; set; }
     }
 }

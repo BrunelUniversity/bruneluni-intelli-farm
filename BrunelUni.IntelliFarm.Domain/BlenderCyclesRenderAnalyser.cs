@@ -14,7 +14,7 @@ namespace BrunelUni.IntelliFarm.Domain
             var buckets = clients.Select( x => new BucketDto
             {
                 DeviceId = x.Id,
-                Frames = new List<(double predictedTime, Guid id)>()
+                Frames = new List<FrameTimeDto>()
             } ).ToList( );
 
             // node speed calc
@@ -31,16 +31,20 @@ namespace BrunelUni.IntelliFarm.Domain
                     client: x.Id ) ) ).ToList( );
             
             // get predicted time for fastest node
-            var predictedTimes = frames.Select( x => ( predicted: GetPredictedTime( firstClient, x ), frame: x.Id ) )
+            var predictedTimes = frames.Select( x => new FrameTimeDto
+                {
+                    Id = x.Id,
+                    Time = GetPredictedTime( firstClient, x )
+                } )
                 .ToList( );
-            var orderedPredictedTimes = predictedTimes.OrderByDescending( x => x.predicted ).ToArray( ).ToList( );
+            var orderedPredictedTimes = predictedTimes.OrderByDescending( x => x.Time ).ToArray( ).ToList( );
             
             // node multiplier calc
             var totalBucketSpeedDivisor = clientsWithRespectToFastestNode.Sum( x => x.clientDiv );
             var bucketMults = clientsWithRespectToFastestNode.Select( x => (mult: x.clientDiv / totalBucketSpeedDivisor, client: x.client) );
 
             // total time render time calc
-            var totalTime = predictedTimes.Sum( x => x.predicted );
+            var totalTime = predictedTimes.Sum( x => x.Time );
 
             Console.WriteLine($"total time: {totalTime}");
 
@@ -68,12 +72,12 @@ namespace BrunelUni.IntelliFarm.Domain
         }
 
         private bool AddToBucket( BucketDto bucket,
-            List<(double predicted, Guid frame)> predictedTimes,
+            List<FrameTimeDto> predictedTimes,
             double maxTimeForBucket,
             List<BucketComplete> bucketCompleted )
         {
-            var bucketTimes = bucket.Frames.Sum( x => x.predictedTime );
-            (double predicted, Guid frame) result;
+            var bucketTimes = bucket.Frames.Sum( x => x.Time );
+            FrameTimeDto result;
             if( predictedTimes.Any( ) )
             {
                 result = predictedTimes[ 0 ];
@@ -85,11 +89,11 @@ namespace BrunelUni.IntelliFarm.Domain
 
             if( !bucketCompleted.First(x => x.DeviceId == bucket.DeviceId).Complete )
             {
-                if( bucketTimes + result.predicted > maxTimeForBucket )
+                if( bucketTimes + result.Time > maxTimeForBucket )
                 {
                     foreach( var newResult in predictedTimes )
                     {
-                        if( bucketTimes + newResult.predicted > maxTimeForBucket )
+                        if( bucketTimes + newResult.Time > maxTimeForBucket )
                         {
                             if( predictedTimes.IndexOf( newResult ) == predictedTimes.Count - 1 )
                             {

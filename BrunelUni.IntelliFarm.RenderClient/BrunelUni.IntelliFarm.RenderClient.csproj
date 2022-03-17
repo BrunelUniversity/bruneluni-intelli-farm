@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.1-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
@@ -15,6 +15,14 @@
     <ItemGroup>
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj" />
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj" />
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.DIModule\BrunelUni.IntelliFarm.DIModule.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

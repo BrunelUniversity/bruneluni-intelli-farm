@@ -11,7 +11,7 @@
             Background="Salmon"
             BorderThickness="0"
             Height="40"
-            FontSize="15"
+            FontSize="13"
             FontWeight="Light"
             Width="70"
             Content="{Binding Text}"
