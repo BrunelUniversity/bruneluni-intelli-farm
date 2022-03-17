@@ -1,34 +1,47 @@
 ﻿using System;
 using System.Windows;
+using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.RenderClient.Pages;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace BrunelUni.IntelliFarm.RenderClient
 {
     public partial class MainWindow : Window
     {
-        private NavigationService _navigationService;
+        private readonly IHost _host;
+        private NavigationService NavigationService => _host.Services.GetService<NavigationService>( )!;
 
         public MainWindow( )
         {
-            _navigationService = new NavigationService( );
-            _navigationService.Navigate += OnNavigate;
+            _host = Host.CreateDefaultBuilder( )
+                .ConfigureServices( ( hostContext, services ) =>
+                    services.BindCrosscuttingLayer( )
+                        .AddTransient<NavigationService>( )
+                        .AddTransient<CreateDevicePage>( )
+                        .AddTransient<MainPage>( )
+                        .AddTransient<RenderPage>( )
+                        .AddTransient<CreateScenePage>( ) )
+                .Build( );
+            
             InitializeComponent( );
-            _mainFrame.Navigate( new MainPage( _navigationService ) );
+            NavigationService.Navigate += OnNavigate;
         }
 
         private void OnNavigate( string obj )
         {
-            switch( obj )
-            {
-                case "main":
-                    _mainFrame.Navigate( new MainPage( _navigationService ) );
-                    break;
-                case "create-scene":
-                    _mainFrame.Navigate( new CreateScenePage( _navigationService ) );
-                    break;
-                default:
-                    throw new ArgumentException( $"{obj} route does not exist" );
-            }
+            var pageType = GetPageRoute( obj );
+            _mainFrame.Navigate( _host.Services.GetService( pageType ) );
         }
+
+        private Type GetPageRoute( string route ) =>
+            route switch
+            {
+                "main" => typeof( MainPage ),
+                "create-scene" => typeof( CreateScenePage ),
+                "create-device" => typeof( CreateDevicePage ),
+                "render" => typeof( RenderPage ),
+                _ => throw new ArgumentException( "route not found" )
+            };
     }
 }
