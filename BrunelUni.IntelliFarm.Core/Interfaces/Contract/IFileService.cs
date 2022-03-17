@@ -2,6 +2,8 @@
 {
     public interface IFileService
     {
-        
+        void CreateFileFromBytes( byte [ ] bytes,
+            bool local,
+            string fileName );
     }
 }

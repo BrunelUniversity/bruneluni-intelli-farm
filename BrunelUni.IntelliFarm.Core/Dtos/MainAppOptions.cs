@@ -3,5 +3,6 @@
     public class MainAppOptions
     {
         public string ApiBaseUrl { get; set; }
+        public bool Local { get; set; }
     }
 }

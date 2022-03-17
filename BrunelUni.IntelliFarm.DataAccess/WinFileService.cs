@@ -1,12 +1,22 @@
 ﻿using System.IO;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.DataAccess
 {
     public class WinFileService
     {
-        public void CreateFileFromBytes( byte[] bytes )
+        private readonly ICurrentPathService _currentPathService;
+
+        public WinFileService( ICurrentPathService currentPathService )
         {
-            File.WriteAllBytes( "", bytes );
+            _currentPathService = currentPathService;
+        }
+        
+        public void CreateFileFromBytes( byte[] bytes,
+            bool local,
+            string fileName )
+        {
+            File.WriteAllBytes( $"{_currentPathService.GetCurrent( local )}\\{fileName}", bytes );
         }
     }
 }
