@@ -53,7 +53,7 @@ namespace BrunelUni.IntelliFarm.Domain
                 times.Add( _sceneCommandFacade.Render( ).RenderTime );
             }
 
-            return times.Sum( ) / 3;
+            return (times.Sum( )) / (double)3;
         }
 
         public void CreateDevice( string deviceName )
