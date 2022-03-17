@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.RenderClient", "BrunelUni.IntelliFarm.RenderClient\BrunelUni.IntelliFarm.RenderClient.csproj", "{0E57E138-BC67-4A19-9E7D-24982B68CEB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.DataAccess", "BrunelUni.IntelliFarm.DataAccess\BrunelUni.IntelliFarm.DataAccess.csproj", "{6C971043-192A-4090-9E51-0EC6C65930C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{0E57E138-BC67-4A19-9E7D-24982B68CEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E57E138-BC67-4A19-9E7D-24982B68CEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E57E138-BC67-4A19-9E7D-24982B68CEB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C971043-192A-4090-9E51-0EC6C65930C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C971043-192A-4090-9E51-0EC6C65930C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C971043-192A-4090-9E51-0EC6C65930C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C971043-192A-4090-9E51-0EC6C65930C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
