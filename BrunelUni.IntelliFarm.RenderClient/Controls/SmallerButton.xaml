@@ -14,5 +14,6 @@
             FontSize="15"
             FontWeight="Light"
             Width="70"
-            Content="{Binding Text}"/>
+            Content="{Binding Text}"
+            Click="HomeButton_OnClick"/>
 </UserControl>

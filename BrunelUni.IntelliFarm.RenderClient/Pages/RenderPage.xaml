@@ -1,4 +1,4 @@
-﻿<Page x:Class="BrunelUni.IntelliFarm.RenderClient.Pages.CreateScenePage"
+﻿<Page x:Class="BrunelUni.IntelliFarm.RenderClient.Pages.RenderPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Pages"
       xmlns:controls="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Controls"
       mc:Ignorable="d"
-      Title="CreateScenePage" Height="450" Width="800">
+      Title="RenderPage" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"></ColumnDefinition>
@@ -26,17 +26,14 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
         <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
-                             Text="Create Scene" />
+                             Text="Render" />
         <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="NameTextBox"
-                              Text="New Scene Name..." />
-        <controls:LargeButton Grid.Row="3" Grid.Column="2" x:Name="UploadSceneButton"
-                              Text="Upload File"
-                              OnClick="UploadSceneButton_OnOnClick" />
-        <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="CreateButton"
-                              Text="Create"
-                              OnClick="CreateButton_OnOnClick" />
+                                    Text="Scene Name..." />
+        <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="RenderButton"
+                              Text="Render"
+                              OnClick="RenderButton_OnOnClick" />
         <controls:SmallerButton Grid.Row="1" Grid.Column="1" x:Name="HomeNavButton"
-                              Text="Home"
-                              OnClick="HomeNavButton_OnOnClick" />
+                                Text="Home"
+                                OnClick="HomeNavButton_OnOnClick" />
     </Grid>
 </Page>

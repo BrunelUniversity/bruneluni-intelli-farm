@@ -25,55 +25,15 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
-        <controls:LargeButton Grid.Row="0" Grid.Column="0" Text="fdsa"></controls:LargeButton>
-        <Border Grid.Row="1" Grid.Column="2" BorderBrush="{x:Null}" Height="50">
-            <TextBlock
-                FontWeight="ExtraLight"
-                TextWrapping="Wrap"
-                Text="Create Scene"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontSize="25"/>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="2" BorderBrush="{x:Null}" Height="50">
-            <TextBox
-                FontWeight="ExtraLight"
-                Text="Name..."
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                FontSize="10"
-                Width="150"
-                Height="40"
-                Padding="12.5"/>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="2" BorderBrush="{x:Null}" Height="50">
-            <TextBox
-                FontWeight="ExtraLight"
-                Text="C:\\Path-To-File"
-                FontSize="10"
-                Width="150"
-                Height="40"
-                Padding="12.5"
-                IsEnabled="False"/>
-        </Border>
-        <Button Foreground="White"
-                Background="Tomato"
-                BorderThickness="0"
-                Grid.Row="6"
-                Grid.Column="2"
-                Height="40"
-                FontSize="15"
-                FontWeight="Light"
-                Width="150">Create</Button>
-        <Button Name="HomeButton"
-                Foreground="White"
-                Background="Salmon"
-                BorderThickness="0"
-                Grid.Row="1"
-                Grid.Column="1"
-                Height="40"
-                FontSize="15"
-                FontWeight="Light"
-                Width="70">Home</Button>
+        <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
+                             Text="Create Device" />
+        <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="NameTextBox"
+                                    Text="New Device Name..." />
+        <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="CreateButton"
+                              Text="Calibrate/Create"
+                              OnClick="CreateButton_OnOnClick" />
+        <controls:SmallerButton Grid.Row="1" Grid.Column="1" x:Name="HomeNavButton"
+                                Text="Home"
+                                OnClick="HomeNavButton_OnOnClick" />
     </Grid>
 </Page>
