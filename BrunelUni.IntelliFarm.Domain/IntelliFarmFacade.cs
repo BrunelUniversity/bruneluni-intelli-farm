@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
-using BrunelUni.IntelliFarm.RenderClient.Pages;
 
-namespace BrunelUni.IntelliFarm.RenderClient
+namespace BrunelUni.IntelliFarm.Domain
 {
     public class IntelliFarmFacade : IIntelliFarmFacade
     {
@@ -17,7 +17,12 @@ namespace BrunelUni.IntelliFarm.RenderClient
         private readonly IAnimationContext _animationContext;
         private readonly IFileAdapter _fileAdapter;
 
-        public IntelliFarmFacade( IWebClient webClient, IConfigurationAdapter configurationAdapter, IZipAdapter zipAdapter, ILoggerAdapter<CreateDevicePage> loggerAdapter, ISceneCommandFacade sceneCommandFacade, IAnimationContext animationContext, IFileAdapter fileAdapter )
+        public IntelliFarmFacade( IWebClient webClient,
+            IConfigurationAdapter configurationAdapter,
+            IZipAdapter zipAdapter,
+            ISceneCommandFacade sceneCommandFacade,
+            IAnimationContext animationContext,
+            IFileAdapter fileAdapter )
         {
             _webClient = webClient;
             _configurationAdapter = configurationAdapter;
@@ -58,6 +63,12 @@ namespace BrunelUni.IntelliFarm.RenderClient
             _animationContext.Initialize(  );
             var avTimeForBaseScene = CalibrateScene( "poly_80_100_coverage.blend" );
             var avTimeFor0Scene = CalibrateScene( "vewiport_0.blend" );
+            _webClient.Create( "device", new ClientDto
+            {
+                Name = deviceName,
+                TimeFor80Poly100Coverage0Bounces100Samples = avTimeForBaseScene,
+                TimeFor0PolyViewpoint = avTimeFor0Scene
+            } );
         }
 
         public void Render( ) { throw new System.NotImplementedException( ); }
