@@ -23,7 +23,7 @@ namespace BrunelUni.IntelliFarm.RenderClient
                 case "main":
                     _mainFrame.Navigate( new MainPage( _navigationService ) );
                     break;
-                case "create-project":
+                case "create-scene":
                     _mainFrame.Navigate( new CreateScenePage( _navigationService ) );
                     break;
                 default:

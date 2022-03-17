@@ -4,10 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Pages"
+      xmlns:controls="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Controls"
       mc:Ignorable="d"
       Title="MainPage" Height="450" Width="800">
     <Grid>
-        <TextBlock>Main</TextBlock>
-        <Button Width="100" Height="20" Click="ButtonBase_OnClick">Create Scene</Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="20"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
+                             Text="Intelli-Farm" />
+        <controls:LargeButton Grid.Row="4" Grid.Column="2" x:Name="CreateClientNavButton"
+                              Text="Create Project"
+                              OnClick="CreateClient_OnOnClick" />
+        <controls:LargeButton Grid.Row="5" Grid.Column="2" x:Name="CreateProjectNavButton"
+                              Text="Create Project"
+                              OnClick="CreateProject_OnOnClick" />
+        <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="RenderNavButton"
+                              Text="Render"
+                              OnClick="RenderNavButton_OnOnClick" />
     </Grid>
 </Page>

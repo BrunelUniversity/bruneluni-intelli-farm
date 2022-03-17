@@ -12,7 +12,7 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             InitializeComponent( );
         }
 
-        private void ButtonBase_OnClick( object sender, RoutedEventArgs e )
+        private void HomeButton_OnClick( object sender, RoutedEventArgs e )
         {
             _navigationService.NavigateTo( "main" );
         }

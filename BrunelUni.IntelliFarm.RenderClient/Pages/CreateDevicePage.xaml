@@ -1,11 +1,12 @@
-﻿<Page x:Class="BrunelUni.IntelliFarm.RenderClient.Pages.CreateScenePage"
+﻿<Page x:Class="BrunelUni.IntelliFarm.RenderClient.Pages.CreateDevicePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Pages"
+      xmlns:controls="clr-namespace:BrunelUni.IntelliFarm.RenderClient.Controls"
       mc:Ignorable="d"
-      Title="CreateScenePage" Height="450" Width="800">
+      Title="CreateDevicePage" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"></ColumnDefinition>
@@ -24,6 +25,7 @@
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
+        <controls:LargeButton Grid.Row="0" Grid.Column="0" Text="fdsa"></controls:LargeButton>
         <Border Grid.Row="1" Grid.Column="2" BorderBrush="{x:Null}" Height="50">
             <TextBlock
                 FontWeight="ExtraLight"
@@ -72,7 +74,6 @@
                 Height="40"
                 FontSize="15"
                 FontWeight="Light"
-                Width="70"
-                Click="HomeButton_OnClick">Home</Button>
+                Width="70">Home</Button>
     </Grid>
 </Page>

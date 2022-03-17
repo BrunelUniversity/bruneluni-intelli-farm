@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BrunelUni.IntelliFarm.RenderClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="850" ResizeMode="NoResize">
     <DockPanel>
         <Frame NavigationUIVisibility="Hidden" x:Name="_mainFrame" />
     </DockPanel>
