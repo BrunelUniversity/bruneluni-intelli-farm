@@ -11,5 +11,6 @@ namespace BrunelUni.IntelliFarm.Core.Dtos
         public string FileName { get; set; }
 
         public FrameDto [ ] Frames { get; set; }
+        public string ZipFileBytes { get; set; }
     }
 }

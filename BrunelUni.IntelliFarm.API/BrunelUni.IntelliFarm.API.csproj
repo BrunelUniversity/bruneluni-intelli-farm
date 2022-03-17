@@ -7,9 +7,11 @@
     <ItemGroup>
       <PackageReference Include="Aidan.Common.Core" Version="1.0.31" />
       <PackageReference Include="Aidan.Common.Utils" Version="1.0.30" />
+      <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.0.1" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj" />
       <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj" />
     </ItemGroup>
