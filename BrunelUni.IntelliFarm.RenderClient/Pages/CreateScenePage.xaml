@@ -27,9 +27,11 @@
         </Grid.RowDefinitions>
         <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
                              Text="Create Scene" />
-        <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="NameTextBox"
+        <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="SceneNameTextBox"
                               Text="New Scene Name..." />
-        <controls:LargeButton Grid.Row="3" Grid.Column="2" x:Name="UploadSceneButton"
+        <controls:SingleLineTextBox Grid.Row="3" Grid.Column="2" x:Name="DeviceNamesTextBox"
+                                    Text="Device Names..." />
+        <controls:LargeButton Grid.Row="4" Grid.Column="2" x:Name="UploadSceneButton"
                               Text="Upload File"
                               OnClick="UploadSceneButton_OnOnClick" />
         <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="CreateButton"
