@@ -27,8 +27,10 @@
         </Grid.RowDefinitions>
         <controls:TitleBlock Grid.Row="1" Grid.Column="2" x:Name="TitleBlock"
                              Text="Render" />
-        <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="NameTextBox"
+        <controls:SingleLineTextBox Grid.Row="2" Grid.Column="2" x:Name="SceneNameTextBox"
                                     Text="Scene Name..." />
+        <controls:SingleLineTextBox Grid.Row="3" Grid.Column="2" x:Name="DeviceNameTextBox"
+                                    Text="Device Name..." />
         <controls:LargeButton Grid.Row="6" Grid.Column="2" x:Name="RenderButton"
                               Text="Render"
                               OnClick="RenderButton_OnOnClick" />

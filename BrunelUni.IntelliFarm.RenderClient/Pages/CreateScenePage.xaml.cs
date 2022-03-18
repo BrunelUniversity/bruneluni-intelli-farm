@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Core.Enums;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.RenderClient.Pages
@@ -19,7 +21,11 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
 
         private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
         {
-            _webClient.UploadFile( "upload-file", "calibration.zip" );
+            _webClient.Get( "bucket", "sceneName=some&device=somedevice" );
+            _webClient.Create( "bucket", new BucketDto
+            {
+                Type = BucketTypeEnum.Actual
+            } );
             // open file dialog, zip file, convert it to bytes
         }
 

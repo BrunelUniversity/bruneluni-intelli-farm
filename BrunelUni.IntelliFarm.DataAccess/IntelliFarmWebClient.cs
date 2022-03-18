@@ -62,7 +62,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
             client.BaseAddress = new Uri( _baseUrl );
             var request = new HttpRequestMessage( HttpMethod.Post, endpoint );
             var content = _serializer.Serialize( body );
-            _loggerAdapter.LogInfo( $"POST {content}" );
+            _loggerAdapter.LogInfo( $"POST /{endpoint} with body: {content}" );
             request.Content = new StringContent( content,
                 Encoding.UTF8,
                 "application/json" );
@@ -71,11 +71,37 @@ namespace BrunelUni.IntelliFarm.DataAccess
             var taskResult = task.Result;
             var taskRead = taskResult.Content.ReadAsStringAsync( );
             taskRead.Wait( );
-            return new WebDto
+            var rawData = taskRead.Result;
+            var statusCode = taskResult.StatusCode;
+            var webResult = new WebDto
             {
-                Data = JsonConvert.DeserializeObject<T>( taskRead.Result ),
-                StatusCode = taskResult.StatusCode
+                Data = JsonConvert.DeserializeObject( rawData ),
+                StatusCode = statusCode
             };
+            _loggerAdapter.LogInfo( $"{statusCode} {rawData}" );
+            return webResult;
+        }
+
+        public WebDto Get( string endpoint, string queryParams )
+        {
+            using var client = new HttpClient( );
+            client.BaseAddress = new Uri( _baseUrl );
+            var request = new HttpRequestMessage( HttpMethod.Get, $"{endpoint}?{queryParams}" );
+            _loggerAdapter.LogInfo( $"GET /{endpoint}" );
+            var task = client.SendAsync( request );
+            task.Wait( );
+            var taskResult = task.Result;
+            var taskRead = taskResult.Content.ReadAsStringAsync( );
+            taskRead.Wait( );
+            var rawData = taskRead.Result;
+            var statusCode = taskResult.StatusCode;
+            var webResult = new WebDto
+            {
+                Data = JsonConvert.DeserializeObject( rawData ),
+                StatusCode = statusCode
+            };
+            _loggerAdapter.LogInfo( $"{statusCode} {rawData}" );
+            return webResult;
         }
     }
 }
