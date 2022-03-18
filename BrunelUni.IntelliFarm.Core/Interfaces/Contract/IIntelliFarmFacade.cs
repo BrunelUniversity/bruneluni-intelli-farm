@@ -6,6 +6,6 @@ namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
     {
         Result CreateProject( string name, string filePath, params string [ ] devices );
         void CreateDevice( string deviceName );
-        void Render( );
+        void Render( string sceneName, string deviceName );
     }
 }

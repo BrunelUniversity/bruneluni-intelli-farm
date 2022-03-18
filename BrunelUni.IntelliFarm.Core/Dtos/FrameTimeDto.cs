@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace BrunelUni.IntelliFarm.Core.Dtos
+﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
     public class FrameTimeDto
     {
-        public Guid Id { get; set; }
+        public int Num { get; set; }
         public double Time { get; set; }
     }
 }

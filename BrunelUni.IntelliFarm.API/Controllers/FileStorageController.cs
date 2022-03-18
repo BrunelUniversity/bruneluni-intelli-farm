@@ -31,6 +31,16 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             return new FileStreamResult( stream, "application/octet-stream" );
         }
         
+        [ Route("scene-file") ]
+        [ HttpGet ]
+        public IActionResult GetSceneFile( [ FromQuery ] string key )
+        {
+            var options = _configurationAdapter.Get<AppOptions>( );
+            var remoteFileService = _remoteFileServiceFactory.Factory( options.AwsId, options.AwsToken );
+            var stream = remoteFileService.GetStream( key );
+            return new FileStreamResult( stream, "application/octet-stream" );
+        }
+        
         [ Route("blender") ]
         [ HttpGet ]
         public IActionResult GetBlender( )

@@ -30,7 +30,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
             var actualBucket = new List<double>( );
             foreach( var frame in bucket.Frames )
             {
-                actualBucket.Add( predictorFixtureDtos.First( x => x.Frame.Id == frame.Id ).ActualRenderTime );
+                actualBucket.Add( predictorFixtureDtos.First( x => x.Frame.Number == frame.Num ).ActualRenderTime );
             }
             var actualBucketTimes = actualBucket.Sum( );
             Console.WriteLine($"actual time for node{index}: {mult*actualBucketTimes}");

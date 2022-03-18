@@ -33,7 +33,7 @@ namespace BrunelUni.IntelliFarm.Domain
             // get predicted time for fastest node
             var predictedTimes = frames.Select( x => new FrameTimeDto
                 {
-                    Id = x.Id,
+                    Num = x.Number,
                     Time = GetPredictedTime( firstClient, x )
                 } )
                 .ToList( );

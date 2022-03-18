@@ -102,6 +102,9 @@ namespace BrunelUni.IntelliFarm.Domain
             } );
         }
 
-        public void Render( ) { throw new System.NotImplementedException( ); }
+        public void Render( string sceneName, string deviceName )
+        {
+            
+        }
     }
 }

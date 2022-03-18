@@ -82,11 +82,11 @@ namespace BrunelUni.IntelliFarm.DataAccess
             return webResult;
         }
 
-        public WebDto Get( string endpoint, string queryParams )
+        public WebDto Get( string endpoint )
         {
             using var client = new HttpClient( );
             client.BaseAddress = new Uri( _baseUrl );
-            var request = new HttpRequestMessage( HttpMethod.Get, $"{endpoint}?{queryParams}" );
+            var request = new HttpRequestMessage( HttpMethod.Get, $"{endpoint}" );
             _loggerAdapter.LogInfo( $"GET /{endpoint}" );
             var task = client.SendAsync( request );
             task.Wait( );
