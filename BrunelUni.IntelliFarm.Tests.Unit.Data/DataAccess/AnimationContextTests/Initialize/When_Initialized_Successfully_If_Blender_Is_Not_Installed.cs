@@ -13,7 +13,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 
         protected override void When( )
         {
-            _baseUrl = "https://apiendpoint.com";
+            _baseUrl = "https://apiendpoint.com/";
             MockConfigurationAdapter.Get<MainAppOptions>( )
                 .Returns( new MainAppOptions
                 {

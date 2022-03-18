@@ -51,7 +51,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             }
 
             var webResult = _webClientAdapter.DownloadFile(
-                $"{_configurationAdapter.Get<MainAppOptions>( ).ApiBaseUrl}/blender",
+                $"{_configurationAdapter.Get<MainAppOptions>( ).ApiBaseUrl}blender",
                 "blender.zip" );
             if( webResult.Status == OperationResultEnum.Failed )
                 throw new WebException( $"failing to download file msg: {webResult.Msg}" );
