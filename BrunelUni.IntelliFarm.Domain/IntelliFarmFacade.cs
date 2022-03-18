@@ -111,7 +111,12 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public Result Render( string sceneName, string deviceName )
         {
-            var bucket = _webClient.Get( $"bucket?sceneName={sceneName}&device={deviceName}" ).Data as BucketDto;
+            var webResult = _webClient.Get( $"bucket?sceneName={sceneName}&device={deviceName}" );
+            if( webResult.StatusCode == HttpStatusCode.NotFound )
+            {
+                return Result.Error( $"bucket of scene: {sceneName} and device: {deviceName} not found" );
+            }
+            var bucket = webResult.Data as BucketDto;
             _webClient.DownloadFile( $"scene-file?key={bucket?.FilePath}", $"{sceneName}.blend" );
             _zipAdapter.ExtractToDirectory( $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{sceneName}.zip",
                 $"{_fileAdapter.GetCurrentDirectory( ).Value}" );
