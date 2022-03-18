@@ -4,5 +4,6 @@
     {
         public string AwsToken { get; set; }
         public string AwsId { get; set; }
+        public bool Local { get; set; }
     }
 }

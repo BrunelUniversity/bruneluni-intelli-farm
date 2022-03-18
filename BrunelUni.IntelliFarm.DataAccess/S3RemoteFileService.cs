@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using Amazon;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -51,6 +52,29 @@ namespace BrunelUni.IntelliFarm.DataAccess
                 InputStream = data
             } );
             task.Wait( );
+        }
+
+        public string DownloadFile( string path )
+        {
+            var dir = $"{Directory.GetCurrentDirectory( )}\\{Path.GetFileNameWithoutExtension( path )}.zip";
+            using var client = new AmazonS3Client(
+                _id,
+                _secret,
+                RegionEndpoint.GetBySystemName( S3Region ) );
+            var getObjectTask = client.GetObjectAsync( new GetObjectRequest
+            {
+                BucketName = IntelliFarmS3Name,
+                Key = path
+            } );
+            getObjectTask.Wait( );
+            var writeReponseToFileTask = getObjectTask
+                .Result
+                .WriteResponseStreamToFileAsync(
+                    dir,
+                    false,
+                    CancellationToken.None );
+            writeReponseToFileTask.Wait( );
+            return dir;
         }
     }
 }

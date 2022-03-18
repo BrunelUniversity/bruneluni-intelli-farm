@@ -6,5 +6,6 @@ namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
     {
         public void CreateFromStream( Stream data, string path );
         Stream GetStream( string path );
+        string DownloadFile( string path );
     }
 }

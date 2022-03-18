@@ -14,6 +14,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         protected ISceneCommandFacade MockSceneCommandFacade;
         protected IAnimationContext MockAnimationContext;
         protected IFileAdapter MockFileAdapter;
+        private IState _state;
 
         protected override void Given( )
         {
@@ -23,8 +24,9 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             MockSceneCommandFacade = Substitute.For<ISceneCommandFacade>( );
             MockAnimationContext = Substitute.For<IAnimationContext>( );
             MockFileAdapter = Substitute.For<IFileAdapter>( );
+            _state = Substitute.For<IState>( );
             SUT = new Domain.IntelliFarmFacade( MockWebClient, MockConfigurationAdapter, MockZipAdapter, MockSceneCommandFacade,
-                MockAnimationContext, MockFileAdapter );
+                MockAnimationContext, MockFileAdapter, _state );
         }
     }
 }

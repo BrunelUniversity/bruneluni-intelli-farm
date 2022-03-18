@@ -20,13 +20,15 @@ namespace BrunelUni.IntelliFarm.Domain
         private readonly ISceneCommandFacade _sceneCommandFacade;
         private readonly IAnimationContext _animationContext;
         private readonly IFileAdapter _fileAdapter;
+        private readonly IState _state;
 
         public IntelliFarmFacade( IWebClient webClient,
             IConfigurationAdapter configurationAdapter,
             IZipAdapter zipAdapter,
             ISceneCommandFacade sceneCommandFacade,
             IAnimationContext animationContext,
-            IFileAdapter fileAdapter )
+            IFileAdapter fileAdapter,
+            IState state )
         {
             _webClient = webClient;
             _configurationAdapter = configurationAdapter;
@@ -34,6 +36,7 @@ namespace BrunelUni.IntelliFarm.Domain
             _sceneCommandFacade = sceneCommandFacade;
             _animationContext = animationContext;
             _fileAdapter = fileAdapter;
+            _state = state;
         }
 
         public Result CreateProject( string name, string filePath, params string [ ] devices )
@@ -145,6 +148,14 @@ namespace BrunelUni.IntelliFarm.Domain
                 Frames = times
             } );
             return Result.Success( );
+        }
+
+        public void CreateBucketsFromProject( SceneDto sceneDto, string file ) { throw new System.NotImplementedException( ); }
+
+
+        public void CreateBucketsFromProject( )
+        {
+            
         }
     }
 }
