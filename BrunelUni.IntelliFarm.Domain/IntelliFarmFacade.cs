@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using Aidan.Common.Core;
@@ -37,6 +38,12 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public Result CreateProject( string name, string filePath, params string [ ] devices )
         {
+            var fileName = Path.GetFileNameWithoutExtension( filePath );
+            if( fileName != name )
+            {
+                return Result.Error(
+                    $"{fileName} is not the same as {name}, file name and scene name have to be the same" );
+            }
             _zipAdapter.ExtractToDirectory( filePath, $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
             var key = _webClient.UploadFile( "upload-file", $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
             _animationContext.Initialize(  );
