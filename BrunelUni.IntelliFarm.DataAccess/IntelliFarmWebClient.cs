@@ -2,7 +2,6 @@
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
@@ -42,16 +41,17 @@ namespace BrunelUni.IntelliFarm.DataAccess
             using var client = new HttpClient( );
             client.BaseAddress = new Uri( _baseUrl );
             client.DefaultRequestHeaders.Accept.Clear( );
-            client.DefaultRequestHeaders.Accept.Add( new MediaTypeWithQualityHeaderValue( "application/json" ) );
 
             var content = new MultipartFormDataContent( );
             var fileContent = new ByteArrayContent( File.ReadAllBytes( path ) );
             content.Add( fileContent, "file", filename );
 
-            var postTask = client.PostAsync( "upload-file", content );
+            var postTask = client.PostAsync( endpoint, content );
             postTask.Wait( );
             var response = postTask.Result;
-            var readStringTask = response.Content.ReadAsStringAsync( );
+            var readStringTask = response
+                .Content
+                .ReadAsStringAsync( );
             readStringTask.Wait( );
             return readStringTask.Result;
         }

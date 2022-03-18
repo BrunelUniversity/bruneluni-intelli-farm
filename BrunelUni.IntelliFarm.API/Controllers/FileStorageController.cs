@@ -41,7 +41,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         }
 
         [ Route( "upload-file" ) ]
-        public IActionResult UploadFile( IFormFile file )
+        public IActionResult UploadFile( [ FromForm ] IFormFile file )
         {
             using var memoryStream = new MemoryStream( );
             file.OpenReadStream( )
