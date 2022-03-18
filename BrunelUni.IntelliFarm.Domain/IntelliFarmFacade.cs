@@ -68,6 +68,10 @@ namespace BrunelUni.IntelliFarm.Domain
             sceneDto.FileName = key;
             sceneDto.Frames = frames.ToArray( );
             sceneDto.Status = RenderStatusEnum.NotStarted;
+            sceneDto.Clients = devices.Select( x => new ClientDto
+            {
+                Name = x
+            } ).ToArray( );
             var result = _webClient.Create( "scene", sceneDto );
             if( result.StatusCode == HttpStatusCode.NotFound )
             {
