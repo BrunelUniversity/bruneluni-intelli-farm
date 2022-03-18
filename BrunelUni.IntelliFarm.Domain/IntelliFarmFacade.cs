@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Aidan.Common.Core;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Core.Enums;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -35,7 +37,34 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public Result CreateProject( string name, string filePath, params string [ ] devices )
         {
-            return Result.Error( "" );
+            _zipAdapter.ExtractToDirectory( filePath, $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
+            var key = _webClient.UploadFile( "upload-file", $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
+            _animationContext.Initialize(  );
+            _animationContext.InitializeScene( filePath );
+            var sceneData = _sceneCommandFacade.GetSceneData( );
+            var sceneDto = new SceneDto( );
+            var frameLength = sceneData.EndFrame - sceneData.StartFrame + 1;
+            var frames = new List<FrameDto>( );
+            for( var i = 0; i < frameLength; i++ )
+            {
+                frames.Add( new FrameDto
+                {
+                    Scene = sceneDto.Id,
+                    Number = sceneData.StartFrame + i
+                } );
+            }
+
+            sceneDto.StartFrame = sceneData.StartFrame;
+            sceneDto.FileName = key;
+            sceneDto.Frames = frames.ToArray( );
+            sceneDto.Status = RenderStatusEnum.NotStarted;
+            var result = _webClient.Create( "scene", sceneDto );
+            if( result.StatusCode == HttpStatusCode.NotFound )
+            {
+                return Result.Error( "cannot be created because devices cannot be found" );
+            }
+
+            return Result.Success( );
         }
 
         private double CalibrateScene( string name )

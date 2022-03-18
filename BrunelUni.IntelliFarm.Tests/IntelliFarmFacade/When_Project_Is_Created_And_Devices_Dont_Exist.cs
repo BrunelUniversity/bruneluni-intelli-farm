@@ -2,6 +2,7 @@
 using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
 
@@ -13,6 +14,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 
         protected override void When( )
         {
+            MockSceneCommandFacade.GetSceneData( ).Returns( new RenderDataDto( ) );
+            MockFileAdapter.GetCurrentDirectory( )
+                .Returns( new ObjectResult<string>
+                {
+                    Value = ""
+                } );
             MockWebClient
                 .Create( Arg.Any<string>( ), Arg.Any<SceneDto>( ) )
                 .Returns( new WebDto

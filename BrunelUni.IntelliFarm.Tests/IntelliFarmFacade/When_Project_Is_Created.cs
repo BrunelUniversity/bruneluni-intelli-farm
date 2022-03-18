@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Dtos;
@@ -25,6 +26,15 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 
         protected override void When( )
         {
+            MockWebClient.Create( Arg.Any<string>( ), Arg.Any<SceneDto>( ) )
+                .Returns( new WebDto
+                {
+                    Data = new SceneDto
+                    {
+                        
+                    },
+                    StatusCode = HttpStatusCode.OK
+                } );
             _totalFrames = 447;
             _startFrame = 54;
             _sceneData = new RenderDataDto
@@ -89,13 +99,15 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_Request_To_Create_A_Project_Is_Sent( )
         {
-            MockWebClient.Received( ).Create( "scene", Arg.Is<SceneDto>( dto =>
-                dto.Status == RenderStatusEnum.NotStarted &&
-                dto.FileName == _s3Key &&
-                dto.Frames.Length == _totalFrames &&
-                dto.StartFrame == _startFrame ) );
+            MockWebClient.Received( ).Create( "scene", Arg.Is<SceneDto>( x => AssertDto( x ) ) );
         }
 
+        private bool AssertDto( SceneDto dto ) =>
+            dto.Status == RenderStatusEnum.NotStarted &&
+            dto.FileName == _s3Key &&
+            dto.Frames.Length == _totalFrames &&
+            dto.StartFrame == _startFrame;
+        
         [ Test ]
         public void Then_Result_Is_Success( )
         {
