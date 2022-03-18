@@ -7,7 +7,6 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     public class BlenderCommandInAndOut : ICommandInAndOut
     {
         private readonly CommandMetaDto _commandMetaDto;
-        private readonly ILoggerAdapter<ICommandInAndOut> _loggerAdapter;
         private readonly INamedPipeServer _namedPipeServer;
         private readonly ISceneProcessor _sceneProcessor;
         private readonly ISerializer _serializer;
@@ -38,7 +37,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
                     args = $"{_commandMetaDto.RenderMetaDto.BlendFilePath} ";
                 args += $"-b -P {_commandMetaDto.ScriptsRootDirectoryDto.DataScriptsDir}\\main.py";
                 if( _commandMetaDto.Render ) args += " -a";
-
+                
                 _sceneProcessor.RunSceneProcess( _commandMetaDto.ScriptsRootDirectoryDto.BlenderDirectory, args );
             } );
             return _serializer.Deserialize<TOut>( response );

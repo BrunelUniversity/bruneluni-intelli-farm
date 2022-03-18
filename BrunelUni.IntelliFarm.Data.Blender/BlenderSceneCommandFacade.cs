@@ -1,4 +1,5 @@
-﻿using BrunelUni.IntelliFarm.Data.Core.Dtos;
+﻿using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.Data.Blender
@@ -10,22 +11,26 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         private readonly ICommandOutFactory _commandOutFactory;
         private readonly IRenderManagerService _renderManagerService;
         private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
+        private readonly ILoggerAdapter<ISceneCommandFacade> _loggerAdapter;
 
         public BlenderSceneCommandFacade( ICommandInFactory commandInFactory,
             IRenderManagerService renderManagerService,
             ICommandOutFactory commandOutFactory,
             ICommandInAndOutFactory commandInAndOutFactory,
-            IScriptsRootDirectoryState scriptsRootDirectoryState )
+            IScriptsRootDirectoryState scriptsRootDirectoryState,
+            ILoggerAdapter<ISceneCommandFacade> loggerAdapter )
         {
             _commandInFactory = commandInFactory;
             _renderManagerService = renderManagerService;
             _commandOutFactory = commandOutFactory;
             _commandInAndOutFactory = commandInAndOutFactory;
             _scriptsRootDirectoryState = scriptsRootDirectoryState;
+            _loggerAdapter = loggerAdapter;
         }
 
         public void SetSceneData( RenderDataDto renderOptions )
         {
+            _loggerAdapter.LogInfo( "setting scene data" );
             _commandInFactory
                 .Factory( CreateMeta( "set_scene_data", false ) )
                 .Run( renderOptions );
@@ -54,6 +59,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
 
         public RenderResultDto Render( )
         {
+            _loggerAdapter.LogInfo( "rendering frame" );
             return _commandOutFactory
                 .Factory( CreateMeta( "render_frame", true ) )
                 .Run<RenderResultDto>( );

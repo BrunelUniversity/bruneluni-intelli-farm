@@ -17,7 +17,14 @@ namespace BrunelUni.IntelliFarm.RenderClient
         public void FireAndForget( Action task )
         {
             _loggerAdapter.LogInfo( "dispatching long running task..." );
-            Task.Run( task );
+            Task.Run( () =>
+            {
+                try { task( ); }
+                catch( Exception e )
+                {
+                    _loggerAdapter.LogError( $"exception {e.GetType(  ).Name} occured in long running task message: {e.Message}" );
+                }
+            } );
         }
     }
 }

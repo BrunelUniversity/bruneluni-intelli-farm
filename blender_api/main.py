@@ -59,7 +59,9 @@ class CommandsDispatcher:
             self.__temp_comms_service.write_json(data=self.__state["data_out"])
 
 
-temp_comms_service = Win32NamedPipeTempCommsService(filename="blender-api-pipe")
+temp_comms_service = Win32NamedPipeTempCommsService(
+    filename_read="blender-api-pipe-read",
+    filename_write="blender-api-pipe-write")
 scene_adapter = BlenderSceneAdapter()
 date_time_adapter = InBuiltDateTimeAdapter()
 commands = CommandsDispatcher(temp_comms_service=temp_comms_service,

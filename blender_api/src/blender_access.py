@@ -4,6 +4,7 @@ from ctypes.wintypes import HANDLE
 from datetime import datetime
 from typing import Callable, Any
 
+import time
 import bmesh
 import bpy
 import win32file
@@ -154,12 +155,13 @@ class FileTempCommsService:
 
 class Win32NamedPipeTempCommsService:
 
-    def __init__(self, filename: str):
-        self.__filename = filename
+    def __init__(self, filename_read: str, filename_write: str):
+        self.__filename_write = filename_write
+        self.__filename_read = filename_read
 
     def read_json(self) -> dict:
         print("reading from named pipe client")
-        handle = self.__connect_to_pipe()
+        handle = self.__connect_to_pipe(filename=self.__filename_write)
         _, data = win32file.ReadFile(handle, 4096)
         message_string = data.decode('utf-8')
         win32file.CloseHandle(handle)
@@ -168,24 +170,22 @@ class Win32NamedPipeTempCommsService:
 
     def write_json(self, data: dict):
         print("writing from named pipe client")
-        handle = self.__connect_to_pipe()
+        handle = self.__connect_to_pipe(filename=self.__filename_read)
         message_bytes = json.dumps(data).encode('utf-8')
         win32file.WriteFile(handle, message_bytes)
         win32file.CloseHandle(handle)
         print("written from named pipe client")
 
-    def __connect_to_pipe(self) -> HANDLE:
-        print(f"connecting to named pipe at {self.__filename}")
-        file_handle = win32file.CreateFile(
-            f"\\\\.\\pipe\\{self.__filename}",
+    def __connect_to_pipe(self, filename: str) -> HANDLE:
+        print(f"connecting to named pipe at {filename}")
+        return win32file.CreateFile(
+            f"\\\\.\\pipe\\{filename}",
             win32file.GENERIC_READ | win32file.GENERIC_WRITE,
             0,
             None,
             win32file.OPEN_EXISTING,
             0,
             None)
-        return file_handle
-
 
 class InBuiltDateTimeAdapter:
 

@@ -27,8 +27,36 @@
 
     <ItemGroup>
       <Content Include="..\blender_api\main.py">
-        <Link>main.py</Link>
+        <Link>blender_api\main.py</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\blender_api\requirements.txt">
+        <Link>blender_api\requirements.txt</Link>
+      </Content>
+      <Content Include="..\blender_api\src\blender_access.py">
+        <Link>blender_api\src\blender_access.py</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\blender_api\src\core.py">
+        <Link>blender_api\src\core.py</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\blender_api\src\domain.py">
+        <Link>blender_api\src\domain.py</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\blender_api\src\__init__.py">
+        <Link>blender_api\src\__init__.py</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\blender_api\tests\test_domain.py">
+        <Link>blender_api\tests\test_domain.py</Link>
+      </Content>
+      <Content Include="..\blender_api\tests\__init__.py">
+        <Link>blender_api\tests\__init__.py</Link>
+      </Content>
+      <Content Include="..\blender_api\__init__.py">
+        <Link>blender_api\__init__.py</Link>
       </Content>
     </ItemGroup>
 

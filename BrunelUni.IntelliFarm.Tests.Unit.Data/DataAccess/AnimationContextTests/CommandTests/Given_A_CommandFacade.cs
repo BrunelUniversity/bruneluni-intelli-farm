@@ -1,4 +1,5 @@
-﻿using Aidan.Common.Utils.Test;
+﻿using Aidan.Common.Core.Interfaces.Contract;
+using Aidan.Common.Utils.Test;
 using BrunelUni.IntelliFarm.Data.Blender;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
@@ -18,6 +19,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         protected ICommandOut MockCommandOut;
         protected ICommandOutFactory MockCommandOutFactory;
         protected IScriptsRootDirectoryState ScriptsRootDirectoryState;
+        private ILoggerAdapter<ISceneCommandFacade> _loggerAdapter;
 
         protected override void Given( )
         {
@@ -37,6 +39,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 .Factory( Arg.Any<CommandMetaDto>( ) )
                 .Returns( MockCommandInAndOut );
             _renderManagerService = Substitute.For<IRenderManagerService>( );
+            _loggerAdapter = Substitute.For<ILoggerAdapter<ISceneCommandFacade>>( );
             BlendFile = "C:\\Users\\blender.blend";
             _renderManagerService
                 .RenderManager
@@ -50,7 +53,8 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 _renderManagerService,
                 MockCommandOutFactory,
                 MockCommandInAndOutFactory,
-                ScriptsRootDirectoryState );
+                ScriptsRootDirectoryState,
+                _loggerAdapter );
         }
 
         protected bool AssertMeta( CommandMetaDto c, string command, bool render )
