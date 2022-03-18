@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
 namespace BrunelUni.IntelliFarm.RenderClient.Pages
@@ -24,17 +23,9 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             InitializeComponent( );
         }
 
-        private void CreateButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
-        {
-            var response = _client.Create( "device", new ClientDto
-            {
-                Name = "beans",
-                TimeFor0PolyViewpoint = 45.5,
-                TimeFor80Poly100Coverage0Bounces100Samples = 5.6
-            } );
+        private void CreateButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) =>
             _longRunningTaskDispatcher
                 .FireAndForget( ( ) => _intelliFarmFacade.CreateDevice( NameTextBox.Text ) );
-        }
 
         private void HomeNavButton_OnOnClick( object arg1, RoutedEventArgs arg2 ) =>
             _wpfNavigationService.NavigateTo( AppConstants.MainPageRouteName );

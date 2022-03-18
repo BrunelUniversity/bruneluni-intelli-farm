@@ -16,6 +16,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         protected IRenderManagerService MockRenderManagerService;
         protected IWebClientAdapter MockWebClientAdapter;
         protected IZipAdapter MockZipAdapter;
+        protected IConfigurationAdapter MockConfigurationAdapter;
 
         protected override void Given( )
         {
@@ -26,8 +27,9 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
             _fakeScriptsRootDirectoryState = new FakeScriptsRootDirectoryState( );
             MockWebClientAdapter = Substitute.For<IWebClientAdapter>( );
             MockPythonBundler = Substitute.For<IPythonBundler>( );
+            MockConfigurationAdapter = Substitute.For<IConfigurationAdapter>( );
             SUT = new BlenderAnimationContext( MockRenderManagerService, MockRenderManagerFactory, MockFileAdapter,
-                MockZipAdapter, _fakeScriptsRootDirectoryState, MockWebClientAdapter, MockPythonBundler );
+                MockZipAdapter, _fakeScriptsRootDirectoryState, MockWebClientAdapter, MockPythonBundler, MockConfigurationAdapter );
         }
     }
 }

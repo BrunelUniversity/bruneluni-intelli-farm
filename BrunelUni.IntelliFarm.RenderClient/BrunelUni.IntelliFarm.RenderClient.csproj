@@ -25,4 +25,11 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\blender_api\main.py">
+        <Link>main.py</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

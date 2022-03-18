@@ -1,5 +1,6 @@
 ﻿using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Tests.Unit.Data.Constants;
 using NSubstitute;
 using NUnit.Framework;
@@ -8,8 +9,16 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
 {
     public class When_Initialized_Successfully_If_Blender_Is_Not_Installed : Given_A_BlenderAnimationContext
     {
+        private string _baseUrl;
+
         protected override void When( )
         {
+            _baseUrl = "https://apiendpoint.com";
+            MockConfigurationAdapter.Get<MainAppOptions>( )
+                .Returns( new MainAppOptions
+                {
+                    ApiBaseUrl = _baseUrl
+                } );
             MockFileAdapter.Exists( Arg.Any<string>( ) )
                 .Returns( Result.Error( "file doesnt exist" ) );
             MockWebClientAdapter.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) )
@@ -23,7 +32,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         public void Then_Correct_File_Was_Downloaded( )
         {
             MockWebClientAdapter.Received( ).DownloadFile(
-                $"{TestConstants.BlenderBaseUrl}/{TestConstants.BlenderVersion}.zip",
+                $"{_baseUrl}/blender",
                 "blender.zip" );
             MockWebClientAdapter.Received( 1 ).DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) );
         }

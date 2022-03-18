@@ -1,4 +1,5 @@
 ﻿using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -13,7 +14,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         {
             ScriptsRootDirectoryDto = new ScriptsRootDirectoryDto
             {
-                Directory = currentPathService.GetCurrent( configurationAdapter.Get<AppOptions>( ).Local )
+                Directory = currentPathService.GetCurrent( configurationAdapter.Get<MainAppOptions>( ).Local )
             };
             ScriptsRootDirectoryDto.DataScriptsDir = $"{ScriptsRootDirectoryDto.Directory}\\blender_api";
             ScriptsRootDirectoryDto.DataScriptsTempFile = $"{ScriptsRootDirectoryDto.Directory}\\temp\\render.json";

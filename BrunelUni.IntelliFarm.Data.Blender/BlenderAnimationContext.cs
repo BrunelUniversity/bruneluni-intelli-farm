@@ -13,6 +13,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
     {
         private readonly IFileAdapter _fileAdapter;
         private readonly IPythonBundler _pythonBundler;
+        private readonly IConfigurationAdapter _configurationAdapter;
         private readonly IRenderManagerFactory _renderManagerFactory;
         private readonly IRenderManagerService _renderManagerService;
         private readonly IScriptsRootDirectoryState _scriptsRootDirectoryState;
@@ -25,7 +26,8 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             IZipAdapter zipAdapter,
             IScriptsRootDirectoryState scriptsRootDirectoryState,
             IWebClientAdapter webClientAdapter,
-            IPythonBundler pythonBundler )
+            IPythonBundler pythonBundler,
+            IConfigurationAdapter configurationAdapter )
         {
             _renderManagerService = renderManagerService;
             _renderManagerFactory = renderManagerFactory;
@@ -34,6 +36,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _scriptsRootDirectoryState = scriptsRootDirectoryState;
             _webClientAdapter = webClientAdapter;
             _pythonBundler = pythonBundler;
+            _configurationAdapter = configurationAdapter;
         }
 
         public void Initialize( )
