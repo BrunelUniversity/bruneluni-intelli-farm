@@ -1,4 +1,5 @@
-﻿using BrunelUni.IntelliFarm.Core.Dtos;
+﻿using System;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrunelUni.IntelliFarm.API.Controllers
@@ -10,6 +11,16 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         public IActionResult CreateScene( [ FromBody ] SceneDto scene )
         {
             return Ok( scene );
+        }
+        
+        [ HttpPost ]
+        public IActionResult GetSceneById( [ FromQuery ] string scene )
+        {
+            var id = Guid.Parse( scene );
+            return Ok( new SceneDto
+            {
+                Id = id
+            } );
         }
     }
 }
