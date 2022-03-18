@@ -3,6 +3,7 @@ using System.Net;
 using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Core.Enums;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using NSubstitute;
 using NUnit.Framework;
@@ -17,6 +18,13 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         private string _zipFileAbsolutePath;
         private string _sceneName;
         private string _deviceName;
+        private int _frame1;
+        private int _frame2;
+        private int _frame3;
+        private double _renderTime1;
+        private double _renderTime2;
+        private int _renderTime3;
+        private BucketDto _bucket;
 
         protected override void When( )
         {
@@ -24,32 +32,33 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             _deviceName = "WEY-243";
             _someZipFile = "some.zip";
             _someS3Key = $"/path/file.zip";
+            _frame1 = 10;
+            _frame2 = 4;
+            _frame3 = 12;
+            _bucket = new BucketDto
+            {
+                FilePath = _someS3Key,
+                Frames = new List<FrameTimeDto>
+                {
+                    new FrameTimeDto
+                    {
+                        Num = _frame1
+                    },
+                    new FrameTimeDto
+                    {
+                        Num = _frame2
+                    },
+                    new FrameTimeDto
+                    {
+                        Num = _frame3
+                    }
+                }
+            };
             MockWebClient.Get( Arg.Any<string>( ) )
                 .Returns( new WebDto
                 {
                     StatusCode = HttpStatusCode.OK,
-                    Data = new [ ]
-                    {
-                        new BucketDto
-                        {
-                            FilePath = _someS3Key,
-                            Frames = new List<FrameTimeDto>
-                            {
-                                new FrameTimeDto
-                                {
-                                    Num = 10
-                                },
-                                new FrameTimeDto
-                                {
-                                    Num = 4
-                                },
-                                new FrameTimeDto
-                                {
-                                    Num = 12
-                                }
-                            }
-                        }
-                    }
+                    Data = _bucket
                 } );
             _currentDir = "C:\\Current\\Dir";
             MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
@@ -60,19 +69,22 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             _zipFileAbsolutePath = $"{_currentDir}\\{_someZipFile}";
             MockWebClient.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( _zipFileAbsolutePath );
+            _renderTime1 = 20.4;
+            _renderTime2 = 18.4;
+            _renderTime3 = 17;
             MockSceneCommandFacade
                 .Render( )
                 .Returns( new RenderResultDto
                     {
-                        RenderTime = 20.4
+                        RenderTime = _renderTime1
                     },
                     new RenderResultDto
                     {
-                        RenderTime = 18.4
+                        RenderTime = _renderTime2
                     },
                     new RenderResultDto
                     {
-                        RenderTime = 17
+                        RenderTime = _renderTime3
                     } );
             SUT.Render( _sceneName, _deviceName );
         }
@@ -87,6 +99,25 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 MockWebClient.Get( $"bucket?sceneName={_sceneName}&device={_deviceName}" );
                 MockAnimationContext.Initialize(  );
                 MockAnimationContext.InitializeScene( $"{_currentDir}\\{_sceneName}.blend" );
+                MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
+                    r.StartFrame == _frame1 &&
+                    r.EndFrame == _frame1 ) );
+                MockSceneCommandFacade.Render( );
+                MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
+                    r.StartFrame == _frame2
+                    && r.EndFrame == _frame2 ) );
+                MockSceneCommandFacade.Render( );
+                MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
+                    r.StartFrame == _frame3
+                    && r.EndFrame == _frame3 ) );
+                MockSceneCommandFacade.Render( );
+                MockWebClient.Create( "bucket", Arg.Is<BucketDto>( t =>
+                    t.DeviceId == _bucket.DeviceId &&
+                    t.SceneId == _bucket.SceneId &&
+                    t.Type == BucketTypeEnum.Actual &&
+                    t.Frames[ 0 ].Num == _frame1 && t.Frames[ 0 ].Time.Equals( _renderTime1 ) &&
+                    t.Frames[ 1 ].Num == _frame2 && t.Frames[ 1 ].Time.Equals( _renderTime2 ) &&
+                    t.Frames[ 2 ].Num == _frame3 && t.Frames[ 2 ].Time.Equals( _renderTime3 ) ) );
             } );
         }
     }

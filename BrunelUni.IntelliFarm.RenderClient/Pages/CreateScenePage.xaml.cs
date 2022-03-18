@@ -21,7 +21,7 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
 
         private void UploadSceneButton_OnOnClick( object arg1, RoutedEventArgs arg2 )
         {
-            _webClient.Get( "bucket", "sceneName=some&device=somedevice" );
+            _webClient.Get( "bucket?sceneName=some&device=somedevice" );
             _webClient.Create( "bucket", new BucketDto
             {
                 Type = BucketTypeEnum.Actual

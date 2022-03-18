@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BrunelUni.IntelliFarm.Core.Dtos;
+﻿using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Enums;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
@@ -21,13 +20,9 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             [ FromQuery ] string sceneName,
             [ FromQuery ] string device )
         {
-            return Ok( new List<BucketDto>
+            return Ok( new BucketDto
             {
-                new BucketDto(  ),
-                new BucketDto
-                {
-                    Type = BucketTypeEnum.Predicted
-                }
+                Type = BucketTypeEnum.Predicted
             } );
         }
     }
