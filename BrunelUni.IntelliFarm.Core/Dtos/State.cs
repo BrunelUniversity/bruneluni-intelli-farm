@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
-namespace BrunelUni.IntelliFarm.API
+namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-    public class State
+    public class State : IState
     {
         public List<SceneDto> Scenes { get; set; } = new List<SceneDto>( );
         public List<BucketDto> Buckets { get; set; } = new List<BucketDto>( );

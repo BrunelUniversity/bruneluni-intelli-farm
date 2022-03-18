@@ -22,8 +22,7 @@ namespace BrunelUni.IntelliFarm.API
                 .BindCrosscuttingLayer( )
                 .BindDataLayer( )
                 .BindIntelliFarm( )
-                .AddTransient<MvcAdapter>( )
-                .AddSingleton<State>( );
+                .AddTransient<MvcAdapter>( );
             serviceCollection.AddControllers( );
             serviceCollection.Configure<KestrelServerOptions>( options =>
             {
