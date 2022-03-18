@@ -14,7 +14,6 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
     {
         private string _someS3Key;
         private string _currentDir;
-        private string _someZipFile;
         private string _zipFileAbsolutePath;
         private string _sceneName;
         private string _deviceName;
@@ -25,6 +24,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         private double _renderTime2;
         private int _renderTime3;
         private BucketDto _bucket;
+        private Result _result;
 
         protected override void When( )
         {
@@ -85,7 +85,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                     {
                         RenderTime = _renderTime3
                     } );
-            SUT.Render( _sceneName, _deviceName );
+            _result = SUT.Render( _sceneName, _deviceName );
         }
 
         [ Test ]
@@ -138,6 +138,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                     && r.EndFrame == _frame3 ) );
                 MockSceneCommandFacade.Render( );
             } );
+        }
+        
+        [ Test ]
+        public void Then_Success_Is_Returned( )
+        {
+            Assert.AreEqual( OperationResultEnum.Success, _result );
         }
     }
 }

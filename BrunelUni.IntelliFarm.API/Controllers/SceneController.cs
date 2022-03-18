@@ -6,6 +6,11 @@ namespace BrunelUni.IntelliFarm.API.Controllers
     [ Route("scene") ]
     public class SceneController : ControllerBase
     {
+        public SceneController( )
+        {
+            
+        }
+        
         [ HttpPost ]
         public IActionResult CreateScene( [ FromBody ] SceneDto scene )
         {

@@ -109,7 +109,7 @@ namespace BrunelUni.IntelliFarm.Domain
             } );
         }
 
-        public void Render( string sceneName, string deviceName )
+        public Result Render( string sceneName, string deviceName )
         {
             var bucket = _webClient.Get( $"bucket?sceneName={sceneName}&device={deviceName}" ).Data as BucketDto;
             _webClient.DownloadFile( $"scene-file?key={bucket?.FilePath}", $"{sceneName}.blend" );
@@ -139,6 +139,7 @@ namespace BrunelUni.IntelliFarm.Domain
                 Type = BucketTypeEnum.Actual,
                 Frames = times
             } );
+            return Result.Success( );
         }
     }
 }
