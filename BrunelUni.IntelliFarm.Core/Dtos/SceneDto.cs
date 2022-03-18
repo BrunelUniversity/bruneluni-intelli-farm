@@ -14,5 +14,6 @@ namespace BrunelUni.IntelliFarm.Core.Dtos
         public int StartFrame { get; set; }
         public FrameDto [ ] Frames { get; set; }
         public RenderStatusEnum Status { get; set; } = RenderStatusEnum.NotStarted;
+        public ClientDto[] Clients { get; set; }
     }
 }

@@ -106,7 +106,11 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             dto.Status == RenderStatusEnum.NotStarted &&
             dto.FileName == _s3Key &&
             dto.Frames.Length == _totalFrames &&
-            dto.StartFrame == _startFrame;
+            dto.StartFrame == _startFrame &&
+            dto.Clients[ 0 ].Name == _device1 &&
+            dto.Clients[ 1 ].Name == _device2 &&
+            dto.Clients[ 2 ].Name == _device3 &&
+            dto.Clients.Length == 3;
         
         [ Test ]
         public void Then_Result_Is_Success( )
