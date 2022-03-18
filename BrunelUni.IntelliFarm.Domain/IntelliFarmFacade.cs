@@ -111,7 +111,34 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public void Render( string sceneName, string deviceName )
         {
-            
+            var bucket = _webClient.Get( $"bucket?sceneName={sceneName}&device={deviceName}" ).Data as BucketDto;
+            _webClient.DownloadFile( $"scene-file?key={bucket?.FilePath}", $"{sceneName}.blend" );
+            _zipAdapter.ExtractToDirectory( $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{sceneName}.zip",
+                $"{_fileAdapter.GetCurrentDirectory( ).Value}" );
+            _animationContext.Initialize( );
+            _animationContext.InitializeScene( $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{sceneName}.blend" );
+            var times = new List<FrameTimeDto>( );
+            foreach( var frame in bucket.Frames )
+            {
+                _sceneCommandFacade.SetSceneData( new RenderDataDto
+                {
+                    StartFrame = frame.Num,
+                    EndFrame = frame.Num
+                } );
+                times.Add( new FrameTimeDto
+                {
+                    Num = frame.Num,
+                    Time = _sceneCommandFacade.Render( ).RenderTime
+                } );
+            }
+
+            _webClient.Create( "bucket", new BucketDto
+            {
+                DeviceId = bucket.DeviceId,
+                SceneId = bucket.SceneId,
+                Type = BucketTypeEnum.Actual,
+                Frames = times
+            } );
         }
     }
 }

@@ -30,7 +30,6 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         {
             _sceneName = "test_scene";
             _deviceName = "WEY-243";
-            _someZipFile = "some.zip";
             _someS3Key = $"/path/file.zip";
             _frame1 = 10;
             _frame2 = 4;
@@ -66,7 +65,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 Status = OperationResultEnum.Success,
                 Value = _currentDir
             } );
-            _zipFileAbsolutePath = $"{_currentDir}\\{_someZipFile}";
+            _zipFileAbsolutePath = $"{_currentDir}\\{_sceneName}.zip";
             MockWebClient.DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( _zipFileAbsolutePath );
             _renderTime1 = 20.4;
@@ -94,9 +93,9 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         {
             Received.InOrder( ( ) =>
             {
-                MockWebClient.DownloadFile( $"scene-file?key={_someS3Key}", "some.zip" );
-                MockZipAdapter.ExtractToDirectory( _zipFileAbsolutePath, _currentDir );
                 MockWebClient.Get( $"bucket?sceneName={_sceneName}&device={_deviceName}" );
+                MockWebClient.DownloadFile( $"scene-file?key={_someS3Key}", $"{_sceneName}.zip" );
+                MockZipAdapter.ExtractToDirectory( $"{_currentDir}\\{_sceneName}.zip", _currentDir );
                 MockAnimationContext.Initialize(  );
                 MockAnimationContext.InitializeScene( $"{_currentDir}\\{_sceneName}.blend" );
                 MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
