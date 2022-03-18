@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Aidan.Common.Core;
 using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
@@ -32,8 +33,9 @@ namespace BrunelUni.IntelliFarm.Domain
             _fileAdapter = fileAdapter;
         }
 
-        public void CreateProject( string name, string filePath, string [ ] devices )
+        public Result CreateProject( string name, string filePath, params string [ ] devices )
         {
+            return Result.Error( "" );
         }
 
         private double CalibrateScene( string name )

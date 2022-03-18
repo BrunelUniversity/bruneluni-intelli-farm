@@ -1,8 +1,10 @@
-﻿namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
+﻿using Aidan.Common.Core;
+
+namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
 {
     public interface IIntelliFarmFacade
     {
-        void CreateProject( string name, string filePath, string [ ] devices );
+        Result CreateProject( string name, string filePath, params string [ ] devices );
         void CreateDevice( string deviceName );
         void Render( );
     }

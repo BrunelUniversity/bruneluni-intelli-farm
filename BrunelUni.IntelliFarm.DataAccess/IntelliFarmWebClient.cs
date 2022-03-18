@@ -56,7 +56,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
             return readStringTask.Result;
         }
 
-        public T Create<T>( string endpoint, T body )
+        public WebDto Create<T>( string endpoint, T body )
         {
             using var client = new HttpClient( );
             client.BaseAddress = new Uri( _baseUrl );
@@ -68,9 +68,14 @@ namespace BrunelUni.IntelliFarm.DataAccess
                 "application/json" );
             var task = client.SendAsync( request );
             task.Wait( );
-            var taskRead = task.Result.Content.ReadAsStringAsync( );
+            var taskResult = task.Result;
+            var taskRead = taskResult.Content.ReadAsStringAsync( );
             taskRead.Wait( );
-            return JsonConvert.DeserializeObject<T>( taskRead.Result );
+            return new WebDto
+            {
+                Data = JsonConvert.DeserializeObject<T>( taskRead.Result ),
+                StatusCode = taskResult.StatusCode
+            };
         }
     }
 }
