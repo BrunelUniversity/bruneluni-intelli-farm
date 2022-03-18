@@ -25,7 +25,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_Failiure_Is_Returned( )
         {
-            Assert.AreEqual( OperationResultEnum.Failed, _result );
+            Assert.AreEqual( OperationResultEnum.Failed, _result.Status );
         }
     }
 }

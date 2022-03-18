@@ -143,7 +143,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_Success_Is_Returned( )
         {
-            Assert.AreEqual( OperationResultEnum.Success, _result );
+            Assert.AreEqual( OperationResultEnum.Success, _result.Status );
         }
     }
 }
