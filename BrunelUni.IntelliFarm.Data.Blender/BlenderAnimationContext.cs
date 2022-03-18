@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using Aidan.Common.Core.Enum;
 using Aidan.Common.Core.Interfaces.Contract;
-using BrunelUni.IntelliFarm.Data.Core;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 
@@ -51,7 +51,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             }
 
             var webResult = _webClientAdapter.DownloadFile(
-                $"{DataApplicationConstants.BlenderBaseUrl}/{DataApplicationConstants.BlenderVersionFull}.zip",
+                $"{_configurationAdapter.Get<MainAppOptions>( ).ApiBaseUrl}/blender",
                 "blender.zip" );
             if( webResult.Status == OperationResultEnum.Failed )
                 throw new WebException( $"failing to download file msg: {webResult.Msg}" );
