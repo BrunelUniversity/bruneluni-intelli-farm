@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 {
-    public class When_Project_Is_Created_And_Devices_Dont_Exist : Given_An_IntelliFarm_Facade
+    public class When_Project_Is_Created_And_Name_Is_Not_Equal_To_Scene_File_Name : Given_An_IntelliFarm_Facade
     {
         private Result _result;
 
@@ -27,7 +27,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                     Data = "not found",
                     StatusCode = HttpStatusCode.NotFound
                 } );
-            _result = SUT.CreateProject( "name", "C:\\Path\\To\\File\\name.notblend", "", "" );
+            _result = SUT.CreateProject( "name", "C:\\Path\\To\\File\\file.notblend", "", "" );
         }
         
         [ Test ]

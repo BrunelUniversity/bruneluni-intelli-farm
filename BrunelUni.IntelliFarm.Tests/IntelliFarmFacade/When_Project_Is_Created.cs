@@ -42,7 +42,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 StartFrame = _startFrame,
                 EndFrame = 500
             };
-            _projectName = "project name";
+            _projectName = "file";
             _projectDir = "C:\\Project\\File\\Dir\\";
             _projectFilePath = $"{_projectDir}file.blend";
             MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
