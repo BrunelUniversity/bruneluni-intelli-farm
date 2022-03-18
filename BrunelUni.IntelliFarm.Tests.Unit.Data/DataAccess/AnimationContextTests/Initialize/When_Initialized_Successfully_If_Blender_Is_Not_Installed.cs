@@ -32,7 +32,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         public void Then_Correct_File_Was_Downloaded( )
         {
             MockWebClientAdapter.Received( ).DownloadFile(
-                $"{_baseUrl}/blender",
+                $"{_baseUrl}blender",
                 "blender.zip" );
             MockWebClientAdapter.Received( 1 ).DownloadFile( Arg.Any<string>( ), Arg.Any<string>( ) );
         }
