@@ -8,7 +8,7 @@ namespace BrunelUni.IntelliFarm.RenderClient
     public class LongRunningTaskDispatcher : ILongRunningTaskDispatcher
     {
         private readonly ILoggerAdapter<ILongRunningTaskDispatcher> _loggerAdapter;
-
+        
         public LongRunningTaskDispatcher( ILoggerAdapter<ILongRunningTaskDispatcher> loggerAdapter )
         {
             _loggerAdapter = loggerAdapter;

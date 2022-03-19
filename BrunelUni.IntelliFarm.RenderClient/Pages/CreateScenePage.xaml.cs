@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using Microsoft.Win32;
 
@@ -34,10 +36,14 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             var scene = SceneNameTextBox.Text;
             var devices = DeviceNamesTextBox.Text.Split( ',' );
             _longRunningTaskDispatcher
-                .FireAndForget( () =>
+                .FireAndForget( ( ) =>
                 {
                     var result = _intelliFarmFacade
                         .CreateProject( scene, _path, devices );
+                    if( result.Status == OperationResultEnum.Failed )
+                    {
+                        throw new Exception( result.Msg );
+                    }
                 } );
         }
 

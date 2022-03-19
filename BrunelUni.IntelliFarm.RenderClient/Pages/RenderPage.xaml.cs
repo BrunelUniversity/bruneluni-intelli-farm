@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.RenderClient.Windows;
 
 namespace BrunelUni.IntelliFarm.RenderClient.Pages
 {
@@ -26,7 +28,11 @@ namespace BrunelUni.IntelliFarm.RenderClient.Pages
             var device = DeviceNameTextBox.Text;
             _longRunningTaskDispatcher.FireAndForget( ( ) =>
             {
-                _intelliFarmFacade.Render( scene, device );
+                var result = _intelliFarmFacade.Render( scene, device );
+                if( result.Status == OperationResultEnum.Failed )
+                {
+                    new Popup( result.Msg ).ShowDialog( );
+                }
             } );
         }
 
