@@ -14,7 +14,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         [ HttpPost ]
         public IActionResult CreateScene( [ FromBody ] SceneDto scene )
         {
-            
+            _intelliFarmFacade.CreateBucketsFromProject( scene );
             return Ok( scene );
         }
     }

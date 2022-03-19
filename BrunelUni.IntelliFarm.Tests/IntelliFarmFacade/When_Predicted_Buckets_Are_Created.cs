@@ -37,6 +37,8 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             _someS3Key = "intellifarm/scenes/scene.zip";
             _someZipPath = "C:\\Dir\\Dir\\scene.zip";
             _someBlendPath = "C:\\Dir\\Dir\\scene.blend";
+            MockRemoteFileService.DownloadFile( Arg.Any<string>( ) )
+                .Returns( _someZipPath );
             _stateClients = new List<ClientDto>
             {
                 new ClientDto
@@ -125,7 +127,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         }
 
         [ Test ]
-        public void Then_( )
+        public void Then_Commands_Occur_In_Order( )
         {
             Received.InOrder( ( ) =>
             {
@@ -187,6 +189,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             } ) );
         }
 
+        [ Test ]
+        public void Then_File_Was_Downloaded( )
+        {
+            MockRemoteFileService.DownloadFile( _someS3Key );
+        }
+        
         [ Test ]
         public void Then_File_Was_Unzipped( )
         {

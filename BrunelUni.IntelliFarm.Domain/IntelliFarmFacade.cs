@@ -162,6 +162,7 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public void CreateBucketsFromProject( SceneDto sceneDto )
         {
+            var path = _remoteFileService.DownloadFile( sceneDto.FileName );
             
         }
     }
