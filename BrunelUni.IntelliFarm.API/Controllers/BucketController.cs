@@ -34,5 +34,19 @@ namespace BrunelUni.IntelliFarm.API.Controllers
                                                        x.Type == BucketTypeEnum.Predicted );
             return Ok( buckets );
         }
+        
+        [ HttpGet ]
+        [ Route("actual-bucket") ]
+        public IActionResult GetActualBuckets(
+            [ FromQuery ] string sceneName,
+            [ FromQuery ] string device )
+        {
+            var scene = _state.Scenes.First( x => x.Name == sceneName );
+            var client = _state.Clients.First( x => x.Name == device );
+            var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id &&
+                                                       x.SceneId == scene.Id &&
+                                                       x.Type == BucketTypeEnum.Actual );
+            return Ok( buckets );
+        }
     }
 }
