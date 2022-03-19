@@ -38,8 +38,13 @@ namespace BrunelUni.IntelliFarm.Tests
                         ViewportCoverage = 100
                     },
                     ActualRenderTime = x.RenderTimeSeconds
-                } ).ToArray( );
-                return fixtureData;
+                } ).ToList( );
+                foreach( var fixture in fixtureData )
+                {
+                    fixture.Frame.Number = fixtureData.IndexOf( fixture );
+                }
+
+                return fixtureData.ToArray( );
             }
         }
 
