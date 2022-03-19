@@ -41,6 +41,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 
         protected override void When( )
         {
+            MockConfigurationAdapter.Get<WebAppOptions>( )
+                .Returns( new WebAppOptions
+                {
+                    AwsId = "id",
+                    AwsToken = "token"
+                } );
             _currentDir = "C:\\Dir\\Dir";
             MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
             {
@@ -154,6 +160,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 .Returns( _someZipPath );
             _scene = new SceneDto
             {
+                Name = "scene",
                 Frames = new []
                 {
                     new FrameDto

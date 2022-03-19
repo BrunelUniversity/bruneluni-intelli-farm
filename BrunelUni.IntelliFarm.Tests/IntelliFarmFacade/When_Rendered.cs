@@ -23,7 +23,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         private double _renderTime1;
         private double _renderTime2;
         private int _renderTime3;
-        private BucketDto _bucket;
+        private List<BucketDto> _bucket;
         private Result _result;
 
         protected override void When( )
@@ -34,26 +34,28 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             _frame1 = 10;
             _frame2 = 4;
             _frame3 = 12;
-            _bucket = new BucketDto
+            _bucket = new List<BucketDto>
             {
-                FilePath = _someS3Key,
-                Frames = new List<FrameTimeDto>
-                {
-                    new FrameTimeDto
+                new BucketDto{
+                    FilePath = _someS3Key,
+                    Frames = new List<FrameTimeDto>
                     {
-                        Num = _frame1
-                    },
-                    new FrameTimeDto
-                    {
-                        Num = _frame2
-                    },
-                    new FrameTimeDto
-                    {
-                        Num = _frame3
+                        new FrameTimeDto
+                        {
+                            Num = _frame1
+                        },
+                        new FrameTimeDto
+                        {
+                            Num = _frame2
+                        },
+                        new FrameTimeDto
+                        {
+                            Num = _frame3
+                        }
                     }
                 }
             };
-            MockWebClient.Get( Arg.Any<string>( ) )
+            MockWebClient.Get<List<BucketDto>>( Arg.Any<string>( ) )
                 .Returns( new WebDto
                 {
                     StatusCode = HttpStatusCode.OK,
@@ -91,7 +93,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_Correct_Bucket_Is_Fetched( )
         {
-            MockWebClient.Get( $"bucket?sceneName={_sceneName}&device={_deviceName}" );
+            MockWebClient.Get<List<BucketDto>>( $"bucket?sceneName={_sceneName}&device={_deviceName}" );
         }
 
         [ Test ]
@@ -110,8 +112,8 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         public void Then_Actual_Bucket_Is_Created( )
         {
             MockWebClient.Create( "bucket", Arg.Is<BucketDto>( t =>
-                t.DeviceId == _bucket.DeviceId &&
-                t.SceneId == _bucket.SceneId &&
+                t.DeviceId == _bucket[0].DeviceId &&
+                t.SceneId == _bucket[0].SceneId &&
                 t.Type == BucketTypeEnum.Actual &&
                 t.Frames[ 0 ].Num == _frame1 && t.Frames[ 0 ].Time.Equals( _renderTime1 ) &&
                 t.Frames[ 1 ].Num == _frame2 && t.Frames[ 1 ].Time.Equals( _renderTime2 ) &&

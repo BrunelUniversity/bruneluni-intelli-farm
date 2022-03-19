@@ -18,7 +18,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         protected IState State;
         protected IRemoteFileService MockRemoteFileService;
         protected IRenderAnalyser MockRenderAnalyser;
-        private IZipService _zipService;
+        protected IZipService MockZipService;
 
         protected override void Given( )
         {
@@ -37,9 +37,9 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 .Factory( Arg.Any<string>( ), Arg.Any<string>( ) )
                 .Returns( MockRemoteFileService );
             MockRenderAnalyser = Substitute.For<IRenderAnalyser>( );
-            _zipService = Substitute.For<IZipService>( );
+            MockZipService = Substitute.For<IZipService>( );
             SUT = new Domain.IntelliFarmFacade( MockWebClient, MockConfigurationAdapter, MockZipAdapter, MockSceneCommandFacade,
-                MockAnimationContext, MockFileAdapter, State, remoteFileServiceFactory, MockRenderAnalyser, _zipService );
+                MockAnimationContext, MockFileAdapter, State, remoteFileServiceFactory, MockRenderAnalyser, MockZipService );
         }
     }
 }

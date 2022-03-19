@@ -43,8 +43,8 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 EndFrame = 500
             };
             _projectName = "file";
-            _projectDir = "C:\\Project\\File\\Dir\\";
-            _projectFilePath = $"{_projectDir}file.blend";
+            _projectDir = "C:\\Project\\File\\Dir";
+            _projectFilePath = $"{_projectDir}\\file.blend";
             MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
             {
                 Status = OperationResultEnum.Success, Value = _projectDir
@@ -66,9 +66,9 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_File_Is_Zipped( )
         {
-            MockZipAdapter.Received( 1 ).ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockZipAdapter.Received( 1 ).ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
-            MockZipAdapter.Received( ).ExtractToDirectory( _projectFilePath, $"{_projectDir}\\{_projectName}.zip" );
+            MockZipService.Received( 1 ).Zip( Arg.Any<string>( ), Arg.Any<string>( ) );
+            MockZipService.Received( 1 ).Zip( Arg.Any<string>( ), Arg.Any<string>( ) );
+            MockZipService.Received( ).Zip( _projectFilePath, $"{_projectDir}\\{_projectName}.zip" );
         }
 
         [ Test ]

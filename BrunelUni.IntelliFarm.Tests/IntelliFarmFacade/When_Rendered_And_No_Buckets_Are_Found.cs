@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using Aidan.Common.Core;
 using Aidan.Common.Core.Enum;
 using BrunelUni.IntelliFarm.Core.Dtos;
@@ -13,7 +14,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 
         protected override void When( )
         {
-            MockWebClient.Get( Arg.Any<string>( ) )
+            MockWebClient.Get<List<BucketDto>>( Arg.Any<string>( ) )
                 .Returns( new WebDto
                 {
                     StatusCode = HttpStatusCode.NotFound,

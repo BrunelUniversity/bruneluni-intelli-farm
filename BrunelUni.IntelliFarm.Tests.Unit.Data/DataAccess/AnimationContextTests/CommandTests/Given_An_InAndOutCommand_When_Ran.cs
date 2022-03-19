@@ -20,7 +20,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
         private RenderMetaDto _renderMetaDto;
         private ISceneProcessor _sceneProcessor;
         private string _command;
-        private ISerializer _serializer;
+        private IJsonSnakeCaseSerializer _serializer;
         private IFileAdapter _fileAdapter;
         private IScriptsRootDirectoryState _scriptsRootDirectoryState;
         private ILoggerAdapter<ISceneProcessor> _loggerAdapter;
@@ -46,7 +46,7 @@ namespace BrunelUni.IntelliFarm.Tests.Unit.Data.DataAccess.AnimationContextTests
                 .Returns( _exampleObjectString );
             _renderMetaDto = new RenderMetaDto( );
             _sceneProcessor = Substitute.For<ISceneProcessor>( );
-            _serializer = Substitute.For<ISerializer>( );
+            _serializer = Substitute.For<IJsonSnakeCaseSerializer>( );
             _fileAdapter = Substitute.For<IFileAdapter>( );
             _scriptsRootDirectoryState = new FakeScriptsRootDirectoryState( );
             _loggerAdapter = Substitute.For<ILoggerAdapter<ISceneProcessor>>( );
