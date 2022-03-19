@@ -197,26 +197,26 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
                     r.StartFrame == _scene.StartFrame &&
                     r.EndFrame == _scene.StartFrame ) );
-                MockSceneCommandFacade.GetSceneData( );
                 MockSceneCommandFacade.GetTriangleCount( );
                 MockSceneCommandFacade.GetSceneAndViewportCoverage(
                     Arg.Is<RayCoverageInputDto>( r => r.Subdivisions == 8 ) );
-                
+                MockSceneCommandFacade.GetSceneData( );
+
                 MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
                     r.StartFrame == _scene.StartFrame + 1 &&
                     r.EndFrame == _scene.StartFrame + 1 ) );
-                MockSceneCommandFacade.GetSceneData( );
                 MockSceneCommandFacade.GetTriangleCount( );
                 MockSceneCommandFacade.GetSceneAndViewportCoverage(
                     Arg.Is<RayCoverageInputDto>( r => r.Subdivisions == 8 ) );
-                
+                MockSceneCommandFacade.GetSceneData( );
+
                 MockSceneCommandFacade.SetSceneData( Arg.Is<RenderDataDto>( r =>
                     r.StartFrame == _scene.StartFrame + 2 &&
                     r.EndFrame == _scene.StartFrame + 2 ) );
-                MockSceneCommandFacade.GetSceneData( );
                 MockSceneCommandFacade.GetTriangleCount( );
                 MockSceneCommandFacade.GetSceneAndViewportCoverage(
                     Arg.Is<RayCoverageInputDto>( r => r.Subdivisions == 8 ) );
+                MockSceneCommandFacade.GetSceneData( );
             } );
         }
 
@@ -226,24 +226,20 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             Assert.True( State.Buckets.Select( x => x.Type ).SequenceEqual( new [ ]
             {
                 BucketTypeEnum.Predicted,
-                BucketTypeEnum.Predicted,
                 BucketTypeEnum.Predicted
             } ) );
             Assert.True( State.Buckets.Select( x => x.FilePath ).SequenceEqual( new [ ]
             {
-                _someS3Key,
                 _someS3Key,
                 _someS3Key
             } ) );
             Assert.True( State.Buckets.Select( x => x.DeviceId ).SequenceEqual( new [ ]
             {
                 _stateClients[0].Id,
-                _stateClients[1].Id,
-                _stateClients[2].Id
+                _stateClients[1].Id
             } ) );
             Assert.True( State.Buckets.Select( x => x.SceneId ).SequenceEqual( new [ ]
             {
-                _scene.Id,
                 _scene.Id,
                 _scene.Id
             } ) );
