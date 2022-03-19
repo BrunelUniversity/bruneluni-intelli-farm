@@ -22,12 +22,14 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         private int _frame2;
         private int _frame3;
         private BucketDto [ ] _buckets;
+        private string _currentDir;
 
         protected override void When( )
         {
+            _currentDir = "C:\\Dir\\Dir";
             MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
             {
-                Value = "C:\\Dir\\Dir"
+                Value = _currentDir
             } );
             _frame1 = 5;
             _frame2 = 6;
@@ -198,7 +200,7 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_File_Was_Unzipped( )
         {
-            MockZipAdapter.ExtractToDirectory( _someZipPath, _someBlendPath );
+            MockZipAdapter.ExtractToDirectory( _someZipPath, _currentDir );
         }
     }
 }
