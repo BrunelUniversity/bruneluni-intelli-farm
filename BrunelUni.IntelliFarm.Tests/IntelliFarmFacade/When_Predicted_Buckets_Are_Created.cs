@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Aidan.Common.Core;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Enums;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
@@ -24,6 +25,10 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
 
         protected override void When( )
         {
+            MockFileAdapter.GetCurrentDirectory( ).Returns( new ObjectResult<string>
+            {
+                Value = "C:\\Dir\\Dir"
+            } );
             _frame1 = 5;
             _frame2 = 6;
             _frame3 = 7;
@@ -180,6 +185,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                 _scene.Id,
                 _scene.Id
             } ) );
+        }
+
+        [ Test ]
+        public void Then_File_Was_Unzipped( )
+        {
+            MockZipAdapter.ExtractToDirectory( _someZipPath, _someBlendPath );
         }
     }
 }
