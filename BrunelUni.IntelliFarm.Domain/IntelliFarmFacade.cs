@@ -163,7 +163,44 @@ namespace BrunelUni.IntelliFarm.Domain
         public void CreateBucketsFromProject( SceneDto sceneDto )
         {
             var path = _remoteFileService.DownloadFile( sceneDto.FileName );
-            _zipAdapter.ExtractToDirectory( path, _fileAdapter.GetCurrentDirectory(  ).Value )
+            _zipAdapter.ExtractToDirectory( path, _fileAdapter.GetCurrentDirectory( ).Value );
+            _animationContext.Initialize( );
+            _animationContext.InitializeScene(
+                $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{Path.GetFileNameWithoutExtension( path )}.blend" );
+            var frames = new List<FrameDto>( );
+            foreach( var frame in sceneDto.Frames )
+            {
+                _sceneCommandFacade.SetSceneData( new RenderDataDto
+                {
+                    StartFrame = frame.Number,
+                    EndFrame = frame.Number
+                } );
+                var tris = _sceneCommandFacade.GetTriangleCount( );
+                var sceneAndViewportCoverage = _sceneCommandFacade.GetSceneAndViewportCoverage( new RayCoverageInputDto
+                {
+                    Subdivisions = 8
+                } );
+                var data = _sceneCommandFacade.GetSceneData( );
+                frames.Add( new FrameDto
+                {
+                    MaxDiffuseBounces = data.DiffuseBounces,
+                    Number = frame.Number,
+                    Samples = data.Samples,
+                    Scene = sceneDto.Id,
+                    SceneCoverage = sceneAndViewportCoverage.Scene,
+                    ViewportCoverage = sceneAndViewportCoverage.Viewport,
+                    TriangleCount = tris.Count
+                } );
+            }
+
+            var clients = new List<ClientDto>( );
+            foreach( var client in sceneDto.Clients )
+            {
+                clients.Add( _state.Clients.First( x => x.Name == client.Name ) );
+            }
+
+            var buckets = _renderAnalyser.GetBuckets( clients.ToArray( ), frames.ToArray( ) );
+            _state.Buckets.AddRange( buckets );
         }
     }
 }
