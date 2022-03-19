@@ -200,6 +200,11 @@ namespace BrunelUni.IntelliFarm.Domain
             }
 
             var buckets = _renderAnalyser.GetBuckets( clients.ToArray( ), frames.ToArray( ) );
+            foreach( var bucket in buckets )
+            {
+                bucket.FilePath = sceneDto.FileName;
+                bucket.SceneId = sceneDto.Id;
+            }
             _state.Buckets.AddRange( buckets );
         }
     }
