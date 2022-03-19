@@ -1,6 +1,4 @@
 ﻿using Aidan.Common.Utils.Web;
-using BrunelUni.IntelliFarm.Core.Dtos;
-using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Crosscutting.DIModule;
 using BrunelUni.IntelliFarm.Data.DIModule;
 using BrunelUni.IntelliFarm.DIModule;

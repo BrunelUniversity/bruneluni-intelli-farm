@@ -24,5 +24,7 @@ packages/
 temp/
 blender/
 *.zip
+*.blend
+*.blend1
 
 # TEST
