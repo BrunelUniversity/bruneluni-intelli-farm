@@ -23,6 +23,21 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         private int _frame3;
         private BucketDto [ ] _buckets;
         private string _currentDir;
+        private int _bounces1 = 10;
+        private int _samples1 = 50;
+        private int _bounces2 = 4;
+        private int _samples2 = 40;
+        private int _bounces3 = 3;
+        private int _samples3 = 60;
+        private int _tri1 = 1200;
+        private int _tri2 = 1220;
+        private int _tri3 = 1230;
+        private double _scene1 = 50.0;
+        private double _viewport1 = 60.0;
+        private double _scene2 = 75.0;
+        private double _viewport2  = 85.0;
+        private double _scene3 = 50.5;
+        private double _viewport3 = 50.7;
 
         protected override void When( )
         {
@@ -90,6 +105,49 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
                     }
                 }
             };
+            MockSceneCommandFacade.GetSceneData( ).Returns( new RenderDataDto
+                {
+                    DiffuseBounces = _bounces1,
+                    Samples = _samples1
+                },
+                new RenderDataDto
+                {
+                    DiffuseBounces = _bounces2,
+                    Samples = _samples2
+                },
+                new RenderDataDto
+                {
+                    DiffuseBounces = _bounces3,
+                    Samples = _samples3
+                } );
+            MockSceneCommandFacade.GetTriangleCount( ).Returns( new TriangleCountDto
+                {
+                    Count = _tri1
+                },
+                new TriangleCountDto
+                {
+                    Count = _tri2
+                },
+                new TriangleCountDto
+                {
+                    Count = _tri3
+                } );
+            MockSceneCommandFacade.GetSceneAndViewportCoverage( Arg.Any<RayCoverageInputDto>( ) )
+                .Returns( new RayCoverageResultDto
+                    {
+                        Scene = _scene1,
+                        Viewport = _viewport1
+                    },
+                    new RayCoverageResultDto
+                    {
+                        Scene = _scene2,
+                        Viewport = _viewport2
+                    },
+                    new RayCoverageResultDto
+                    {
+                        Scene = _scene3,
+                        Viewport = _viewport3
+                    } );
             MockRenderAnalyser.GetBuckets( Arg.Any<ClientDto [ ]>( ), Arg.Any<FrameDto [ ]>( ) )
                 .Returns( _buckets );
             MockRemoteFileService.DownloadFile( Arg.Any<string>( ) )
@@ -194,13 +252,79 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         [ Test ]
         public void Then_File_Was_Downloaded( )
         {
+            MockRemoteFileService.Received( 1 ).DownloadFile( Arg.Any<string>( ) );
             MockRemoteFileService.DownloadFile( _someS3Key );
         }
         
         [ Test ]
         public void Then_File_Was_Unzipped( )
         {
-            MockZipAdapter.ExtractToDirectory( _someZipPath, _currentDir );
+            MockZipAdapter.Received( 1 ).ExtractToDirectory( Arg.Any<string>( ), Arg.Any<string>( ) );
+            MockZipAdapter.Received().ExtractToDirectory( _someZipPath, _currentDir );
+        }
+
+        [ Test ]
+        public void Then_Predictor_Was_Called_With_Correct_Frame_Params( )
+        {
+            MockRenderAnalyser.GetBuckets( Arg.Is<ClientDto [ ]>( c =>
+                c.Select( x => x.TimeFor0PolyViewpoint )
+                    .SequenceEqual( new [ ]
+                    {
+                        _stateClients[ 0 ].TimeFor0PolyViewpoint,
+                        _stateClients[ 1 ].TimeFor0PolyViewpoint
+                    } ) &&
+                c.Select( x => x.Name ).SequenceEqual( new [ ]
+                {
+                    _device1,
+                    _device2
+                } ) &&
+                c.Select( x => x.TimeFor80Poly100Coverage0Bounces100Samples ).SequenceEqual( new [ ]
+                {
+                    _stateClients[ 0 ].TimeFor80Poly100Coverage0Bounces100Samples,
+                    _stateClients[ 1 ].TimeFor80Poly100Coverage0Bounces100Samples
+                } ) ), Arg.Is<FrameDto [ ]>( f =>
+                f.Select( x => x.Number ).SequenceEqual( new [ ]
+                {
+                    _frame1,
+                    _frame2,
+                    _frame3
+                } ) &&
+                f.Select( x => x.Samples ).SequenceEqual( new [ ]
+                {
+                    _samples1,
+                    _samples2,
+                    _samples3
+                } ) &&
+                f.Select( x => x.Scene ).SequenceEqual( new []
+                {
+                    _scene.Id,
+                    _scene.Id,
+                    _scene.Id
+                } ) &&
+                f.Select( x => x.SceneCoverage ).SequenceEqual( new [ ]
+                {
+                    _scene1,
+                    _scene2,
+                    _scene3
+                } ) &&
+                f.Select( x => x.TriangleCount ).SequenceEqual( new [ ]
+                {
+                    _tri1,
+                    _tri2,
+                    _tri3
+                } ) &&
+                f.Select( x => x.ViewportCoverage ).SequenceEqual( new [ ]
+                {
+                    _viewport1,
+                    _viewport2,
+                    _viewport3
+                } )&&
+                f.Select( x => x.MaxDiffuseBounces ).SequenceEqual( new [ ]
+                {
+                    _bounces1,
+                    _bounces2,
+                    _bounces3
+                } )) );
         }
     }
 }
