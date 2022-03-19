@@ -34,19 +34,6 @@ namespace BrunelUni.IntelliFarm.API
 
         public void Configure( IApplicationBuilder applicationBuilder, IWebHostEnvironment env )
         {
-            var state = applicationBuilder.ApplicationServices.GetService<IState>( );
-            state.Clients.Add( new ClientDto
-            {
-                Name = "WEY1",
-                TimeFor0PolyViewpoint = 6.7,
-                TimeFor80Poly100Coverage0Bounces100Samples = 20.4
-            } );
-            state.Clients.Add( new ClientDto
-            {
-                Name = "WEY2",
-                TimeFor0PolyViewpoint = 13.4,
-                TimeFor80Poly100Coverage0Bounces100Samples = 40.8
-            } );
             applicationBuilder
                 .UseRouting( )
                 .UseEndpoints( endpoints => endpoints.MapControllers( ) );
