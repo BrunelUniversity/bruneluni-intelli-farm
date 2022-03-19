@@ -1,5 +1,6 @@
 ﻿using Aidan.Common.Core.Interfaces.Contract;
 using Aidan.Common.Utils.Test;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Data.Core.Interfaces.Contract;
 using NSubstitute;
@@ -26,7 +27,9 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
             MockSceneCommandFacade = Substitute.For<ISceneCommandFacade>( );
             MockAnimationContext = Substitute.For<IAnimationContext>( );
             MockFileAdapter = Substitute.For<IFileAdapter>( );
-            State = Substitute.For<IState>( );
+            
+            // todo: using in-memory state for now, needs to be switched out for fake, mock for test
+            State = new State(  );
             MockRemoteFileService = Substitute.For<IRemoteFileService>( );
             MockRenderAnalyser = Substitute.For<IRenderAnalyser>( );
             SUT = new Domain.IntelliFarmFacade( MockWebClient, MockConfigurationAdapter, MockZipAdapter, MockSceneCommandFacade,
