@@ -6,7 +6,8 @@ namespace BrunelUni.IntelliFarm.Core.Dtos
 {
     public class SceneDto
     {
-        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid( );
 
         [ Description( "key of file in s3 bucket" ) ]
         public string FileName { get; set; }

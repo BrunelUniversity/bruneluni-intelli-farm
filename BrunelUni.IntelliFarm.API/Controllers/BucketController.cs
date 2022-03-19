@@ -1,5 +1,6 @@
-﻿using BrunelUni.IntelliFarm.Core.Dtos;
-using BrunelUni.IntelliFarm.Core.Enums;
+﻿using System.Linq;
+using BrunelUni.IntelliFarm.Core.Dtos;
+using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
@@ -9,9 +10,14 @@ namespace BrunelUni.IntelliFarm.API.Controllers
     [ Route("bucket") ]
     public class BucketController : ControllerBase
     {
+        private readonly IState _state;
+
+        public BucketController( IState state ) { _state = state; }
+        
         [ HttpPost ]
         public IActionResult CreateBucket( [ FromBody ] BucketDto bucketDto )
         {
+            _state.Buckets.Add( bucketDto );
             return Ok( bucketDto );
         }
         
@@ -20,10 +26,10 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             [ FromQuery ] string sceneName,
             [ FromQuery ] string device )
         {
-            return Ok( new BucketDto
-            {
-                Type = BucketTypeEnum.Predicted
-            } );
+            var scene = _state.Scenes.First( x => x.Name == sceneName );
+            var client = _state.Clients.First( x => x.Name == device );
+            var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id && x.SceneId == scene.Id );
+            return Ok( buckets );
         }
     }
 }

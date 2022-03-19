@@ -21,8 +21,9 @@ namespace BrunelUni.IntelliFarm.Domain
         private readonly IAnimationContext _animationContext;
         private readonly IFileAdapter _fileAdapter;
         private readonly IState _state;
-        private readonly IRemoteFileService _remoteFileService;
+        private readonly IRemoteFileServiceFactory _remoteFileServiceFactory;
         private readonly IRenderAnalyser _renderAnalyser;
+        private readonly IZipService _zipService;
 
         public IntelliFarmFacade( IWebClient webClient,
             IConfigurationAdapter configurationAdapter,
@@ -31,8 +32,9 @@ namespace BrunelUni.IntelliFarm.Domain
             IAnimationContext animationContext,
             IFileAdapter fileAdapter,
             IState state,
-            IRemoteFileService remoteFileService,
-            IRenderAnalyser renderAnalyser )
+            IRemoteFileServiceFactory remoteFileServiceFactory,
+            IRenderAnalyser renderAnalyser,
+            IZipService zipService )
         {
             _webClient = webClient;
             _configurationAdapter = configurationAdapter;
@@ -41,8 +43,9 @@ namespace BrunelUni.IntelliFarm.Domain
             _animationContext = animationContext;
             _fileAdapter = fileAdapter;
             _state = state;
-            _remoteFileService = remoteFileService;
+            _remoteFileServiceFactory = remoteFileServiceFactory;
             _renderAnalyser = renderAnalyser;
+            _zipService = zipService;
         }
 
         public Result CreateProject( string name, string filePath, params string [ ] devices )
@@ -53,7 +56,7 @@ namespace BrunelUni.IntelliFarm.Domain
                 return Result.Error(
                     $"{fileName} is not the same as {name}, file name and scene name have to be the same" );
             }
-            _zipAdapter.ExtractToDirectory( filePath, $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
+            _zipService.Zip( filePath, $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
             var key = _webClient.UploadFile( "upload-file", $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{name}.zip" );
             _animationContext.Initialize(  );
             _animationContext.InitializeScene( filePath );
@@ -74,6 +77,7 @@ namespace BrunelUni.IntelliFarm.Domain
             sceneDto.FileName = key;
             sceneDto.Frames = frames.ToArray( );
             sceneDto.Status = RenderStatusEnum.NotStarted;
+            sceneDto.Name = name;
             sceneDto.Clients = devices.Select( x => new ClientDto
             {
                 Name = x
@@ -124,13 +128,14 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public Result Render( string sceneName, string deviceName )
         {
-            var webResult = _webClient.Get( $"bucket?sceneName={sceneName}&device={deviceName}" );
+            var webResult = _webClient.Get<List<BucketDto>>( $"bucket?sceneName={sceneName}&device={deviceName}" );
             if( webResult.StatusCode == HttpStatusCode.NotFound )
             {
                 return Result.Error( $"bucket of scene: {sceneName} and device: {deviceName} not found" );
             }
-            var bucket = webResult.Data as BucketDto;
-            _webClient.DownloadFile( $"scene-file?key={bucket?.FilePath}", $"{sceneName}.blend" );
+
+            var bucket = ( webResult.Data as List<BucketDto> )[ 0 ];
+            _webClient.DownloadFile( $"scene-file?key={bucket?.FilePath}", $"{sceneName}.zip" );
             _zipAdapter.ExtractToDirectory( $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{sceneName}.zip",
                 $"{_fileAdapter.GetCurrentDirectory( ).Value}" );
             _animationContext.Initialize( );
@@ -162,11 +167,14 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public void CreateBucketsFromProject( SceneDto sceneDto )
         {
-            var path = _remoteFileService.DownloadFile( sceneDto.FileName );
+            var appOptions = _configurationAdapter.Get<WebAppOptions>( );
+            var path = _remoteFileServiceFactory
+                .Factory( appOptions.AwsId, appOptions.AwsToken )
+                .DownloadFile( sceneDto.FileName );
             _zipAdapter.ExtractToDirectory( path, _fileAdapter.GetCurrentDirectory( ).Value );
             _animationContext.Initialize( );
             _animationContext.InitializeScene(
-                $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{Path.GetFileNameWithoutExtension( path )}.blend" );
+                $"{_fileAdapter.GetCurrentDirectory( ).Value}\\{sceneDto.Name}.blend" );
             var frames = new List<FrameDto>( );
             foreach( var frame in sceneDto.Frames )
             {
@@ -205,6 +213,8 @@ namespace BrunelUni.IntelliFarm.Domain
                 bucket.FilePath = sceneDto.FileName;
                 bucket.SceneId = sceneDto.Id;
             }
+
+            _state.Scenes.Add( sceneDto );
             _state.Buckets.AddRange( buckets );
         }
     }

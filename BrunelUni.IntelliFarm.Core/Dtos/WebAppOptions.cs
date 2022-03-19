@@ -1,6 +1,6 @@
-﻿namespace BrunelUni.IntelliFarm.API
+﻿namespace BrunelUni.IntelliFarm.Core.Dtos
 {
-    public class AppOptions
+    public class WebAppOptions
     {
         public string AwsToken { get; set; }
         public string AwsId { get; set; }

@@ -29,7 +29,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
 
         public string DownloadFile( string endpoint, string filename )
         {
-            var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
+            var path = $"{Directory.GetCurrentDirectory( )}\\{filename}";
             using var webClient = new WebClient( );
             webClient.DownloadFile( $"{_baseUrl}{endpoint}", path );
             return path;
@@ -37,7 +37,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
 
         public string UploadFile( string endpoint, string filename )
         {
-            var path = $"{Directory.GetCurrentDirectory( )}//{filename}";
+            var path = $"{filename}";
             using var client = new HttpClient( );
             client.BaseAddress = new Uri( _baseUrl );
             client.DefaultRequestHeaders.Accept.Clear( );
@@ -82,7 +82,7 @@ namespace BrunelUni.IntelliFarm.DataAccess
             return webResult;
         }
 
-        public WebDto Get( string endpoint )
+        public WebDto Get<T>( string endpoint )
         {
             using var client = new HttpClient( );
             client.BaseAddress = new Uri( _baseUrl );
@@ -95,13 +95,22 @@ namespace BrunelUni.IntelliFarm.DataAccess
             taskRead.Wait( );
             var rawData = taskRead.Result;
             var statusCode = taskResult.StatusCode;
-            var webResult = new WebDto
+            _loggerAdapter.LogInfo( $"{statusCode} {rawData}" );
+            if( statusCode == HttpStatusCode.OK )
+            {
+                var webResult = new WebDto
+                {
+                    Data = JsonConvert.DeserializeObject<T>( rawData ),
+                    StatusCode = statusCode
+                };
+                return webResult;
+            }
+            var otherWebResult = new WebDto
             {
                 Data = JsonConvert.DeserializeObject( rawData ),
                 StatusCode = statusCode
             };
-            _loggerAdapter.LogInfo( $"{statusCode} {rawData}" );
-            return webResult;
+            return otherWebResult;
         }
     }
 }

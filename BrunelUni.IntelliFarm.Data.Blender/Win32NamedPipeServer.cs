@@ -31,6 +31,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             _pipeWriteServer.WaitForConnection( );
             _loggerAdapter.LogInfo( $"client connected on {DataApplicationConstants.PipeNameWrite}" );
             _loggerAdapter.LogInfo( "server writing" );
+            _loggerAdapter.LogInfo( $"server writing message: {message}" );
             _pipeWriteServer.Write( Encoding.UTF8.GetBytes( message ) );
             _loggerAdapter.LogInfo( "server written" );
             _loggerAdapter.LogInfo( $"server waiting for connection on {DataApplicationConstants.PipeNameRead}" );

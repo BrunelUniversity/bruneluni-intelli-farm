@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Aidan.Common.Core.Interfaces.Contract;
+using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +12,21 @@ namespace BrunelUni.IntelliFarm.API.Controllers
     {
         private readonly IRemoteFileServiceFactory _remoteFileServiceFactory;
         private readonly IConfigurationAdapter _configurationAdapter;
-        private AppOptions _options;
+        private WebAppOptions _options;
 
         public FileStorageController( IRemoteFileServiceFactory remoteFileServiceFactory,
             IConfigurationAdapter configurationAdapter )
         {
             _remoteFileServiceFactory = remoteFileServiceFactory;
             _configurationAdapter = configurationAdapter;
-            _options = _configurationAdapter.Get<AppOptions>( );
+            _options = _configurationAdapter.Get<WebAppOptions>( );
         }
         
         [ Route("calibration-files") ]
         [ HttpGet ]
         public IActionResult GetCalibrationFiles( )
         {
-            var options = _configurationAdapter.Get<AppOptions>( );
+            var options = _configurationAdapter.Get<WebAppOptions>( );
             var remoteFileService = _remoteFileServiceFactory.Factory( options.AwsId, options.AwsToken );
             var stream = remoteFileService.GetStream( "calibration-files/calibration.zip" );
             return new FileStreamResult( stream, "application/octet-stream" );
@@ -35,7 +36,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         [ HttpGet ]
         public IActionResult GetSceneFile( [ FromQuery ] string key )
         {
-            var options = _configurationAdapter.Get<AppOptions>( );
+            var options = _configurationAdapter.Get<WebAppOptions>( );
             var remoteFileService = _remoteFileServiceFactory.Factory( options.AwsId, options.AwsToken );
             var stream = remoteFileService.GetStream( key );
             return new FileStreamResult( stream, "application/octet-stream" );
@@ -61,7 +62,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             _remoteFileServiceFactory
                 .Factory( _options.AwsId, _options.AwsToken )
                 .CreateFromStream( memoryStream, key );
-            return Ok( new { Key = key } );
+            return Ok( key );
         }
     }
 }

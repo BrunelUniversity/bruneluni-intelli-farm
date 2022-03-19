@@ -9,10 +9,10 @@ namespace BrunelUni.IntelliFarm.Data.Blender
         private readonly CommandMetaDto _commandMetaDto;
         private readonly INamedPipeServer _namedPipeServer;
         private readonly ISceneProcessor _sceneProcessor;
-        private readonly ISerializer _serializer;
+        private readonly IJsonSnakeCaseSerializer _serializer;
 
         public BlenderCommandInAndOut( CommandMetaDto commandMetaDto,
-            ISerializer serializer,
+            IJsonSnakeCaseSerializer serializer,
             INamedPipeServer namedPipeServer,
             ISceneProcessor sceneProcessor )
         {
