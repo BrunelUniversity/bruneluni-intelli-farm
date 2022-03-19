@@ -8,6 +8,6 @@ namespace BrunelUni.IntelliFarm.Core.Interfaces.Contract
         Result CreateProject( string name, string filePath, params string [ ] devices );
         void CreateDevice( string deviceName );
         Result Render( string sceneName, string deviceName );
-        void CreateBucketsFromProject( SceneDto sceneDto, string file );
+        void CreateBucketsFromProject( SceneDto sceneDto );
     }
 }
