@@ -17,5 +17,11 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             _state.Clients.Add( device );
             return Ok( device );
         }
+        
+        [ HttpGet ]
+        public IActionResult GetAllDevices( )
+        {
+            return Ok( _state.Clients );
+        }
     }
 }
