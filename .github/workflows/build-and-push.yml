@@ -16,7 +16,7 @@ jobs:
           dotnet-version: 3.1.x
       - name: run tests
         run: |
-          dotnet test BrunelUni.IntelliFarm.MainApp.sln
+          dotnet test BrunelUni.IntelliFarm.sln
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
