@@ -35,5 +35,5 @@ jobs:
           fi
       - name: Test with pytest
         run: |
-          cd blender_api
+          cd blender-api
           python -m pytest tests/
