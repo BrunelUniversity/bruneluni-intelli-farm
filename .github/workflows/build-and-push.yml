@@ -14,12 +14,9 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-      - name: Install Nuke
-        run: dotnet tool install Nuke.GlobalTool --global
-      - name: Nuke It
+      - name: run tests
         run: |
-          nuke -Solution BrunelUni.IntelliFarm.sln
-          nuke -Solution BrunelUni.IntelliFarm.Data.sln
+          dotnet test BrunelUni.IntelliFarm.MainApp.sln
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
