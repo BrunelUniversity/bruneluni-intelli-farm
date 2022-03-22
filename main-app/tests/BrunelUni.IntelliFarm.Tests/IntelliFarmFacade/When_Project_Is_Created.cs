@@ -117,5 +117,12 @@ namespace BrunelUni.IntelliFarm.Tests.IntelliFarmFacade
         {
             Assert.AreEqual( OperationResultEnum.Success, _result.Status );
         }
+        
+        // TODO: for debugging
+        [ Test ]
+        public void Then_Result_Message_Is_Null( )
+        {
+            Assert.AreEqual( null, _result.Msg );
+        }
     }
 }
