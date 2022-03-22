@@ -4,7 +4,7 @@ on:
     branches: [ trunk ]
 jobs:
   build_and_test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       AWS_ID: ${{ secrets.AWS_ID }}
       AWS_TOKEN: ${{ secrets.AWS_TOKEN }}
