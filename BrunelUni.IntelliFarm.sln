@@ -1,26 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Blender", "BrunelUni.IntelliFarm.Data.Blender\BrunelUni.IntelliFarm.Data.Blender.csproj", "{82B0A02A-8209-4BCF-93EE-9BC780906FD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Blender", "main-app\src\BrunelUni.IntelliFarm.Data.Blender\BrunelUni.IntelliFarm.Data.Blender.csproj", "{82B0A02A-8209-4BCF-93EE-9BC780906FD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Core", "BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj", "{DC0E675C-7901-4331-B8B0-DE8676007993}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.Core", "main-app\src\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj", "{DC0E675C-7901-4331-B8B0-DE8676007993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Build", "BrunelUni.IntelliFarm.Build\BrunelUni.IntelliFarm.Build.csproj", "{EB364825-EA38-4381-98D6-4278E9D67765}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Build", "build-system\src\BrunelUni.IntelliFarm.Build\BrunelUni.IntelliFarm.Build.csproj", "{EB364825-EA38-4381-98D6-4278E9D67765}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Core", "BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj", "{6C15FCBB-4DD3-4142-BEC2-5A019585DED9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Core", "main-app\src\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj", "{6C15FCBB-4DD3-4142-BEC2-5A019585DED9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.API", "BrunelUni.IntelliFarm.API\BrunelUni.IntelliFarm.API.csproj", "{10C66B1D-7A3E-41C9-9DD8-6A740650286C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.API", "main-app\src\BrunelUni.IntelliFarm.API\BrunelUni.IntelliFarm.API.csproj", "{10C66B1D-7A3E-41C9-9DD8-6A740650286C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Crosscutting.DIModule", "BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj", "{D6DD932C-E393-4C7C-929D-D4632412765D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Crosscutting.DIModule", "main-app\src\BrunelUni.IntelliFarm.Crosscutting.DIModule\BrunelUni.IntelliFarm.Crosscutting.DIModule.csproj", "{D6DD932C-E393-4C7C-929D-D4632412765D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.DIModule", "BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj", "{8036651D-AB83-47FF-A276-1DB1430272A4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Data.DIModule", "main-app\src\BrunelUni.IntelliFarm.Data.DIModule\BrunelUni.IntelliFarm.Data.DIModule.csproj", "{8036651D-AB83-47FF-A276-1DB1430272A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Domain", "BrunelUni.IntelliFarm.Domain\BrunelUni.IntelliFarm.Domain.csproj", "{362F088C-DF30-498F-A029-BF147479DAC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Domain", "main-app\src\BrunelUni.IntelliFarm.Domain\BrunelUni.IntelliFarm.Domain.csproj", "{362F088C-DF30-498F-A029-BF147479DAC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Tests", "BrunelUni.IntelliFarm.Tests\BrunelUni.IntelliFarm.Tests.csproj", "{68F36CB1-FBBE-46AC-8A47-89C71E35A751}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.Tests", "main-app\tests\BrunelUni.IntelliFarm.Tests\BrunelUni.IntelliFarm.Tests.csproj", "{68F36CB1-FBBE-46AC-8A47-89C71E35A751}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.DataAccess", "BrunelUni.IntelliFarm.DataAccess\BrunelUni.IntelliFarm.DataAccess.csproj", "{6C971043-192A-4090-9E51-0EC6C65930C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.DataAccess", "main-app\src\BrunelUni.IntelliFarm.DataAccess\BrunelUni.IntelliFarm.DataAccess.csproj", "{6C971043-192A-4090-9E51-0EC6C65930C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.DIModule", "BrunelUni.IntelliFarm.DIModule\BrunelUni.IntelliFarm.DIModule.csproj", "{148DC740-E074-4D73-9E01-453889BDA2FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrunelUni.IntelliFarm.DIModule", "main-app\src\BrunelUni.IntelliFarm.DIModule\BrunelUni.IntelliFarm.DIModule.csproj", "{148DC740-E074-4D73-9E01-453889BDA2FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

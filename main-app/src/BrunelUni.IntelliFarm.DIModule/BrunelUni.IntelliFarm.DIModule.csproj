@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aidan.Common.DependencyInjection" Version="1.0.8" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\BrunelUni.IntelliFarm.DataAccess\BrunelUni.IntelliFarm.DataAccess.csproj" />
+      <ProjectReference Include="..\..\src\BrunelUni.IntelliFarm.Domain\BrunelUni.IntelliFarm.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
