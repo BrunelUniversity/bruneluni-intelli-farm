@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aidan.Common.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 
@@ -8,6 +9,13 @@ namespace BrunelUni.IntelliFarm.Domain
 {
     public class BlenderCyclesRenderAnalyser : IRenderAnalyser
     {
+        private readonly ILoggerAdapter<IRenderAnalyser> _loggerAdapter;
+
+        public BlenderCyclesRenderAnalyser( ILoggerAdapter<IRenderAnalyser> loggerAdapter )
+        {
+            _loggerAdapter = loggerAdapter;
+        }
+    
         public BucketDto [ ] GetBuckets( ClientDto [ ] clients, FrameDto [ ] frames )
         {
             // create buckets
@@ -46,12 +54,12 @@ namespace BrunelUni.IntelliFarm.Domain
             // total time render time calc
             var totalTime = predictedTimes.Sum( x => x.Time );
 
-            Console.WriteLine($"total time: {totalTime}");
+            _loggerAdapter.LogInfo( $"total time: {totalTime}" );
 
             var totalTimeForNodes = bucketMults.Select( x => (time: totalTime * x.mult, client: x.client) ).ToList( );
 
-            Console.WriteLine( $"total time 1: {totalTimeForNodes[ 0 ]}" );
-            Console.WriteLine( $"total time 2: {totalTimeForNodes[ 1 ]}" );
+            _loggerAdapter.LogInfo( $"total time 1: {totalTimeForNodes[ 0 ]}" );
+            _loggerAdapter.LogInfo( $"total time 2: {totalTimeForNodes[ 1 ]}" );
 
             var bucketFullList = buckets.Select( x => new BucketComplete
             {

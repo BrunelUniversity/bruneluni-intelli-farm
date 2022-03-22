@@ -16,7 +16,7 @@ namespace BrunelUni.IntelliFarm.Data.Blender
             {
                 Directory = currentPathService.GetCurrent( configurationAdapter.Get<MainAppOptions>( ).Local )
             };
-            ScriptsRootDirectoryDto.DataScriptsDir = $"{ScriptsRootDirectoryDto.Directory}\\blender_api";
+            ScriptsRootDirectoryDto.DataScriptsDir = $"{ScriptsRootDirectoryDto.Directory}\\blender-api";
             ScriptsRootDirectoryDto.DataScriptsTempFile = $"{ScriptsRootDirectoryDto.Directory}\\temp\\render.json";
             var blendDir =
                 $"{ScriptsRootDirectoryDto.Directory}\\blender\\{DataApplicationConstants.BlenderVersionFull}";

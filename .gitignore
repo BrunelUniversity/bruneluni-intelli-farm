@@ -27,4 +27,5 @@ blender/
 *.blend
 *.blend1
 
-# TEST
+# WPF LOGS
+*logs.txt

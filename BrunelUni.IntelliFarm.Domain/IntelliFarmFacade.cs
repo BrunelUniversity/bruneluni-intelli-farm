@@ -188,6 +188,8 @@ namespace BrunelUni.IntelliFarm.Domain
                 {
                     Subdivisions = 8
                 } );
+                sceneAndViewportCoverage.Scene *= 100;
+                sceneAndViewportCoverage.Viewport *= 100;
                 var data = _sceneCommandFacade.GetSceneData( );
                 frames.Add( new FrameDto
                 {

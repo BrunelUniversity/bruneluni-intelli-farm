@@ -5,52 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <_CopyItems Include="..\blender_api\*" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\BrunelUni.IntelliFarm.Core\BrunelUni.IntelliFarm.Core.csproj" />
         <ProjectReference Include="..\BrunelUni.IntelliFarm.Data.Core\BrunelUni.IntelliFarm.Data.Core.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="..\blender_api\.idea\.gitignore">
-            <Link>blender_api\.idea\.gitignore</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\aws.xml">
-            <Link>blender_api\.idea\aws.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\bruneluni_Intellifarm_data_scripts.iml">
-            <Link>blender_api\.idea\bruneluni_Intellifarm_data_scripts.iml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\inspectionProfiles\profiles_settings.xml">
-            <Link>blender_api\.idea\inspectionProfiles\profiles_settings.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\inspectionProfiles\Project_Default.xml">
-            <Link>blender_api\.idea\inspectionProfiles\Project_Default.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\misc.xml">
-            <Link>blender_api\.idea\misc.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\modules.xml">
-            <Link>blender_api\.idea\modules.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\vcs.xml">
-            <Link>blender_api\.idea\vcs.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\.idea\workspace.xml">
-            <Link>blender_api\.idea\workspace.xml</Link>
-        </Content>
-        <Content Include="..\blender_api\requirements.txt">
-            <Link>blender_api\requirements.txt</Link>
-        </Content>
-        <Content Include="..\blender_api\__init__.py">
-            <Link>blender_api\__init__.py</Link>
-        </Content>
-    </ItemGroup>
-
-    <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
-        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(OutputPath)\blender_api\src" />
-    </Target>
 
 </Project>

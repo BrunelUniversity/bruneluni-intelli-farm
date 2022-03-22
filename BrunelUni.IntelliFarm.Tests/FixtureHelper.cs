@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Data.Core.Dtos;
 using BrunelUni.IntelliFarm.DataAccess;
@@ -10,6 +12,15 @@ namespace BrunelUni.IntelliFarm.Tests
 {
     public class FixtureHelper
     {
+        private static List<object [ ]> Data = new List<object [ ]>( );
+        
+        public static void AddToReport( object[] data )
+        {
+            Data.Add( data );
+            using var fileStream = File.OpenWrite( $"{Directory.GetCurrentDirectory( )}\\report.json" );
+            fileStream.Write( Encoding.UTF8.GetBytes( JsonConvert.SerializeObject( Data, Formatting.Indented ) ) );
+        }
+
         [ System.ComponentModel.Description( "loads fixture from wey laptop" ) ]
         private static IEnumerable<FeasabilityDto> LoadWeyFixture( )
         {

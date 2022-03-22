@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aidan.Common.Core.Interfaces.Contract;
 using Aidan.Common.Utils.Test;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
 using BrunelUni.IntelliFarm.Domain;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
 {
     public class Given_A_RenderAnalyser : GivenWhenThen<IRenderAnalyser>
     {
+        private ILoggerAdapter<IRenderAnalyser> _loggerAdapter;
+
         protected override void Given( )
         {
-            SUT = new BlenderCyclesRenderAnalyser( );
+            _loggerAdapter = Substitute.For<ILoggerAdapter<IRenderAnalyser>>( );
+            SUT = new BlenderCyclesRenderAnalyser( _loggerAdapter );
         }
 
         public static PredictorFixtureDto [ ] WeyFixture => FixtureHelper.WeyFixture;
         public static object[ ] WeyOrderFixture1 => FixtureHelper.GetWeyOrderFixture1;
         public static object[ ] WeyOrderFixture2 => FixtureHelper.GetWeyOrderFixture2;
-        public void AssertToleranceForBucket( List<PredictorFixtureDto> predictorFixtureDtos,
+        public object AssertToleranceForBucket( List<PredictorFixtureDto> predictorFixtureDtos,
             List<BucketDto> buckets,
             int index,
             double tolerance,
@@ -42,6 +47,7 @@ namespace BrunelUni.IntelliFarm.Tests.SceneAnalyser
             var propDiff = predictedTotalTimeProportion - actualTotalTimeProportion;
             Console.WriteLine( $"proportion{index} diff: {Math.Round( propDiff * 100, 3 )}%" );
             Assert.Less( Math.Abs( propDiff ), tolerance );
+            return $"node{index} diff {Math.Round( propDiff * 100, 3 )}%";
         }
 
         public List<BucketDto> LoadBalance( List<PredictorFixtureDto> predictorFixtureDtos, double[] speedsRelativeToFirst )
