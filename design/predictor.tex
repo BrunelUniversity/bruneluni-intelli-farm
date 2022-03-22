@@ -1,35 +1,31 @@
-﻿\documentclass{article}
-\usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
-
-\makeatletter
-% Reinsert missing \algbackskip
-\def\algbackskip{\hskip-\ALG@thistlm}
-\makeatother
-
+﻿\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage[]{algorithm2e}
 \begin{document}
-    \begin{algorithmic}
-        \hspace*{\algorithmicindent} \textbf{Input} \\
-        \hspace*{\algorithmicindent} \textbf{Output}
-        \State // \textit{-- HEURISTICS CONSTANTS --}
-        \newline
-        \State $bouncesHmaxLogisticFuncMult \gets 4.65$
-        \State $triangleFuncExp \gets 0.06$
-        \State $bouncesAndCoverageHMinFuncExp \gets 0.19$
-        \State $coverage100BounceRate \gets 0.5625$
-        \State $bounceRateDiff \gets 0.1$
-        \State $bouncesAndCoverageHMaxFuncExp \gets -0.74$
-        \newline
-        \newline
-        \State // \textit{-- TRIANGLE COUNT CALCULATION --}
-        \newline
-        \If{$i > 5$}
-            \State $i \gets i-1$
-        \Else
-            \If{$i = 3$}
-                \State $i \gets i+2$
-            \EndIf
-        \EndIf
-    \end{algorithmic}
+
+
+
+    \begin{algorithm}[]
+
+        \SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+        \SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+
+        \Input{frameRaySamples, frameRayDiffuseBounces, frameTriangleCount, frameSceneCoverage, frameViewportCoverage, benchmarkSceneTime, benchmark0CoverageSceneTime}
+        \Output{a predicted render time estimation}
+        \BlankLine
+
+        initialization\;
+        \Left$\leftarrow$ \FindCompress{$Im[i,j-1]$}\;
+        \While{not at end of this document}{
+            read current\;
+            \eIf{understand}{
+                go to next section\;
+                current section becomes this one\;
+            }{
+                go back to the beginning of current section\;
+            }
+        }
+        \caption{How to write algorithms}
+    \end{algorithm}
 
 \end{document}
