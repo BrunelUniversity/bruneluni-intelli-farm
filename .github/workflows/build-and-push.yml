@@ -14,9 +14,12 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-      - name: run tests
+      - name: Install Nuke
+        run: dotnet tool install Nuke.GlobalTool --global
+      - name: Nuke It
         run: |
-          dotnet test BrunelUni.IntelliFarm.sln
+          nuke -Solution BrunelUni.IntelliFarm.sln
+          nuke -Solution BrunelUni.IntelliFarm.Data.sln
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -24,12 +27,9 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd blender_api
+          cd blender-api
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]
-          then
-            pip install -r requirements.txt
-          fi
+          pip install -r requirements.txt
       - name: Test with pytest
         run: |
           cd blender-api
