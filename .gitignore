@@ -26,6 +26,10 @@ blender/
 *.zip
 *.blend
 *.blend1
+*.pdf
+*.aux
 
-# WPF LOGS
+# LOGS
 *logs.txt
+*.log
+

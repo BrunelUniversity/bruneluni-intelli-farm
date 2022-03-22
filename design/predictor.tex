@@ -1,0 +1,35 @@
+﻿\documentclass{article}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+% Reinsert missing \algbackskip
+\def\algbackskip{\hskip-\ALG@thistlm}
+\makeatother
+
+\begin{document}
+    \begin{algorithmic}
+        \hspace*{\algorithmicindent} \textbf{Input} \\
+        \hspace*{\algorithmicindent} \textbf{Output}
+        \State // \textit{-- HEURISTICS CONSTANTS --}
+        \newline
+        \State $bouncesHmaxLogisticFuncMult \gets 4.65$
+        \State $triangleFuncExp \gets 0.06$
+        \State $bouncesAndCoverageHMinFuncExp \gets 0.19$
+        \State $coverage100BounceRate \gets 0.5625$
+        \State $bounceRateDiff \gets 0.1$
+        \State $bouncesAndCoverageHMaxFuncExp \gets -0.74$
+        \newline
+        \newline
+        \State // \textit{-- TRIANGLE COUNT CALCULATION --}
+        \newline
+        \If{$i > 5$}
+            \State $i \gets i-1$
+        \Else
+            \If{$i = 3$}
+                \State $i \gets i+2$
+            \EndIf
+        \EndIf
+    \end{algorithmic}
+
+\end{document}
