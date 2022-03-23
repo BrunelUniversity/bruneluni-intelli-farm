@@ -6,39 +6,40 @@
     \begin{algorithm}
         \caption{Workload Predictor}\label{alg:cap}
         \begin{algorithmic}[1]
+            \State
             \State $bouncesHmaxLogisticMult \gets 4.65$
             \State $triangleExp \gets 0.06$
             \State $bouncesAndCoverageHMinExp \gets 0.19$
             \State $coverage100BounceRate \gets 0.5625$
             \State $bounceRateDiff \gets 0.1$
             \State $bouncesAndCoverageHMaxExp \gets -0.74$
-            \newline
+            \State
             \If{$frameTriangleCount$ is $>$ 1280}
                 \State $triangleExpMultiplier \gets timeToRenderBenchmarkScene \div (80 ^ {triangleExp})$
                 \State $exactTriangleRenderTime \gets triangleExpMultiplier \times (frameTriangleCount ^ {triangleExp})$
             \Else
                 \State $exactTriangleRenderTime \gets timeToRenderBenchmarkScene$
             \EndIf
-            \newline
+            \State
             \State $rayTraceSamplesMultiplier \gets frameRayTraceSamples \div 100$
             \State $exactSamplesRenderTime \gets rayTraceSamplesMultiplier \times exactTriangleRenderTime$
-            \newline
+            \State
             \State $bounceHMax100Cov \gets exactSampleRenderTime \times bouncesHMaxLogisticMult$
             \State $bounceHMinMult \gets bounceHmax100Cov \div (8 ^ {bouncesAndCoverageHMinExp})$
             \State $bounceHMinExactCov \gets bounceHMinMult \times ((frameSceneCoverage \times 0.08) ^ {bouncesAndCoverageHMinExp})$
             \State $bounceIndex \gets 8 - (frameSceneCoverage \times 0.08)$
             \State $bounceHMaxExactCov \gets bounceHMax100Cov \times ((9 - (frameSceneCoverage * 0.08)) ^ {bouncesAndCoverageHMaxExp})$
             \State $bounceRate \gets coverage100BounceRate + (bounceIndex \times bounceRateDiff)$
-            \newline
+            \State
             \State $lastValue \gets 0$
             \For{0 to $bouncesRate$}
                 \State $lastValue \gets lastValue \times (1 + (bounceRate (1 - (lastValue \div bounceHMaxExactCov))))$
             \EndFor
-            \newline
+            \State
             \State $viewportEmptySpace \gets 100 - frameViewportCoverage$
             \State $viewportEmptyTime \gets timeToRender0CovBenchmarkScene \times (viewportEmptySpace \div 100)$
             \State $viewportNotEmptyTime \gets lastValue \times (frameViewportCoverage \div 100)$
-            \newline\Return $viewportNotEmptyTime + viewportEmptyTime$
+            \State\Return $viewportNotEmptyTime + viewportEmptyTime$
         \end{algorithmic}
     \end{algorithm}
 
