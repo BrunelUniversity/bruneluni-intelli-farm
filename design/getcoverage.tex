@@ -10,11 +10,13 @@
             \State add iscosphere at 3d vector $(0_x,0_y,0_z)$
             \State $sceneVectors \gets$ get iscosphere verts as $(x,y,z)$
             \State delete iscosphere
+            \State
             \State add plane at 3d vector $(-4.87318_x,0_y,0_z)$
             \State rotate plane by 3d radian vector $(0_x,1.5708_y,0_z)$
             \State set size of plane to 3d vector $(1_x,1.771_y,1_z)$
             \State $viewportVectors \gets$ get plane verts as $(x,y,z)$
             \State delete plane
+            \State
             \State $sceneRayHitCount \gets 0$
             \For{$vector$ in $sceneVectors$}
                 \State $didRayHit \gets$ cast ray from $(0_x,0_y,0_z)$ in direction $vector$
@@ -22,6 +24,7 @@
                     \State $sceneRayHitCount \gets sceneRayHitCount+1$
                 \EndIf
             \EndFor
+            \State
             \State $viewportRayHitCount \gets 0$
             \For{$vector$ in $viewportVectors$}
                 \State $didRayHit \gets$ cast ray from $(0_x,0_y,0_z)$ in direction $vector$
