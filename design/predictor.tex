@@ -1,4 +1,5 @@
-﻿\documentclass{article}
+﻿\documentclass[a4paper]{article}
+\usepackage[margin=25pt]{geometry}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \begin{document}
@@ -12,57 +13,32 @@
             \State $bounceRateDiff \gets 0.1$
             \State $bouncesAndCoverageHMaxExp \gets -0.74$
             \newline
-            \newline
-            \iftrue
-            -- TRIANGLE COUNT CALCULATION --
-            \fi
-            \newline
             \If{$frameTriangleCount$ is $>$ 1280}
-                \State $triangleExpMultiplier \gets \newline \indent \indent timeToRenderBenchmarkScene \div (80 ^ {triangleExp})$
-                \State $exactTriangleRenderTime \gets \newline \indent \indent triangleExpMultiplier \times (frameTriangleCount ^ {triangleExp})$
+                \State $triangleExpMultiplier \gets timeToRenderBenchmarkScene \div (80 ^ {triangleExp})$
+                \State $exactTriangleRenderTime \gets triangleExpMultiplier \times (frameTriangleCount ^ {triangleExp})$
             \Else
                 \State $exactTriangleRenderTime \gets timeToRenderBenchmarkScene$
             \EndIf
             \newline
-            \newline
-            \iftrue
-            -- RAY TRACE SAMPLES CALCULATION --
-            \fi
-            \newline
             \State $rayTraceSamplesMultiplier \gets frameRayTraceSamples \div 100$
-            \State $exactSamplesRenderTime \gets \newline \indent rayTraceSamplesMultiplier \times exactTriangleRenderTime$
+            \State $exactSamplesRenderTime \gets rayTraceSamplesMultiplier \times exactTriangleRenderTime$
             \newline
-            \newline
-            \iftrue
-            -- SCENE COVERAGE CALCULATION --
-            \fi
-            \newline
-            \State $bounceHMax100Cov \gets \newline \indent exactSampleRenderTime \times bouncesHMaxLogisticMult$
-            \State $bounceHMinMult \gets \newline \indent bounceHmax100Cov \div (8 ^ {bouncesAndCoverageHMinExp})$
-            \State $bounceHMinExactCov \gets \newline \indent bounceHMinMult \times ((frameSceneCoverage \times 0.08) \newline \indent \indent ^ {bouncesAndCoverageHMinExp})$
-            \State $bounceIndex \gets \newline \indent 8 - (frameSceneCoverage \times 0.08)$
-            \State $bounceHMaxExactCov \gets \newline \indent bounceHMax100Cov \times ((9 - \newline \indent \indent (frameSceneCoverage * 0.08)) ^ {bouncesAndCoverageHMaxExp})$
-            \State $bounceRate \gets \newline \indent coverage100BounceRate + (bounceIndex \times bounceRateDiff)$
-            \newline
-            \newline
-            \iftrue
-            -- RAY DIFFUSE BOUNCES CALCULATION --
-            \fi
+            \State $bounceHMax100Cov \gets exactSampleRenderTime \times bouncesHMaxLogisticMult$
+            \State $bounceHMinMult \gets bounceHmax100Cov \div (8 ^ {bouncesAndCoverageHMinExp})$
+            \State $bounceHMinExactCov \gets bounceHMinMult \times ((frameSceneCoverage \times 0.08) ^ {bouncesAndCoverageHMinExp})$
+            \State $bounceIndex \gets 8 - (frameSceneCoverage \times 0.08)$
+            \State $bounceHMaxExactCov \gets bounceHMax100Cov \times ((9 - (frameSceneCoverage * 0.08)) ^ {bouncesAndCoverageHMaxExp})$
+            \State $bounceRate \gets coverage100BounceRate + (bounceIndex \times bounceRateDiff)$
             \newline
             \State $lastValue \gets 0$
             \For{0 to $bouncesRate$}
-                \State $lastValue \gets lastValue \times (1 + (bounceRate \newline \indent \indent \times (1 - (lastValue \div bounceHMaxExactCov))))$
+                \State $lastValue \gets lastValue \times (1 + (bounceRate (1 - (lastValue \div bounceHMaxExactCov))))$
             \EndFor
             \newline
-            \newline
-            \iftrue
-            -- VIEWPORT COVERAGE CALCULATION --
-            \fi
-            \newline
             \State $viewportEmptySpace \gets 100 - frameViewportCoverage$
-            \State $viewportEmptyTime \gets timeToRender0CovBenchmarkScene \times \newline \indent (viewportEmptySpace \div 100)$
+            \State $viewportEmptyTime \gets timeToRender0CovBenchmarkScene \times (viewportEmptySpace \div 100)$
             \State $viewportNotEmptyTime \gets lastValue \times (frameViewportCoverage \div 100)$
-            \Return $viewportNotEmptyTime + viewportEmptyTime$
+            \newline\Return $viewportNotEmptyTime + viewportEmptyTime$
         \end{algorithmic}
     \end{algorithm}
 
