@@ -12,6 +12,7 @@
             \State $firstClient \gets$ first occurrence in $orderedClients$
             \State $restOfClients \gets$ skip first in $orderedClients$ return rest
             \State $clientsWithRespectToFastestNode \gets [(1,id_{firstClient})]$
+            \State
             \For{$client$ in $clients$}
                 \State $clientsWithRespectToFastestNode $ add $(1/(renderBenchmark_{client} \div renderBenchmark_{firstClient}),id_{client})$
             \EndFor
@@ -22,6 +23,7 @@
             \State $totalTime \gets$ sum of $time_n$ $predictedTimes$
             \State $totalTimeForNodes \gets bucketMultipliers$ select ($totalTime \times mult_n$,$client_n$) from $predictedTimes$
             \State $bucketFullList \gets$ select $(false,id_n)$ from $buckets$
+            \State
             \While{$orderedPredictedTimes$ has any items}
                 \State $result \gets$ first $predictedTimes$
                 \For{$bucket$ in $buckets$}
