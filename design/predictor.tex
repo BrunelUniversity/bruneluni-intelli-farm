@@ -1,49 +1,27 @@
-﻿\documentclass[letterpaper,twocolumn,10pt]{article}
-\usepackage[]{algorithm2e}
+﻿\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \begin{document}
-
-
-
-    \begin{algorithm}[]
-
-        \SetKwData{BouncesHmaxLogisticFuncMult}{bouncesHmaxLogisticFuncMult}
-        \SetKwData{TriangleFuncExp}{triangleFuncExp}
-        \SetKwData{BouncesAndCoverageHMinFuncExp}{bouncesAndCoverageHMinFuncExp}
-        \SetKwData{CoverageOneHundredBounceRate}{coverageOneHundredBounceRate}
-        \SetKwData{BounceRateDiff}{bounceRateDiff}
-        \SetKwData{BouncesAndCoverageHMaxFuncExp}{bouncesAndCoverageHMaxFuncExp}
-        \SetKwData{FrameRaySamples}{frameRaySamples}
-        \SetKwData{FrameRayDiffuseBounces}{frameRayDiffuseBounces}
-        \SetKwData{FrameTriangleCount}{frameTriangleCount}
-        \SetKwData{FrameSceneCoverage}{frameSceneCoverage}
-        \SetKwData{FrameViewportCoverage}{frameViewportCoverage}
-        \SetKwData{BenchmarkSceneTime}{benchmarkSceneTime}
-        \SetKwData{Benchmark0CoverageSceneTime}{benchmark0CoverageSceneTime}
-        \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-
-        \Input{frameRaySamples, frameRayDiffuseBounces, frameTriangleCount, frameSceneCoverage, frameViewportCoverage, benchmarkSceneTime, benchmark0CoverageSceneTime}
-        \Output{a predicted render time estimation}
-        \BlankLine
-        \BlankLine
-        \emph{-- HEURISTICS CONSTANTS --}
-        \BlankLine
-        \BouncesHmaxLogisticFuncMult$\leftarrow$ {4.65}\;
-        \TriangleFuncExp$\leftarrow$ {0.06}\;
-        \BouncesAndCoverageHMinFuncExp$\leftarrow$ {0.19}\;
-        \CoverageOneHundredBounceRate$\leftarrow$ {0.5625}\;
-        \BounceRateDiff$\leftarrow$ {0.1}\;
-        \BouncesAndCoverageHMaxFuncExp$\leftarrow$ {-0.74}\;
-        \BlankLine
-        \BlankLine
-        \emph{-- TRIANGLE CALCULATION --}
-        \BlankLine
-        \eIf{\FrameTriangleCount $>$ 1280}{
-            go to next section\;
-            current section becomes this one\;
-        }{
-            go back to the beginning of current section\;
-        }
-        \caption{Workload Predictor}
+    \begin{algorithm}
+        \caption{Workload Predictor}\label{alg:cap}
+        \begin{algorithmic}[1]
+            \State $bouncesHmaxLogisticMult \gets 4.65$
+            \State $triangleExp \gets 0.06$
+            \State $bouncesAndCoverageHMinExp \gets 0.19$
+            \State $coverage100BounceRate \gets 0.5625$
+            \State $bounceRateDiff \gets 0.1$
+            \State $bouncesAndCoverageHMaxExp \gets -0.74$
+            \newline
+            \If{$frameTriangleCount$ is $>$ 1280}
+                \State $triangleExpMultiplier \gets \newline \indent \indent timeToRenderBenchmarkScene \div (80 ^ {triangleExp})$
+                \State $exactTriangleRenderTime \gets \newline \indent \indent triangleExpMultiplier \times (frameTriangleCount ^ {triangleExp})$
+            \Else
+                \State $exactTriangleRenderTime \gets timeToRenderBenchmarkScene$
+            \EndIf
+            \newline
+            \State $rayTraceSamplesMultiplier \gets frameRayTraceSamples \div 100$
+            \State $exactSamplesRenderTime \gets \newline \indent rayTraceSamplesMultiplier \times exactTriangleRenderTime$
+        \end{algorithmic}
     \end{algorithm}
 
 \end{document}
