@@ -1,0 +1,53 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[margin=25pt]{geometry}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\begin{document}
+    \begin{algorithm}
+        \caption{Load Balancer}\label{alg:cap}
+        \begin{algorithmic}[1]
+            \State $buckets \gets$ select ids from $clients$
+            \State $orderedClients \gets$ $clients$ ordered by time to complete benchmark scene
+            \State $firstClient \gets$ first occurrence in $orderedClients$
+            \State $restOfClients \gets$ skip first in $orderedClients$ return rest
+            \State $clientsWithRespectToFastestNode \gets [(1,firstClient.id)]$
+            \For{$client$ in $clients$}
+                \State $clientsWithRespectToFastestNode \gets \newline \indent \indent clientsWithRespectToFastestNode \newline \indent \indent \indent add (1/(client.timeToRenderBenchmark / firstClient.timeToRenderBenchmark),client.id)$
+            \EndFor
+            \State $predictedTimes \gets$ \newline \indent for all frames $[ \newline \indent \indent (f.num_0, GetPredicted(f_0,firstClient)), \newline \indent \indent ..., \newline \indent \indent (f.num_{n-1}, GetPredicted(f_{n-1},firstClient)), \newline \indent \indent (f.num_{n}, GetPredicted(f_{n},firstClient))]$
+            \State $orderedPredictedTimes \gets$ $predictedTimes$ order descending by predicted time
+            \State $totalBucketSpeedDivisor \gets$ sum of $div_n$ in $clientsWithRespectToFastestNode$
+            \State $bucketMultipliers \gets$ select ($div_n$/$totalBucketSpeedDivisor$,$id_n$) from $clientsWithRespectToFastestNode$
+            \State $totalTime \gets$ sum of $time_n$ $predictedTimes$
+            \State $totalTimeForNodes \gets bucketMultipliers$ select ($totalTime \times mult_n$,$client_n$) from $predictedTimes$
+            \State $bucketFullList \gets$ select $(false,id_n)$ from $buckets$
+            \While{$orderedPredictedTimes$ has any items}
+                \State $result \gets$ first $predictedTimes$
+                \For{$bucket$ in $buckets$}
+                    \State $bucketTimes \gets$ sum of $time_n$ in $bucket$
+                    \If{$bucket$ is full}
+                        \If{$bucketTimes$ + $result.time$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ == $bucket.deviceid$)}
+                            \For{$newResult$ in $predictedTimes$}
+                                \If{$bucketTimes$ + $result.time$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ == $bucket.deviceid$)}
+                                    \If{index of $newResult$ in $predictedTimes$ == (length($predictedTimes$) - 1)}
+                                        \State add $newResult$ to $bucket.Frames$
+                                        \State remove $newResult$ from $predictedTimes$
+                                        \State set current bucket to complete
+                                        \State break from loop
+                                    \EndIf
+                                \Else
+                                    \State add $newResult$ to $bucket.Frames$
+                                    \State remove $newResult$ from $predictedTimes$
+                                    \State break from loop
+                                \EndIf
+                            \EndFor
+                        \Else
+                            \State add $newResult$ to $bucket.Frames$
+                            \State remove $newResult$ from $predictedTimes$
+                        \EndIf
+                    \EndIf
+                \EndFor
+            \EndWhile
+        \end{algorithmic}
+    \end{algorithm}
+\end{document}
