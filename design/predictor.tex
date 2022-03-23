@@ -21,6 +21,13 @@
             \newline
             \State $rayTraceSamplesMultiplier \gets frameRayTraceSamples \div 100$
             \State $exactSamplesRenderTime \gets \newline \indent rayTraceSamplesMultiplier \times exactTriangleRenderTime$
+            \newline
+            \State $bounceHMax100Cov \gets \newline \indent exactSampleRenderTime \times bouncesHMaxLogisticMult$
+            \State $bounceHMinMult \gets \newline \indent bounceHmax100Cov \div (8 ^ {bouncesAndCoverageHMinExp})$
+            \State $bounceHMinExactCov \gets \newline \indent bounceHMinMult \times ((frameSceneCoverage \times 0.08) \newline \indent \indent ^ {bouncesAndCoverageHMinExp})$
+            \State $bounceIndex \gets \newline \indent 8 - (frameSceneCoverage \times 0.08)$
+            \State $bounceHMaxExactCov \gets \newline \indent bounceHMax100Cov \times ((9 - \newline \indent \indent (frameSceneCoverage * 0.08)) ^ {bouncesAndCoverageHMaxExp})$
+            \State $bounceRate \gets \newline \indent coverage100BounceRate + (bounceIndex \times bounceRateDiff)$
         \end{algorithmic}
     \end{algorithm}
 
