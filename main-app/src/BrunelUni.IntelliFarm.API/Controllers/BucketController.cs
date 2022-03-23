@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BrunelUni.IntelliFarm.Core.Dtos;
 using BrunelUni.IntelliFarm.Core.Enums;
 using BrunelUni.IntelliFarm.Core.Interfaces.Contract;
@@ -8,7 +9,6 @@ using NUnit.Framework;
 namespace BrunelUni.IntelliFarm.API.Controllers
 {
     [ Description( "used to log actual render time for each bucket" ) ]
-    [ Route("bucket") ]
     public class BucketController : ControllerBase
     {
         private readonly IState _state;
@@ -16,6 +16,7 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         public BucketController( IState state ) { _state = state; }
         
         [ HttpPost ]
+        [ Route("bucket") ]
         public IActionResult CreateBucket( [ FromBody ] BucketDto bucketDto )
         {
             _state.Buckets.Add( bucketDto );
@@ -23,16 +24,24 @@ namespace BrunelUni.IntelliFarm.API.Controllers
         }
         
         [ HttpGet ]
+        [ Route("predicted-bucket") ]
         public IActionResult GetForDeviceAndScene(
             [ FromQuery ] string sceneName,
             [ FromQuery ] string device )
         {
-            var scene = _state.Scenes.First( x => x.Name == sceneName );
-            var client = _state.Clients.First( x => x.Name == device );
-            var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id &&
-                                                       x.SceneId == scene.Id &&
-                                                       x.Type == BucketTypeEnum.Predicted );
-            return Ok( buckets );
+            try
+            {
+                var scene = _state.Scenes.First( x => x.Name == sceneName );
+                var client = _state.Clients.First( x => x.Name == device );
+                var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id &&
+                                                           x.SceneId == scene.Id &&
+                                                           x.Type == BucketTypeEnum.Predicted );
+                return Ok( buckets );
+            }
+            catch( InvalidOperationException )
+            {
+                return Ok( new BucketDto [ ] { } );
+            }
         }
         
         [ HttpGet ]
@@ -41,12 +50,19 @@ namespace BrunelUni.IntelliFarm.API.Controllers
             [ FromQuery ] string sceneName,
             [ FromQuery ] string device )
         {
-            var scene = _state.Scenes.First( x => x.Name == sceneName );
-            var client = _state.Clients.First( x => x.Name == device );
-            var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id &&
-                                                       x.SceneId == scene.Id &&
-                                                       x.Type == BucketTypeEnum.Actual );
-            return Ok( buckets );
+            try
+            {
+                var scene = _state.Scenes.First( x => x.Name == sceneName );
+                var client = _state.Clients.First( x => x.Name == device );
+                var buckets = _state.Buckets.FindAll( x => x.DeviceId == client.Id &&
+                                                           x.SceneId == scene.Id &&
+                                                           x.Type == BucketTypeEnum.Actual );
+                return Ok( buckets );
+            }
+            catch( InvalidOperationException )
+            {
+                return Ok( new BucketDto [ ] { } );
+            }
         }
     }
 }
