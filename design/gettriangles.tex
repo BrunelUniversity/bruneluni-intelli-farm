@@ -1,0 +1,27 @@
+﻿\documentclass[a4paper]{article}
+\usepackage[margin=25pt]{geometry}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\setcounter{algorithm}{3}
+\begin{document}
+    \begin{algorithm}
+        \caption{Get Total Triangle Count}\label{alg:cap}
+        \begin{algorithmic}[1]
+            \State $objects \gets$ all objects in scene
+            \State $meshes \gets$ []
+            \For{$object$ in $objects$}
+                \If{$type_{object}$ is MESH}
+                    \State $meshes$ add $object$
+                \EndIf
+            \EndFor
+            \For{$mesh$ in $meshes$}
+                \State triangulate all polygons on $mesh$
+            \EndFor
+            \State $triangleCount \gets$ 0
+            \For{$mesh$ in $meshes$}
+                \State $triangleCount \gets triangleCount$ + number of $polygons_{mesh}$
+            \EndFor
+            \State \Return $triangleCount$
+        \end{algorithmic}
+    \end{algorithm}
+\end{document}

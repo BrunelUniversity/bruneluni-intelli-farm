@@ -14,7 +14,7 @@
             \State $clientsWithRespectToFastestNode \gets [(1,id_{firstClient})]$
             \State
             \For{$client$ in $clients$}
-                \State $clientsWithRespectToFastestNode $ add $(1/(renderBenchmark_{client} \div renderBenchmark_{firstClient}),id_{client})$
+                \State $clientsWithRespectToFastestNode $ add $(1 \div (renderBenchmark_{client} \div renderBenchmark_{firstClient}),id_{client})$
             \EndFor
             \State $predictedTimes \gets$ \newline \indent $[(fNum_0, GetPredicted(f_0,firstClient)), \newline \indent ..., \newline \indent (fNum_{n-1}, GetPredicted(f_{n-1},firstClient)), \newline \indent (fNum_{n}, GetPredicted(f_{n},firstClient))]$
             \State $orderedPredictedTimes \gets$ $predictedTimes$ order descending by predicted time
@@ -29,10 +29,10 @@
                 \For{$bucket$ in $buckets$}
                     \State $bucketTimes \gets$ sum of $time_n$ in $bucket$
                     \If{$bucket$ is full}
-                        \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ == $deviceid_{bucket}$)}
+                        \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ is $deviceid_{bucket}$)}
                             \For{$newResult$ in $predictedTimes$}
-                                \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ == $deviceid_{bucket}$)}
-                                    \If{index of $newResult$ in $predictedTimes$ == (length($predictedTimes$) - 1)}
+                                \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ is $deviceid_{bucket}$)}
+                                    \If{index of $newResult$ in $predictedTimes$ is (length($predictedTimes$) - 1)}
                                         \State add $newResult$ to $frames_{bucket}$
                                         \State remove $newResult$ from $predictedTimes$
                                         \State set current bucket to complete
