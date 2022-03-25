@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,6 +25,7 @@ namespace BrunelUni.IntelliFarm.Domain
         private readonly IRemoteFileServiceFactory _remoteFileServiceFactory;
         private readonly IRenderAnalyser _renderAnalyser;
         private readonly IZipService _zipService;
+        private readonly ILoggerAdapter<IIntelliFarmFacade> _loggerAdapter;
 
         public IntelliFarmFacade( IWebClient webClient,
             IConfigurationAdapter configurationAdapter,
@@ -34,7 +36,8 @@ namespace BrunelUni.IntelliFarm.Domain
             IState state,
             IRemoteFileServiceFactory remoteFileServiceFactory,
             IRenderAnalyser renderAnalyser,
-            IZipService zipService )
+            IZipService zipService,
+            ILoggerAdapter<IIntelliFarmFacade> loggerAdapter )
         {
             _webClient = webClient;
             _configurationAdapter = configurationAdapter;
@@ -46,6 +49,7 @@ namespace BrunelUni.IntelliFarm.Domain
             _remoteFileServiceFactory = remoteFileServiceFactory;
             _renderAnalyser = renderAnalyser;
             _zipService = zipService;
+            _loggerAdapter = loggerAdapter;
         }
 
         public Result CreateProject( string name, string filePath, params string [ ] devices )
@@ -153,6 +157,8 @@ namespace BrunelUni.IntelliFarm.Domain
                     Num = frame.Num,
                     Time = _sceneCommandFacade.Render( ).RenderTime
                 } );
+                _loggerAdapter.LogInfo(
+                    $"render {Math.Round( bucket.Frames.IndexOf( frame ) / ( ( double )bucket.Frames.Count - 1 ) * 100, 2 )}% complete" );
             }
 
             _webClient.Create( "bucket", new BucketDto
