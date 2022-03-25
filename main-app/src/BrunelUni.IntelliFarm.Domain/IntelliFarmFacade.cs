@@ -132,7 +132,7 @@ namespace BrunelUni.IntelliFarm.Domain
 
         public Result Render( string sceneName, string deviceName )
         {
-            var webResult = _webClient.Get<List<BucketDto>>( $"bucket?sceneName={sceneName}&device={deviceName}" );
+            var webResult = _webClient.Get<List<BucketDto>>( $"predicted-bucket?sceneName={sceneName}&device={deviceName}" );
             if( webResult.StatusCode == HttpStatusCode.NotFound )
             {
                 return Result.Error( $"bucket of scene: {sceneName} and device: {deviceName} not found" );
