@@ -32,7 +32,7 @@
             \State $bounceRate \gets coverage100BounceRate + (bounceIndex \times bounceRateDiff)$
             \State
             \State $lastValue \gets 0$
-            \For{0 to $bouncesRate$}
+            \For{0 to $frameRayTraceBounces$}
                 \State $lastValue \gets lastValue \times (1 + (bounceRate (1 - (lastValue \div bounceHMaxExactCov))))$
             \EndFor
             \State

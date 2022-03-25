@@ -216,6 +216,7 @@ namespace BrunelUni.IntelliFarm.Domain
                 bucket.SceneId = sceneDto.Id;
             }
 
+            sceneDto.Frames = frames.ToArray( );
             _state.Scenes.Add( sceneDto );
             _state.Buckets.AddRange( buckets );
         }

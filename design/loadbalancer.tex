@@ -28,7 +28,7 @@
                 \State $result \gets$ first $predictedTimes$
                 \For{$bucket$ in $buckets$}
                     \State $bucketTimes \gets$ sum of $time_n$ in $bucket$
-                    \If{$bucket$ is full}
+                    \If{$bucket$ is not full}
                         \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ is $deviceid_{bucket}$)}
                             \For{$newResult$ in $predictedTimes$}
                                 \If{$bucketTimes$ + $time_{result}$ $>$ (get in $totalTimeForNodes$ where $deviceid_n$ is $deviceid_{bucket}$)}
